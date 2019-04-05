@@ -3,10 +3,17 @@ package mdata;
 import java.util.Scanner;
 import java.io.*;
 
-
+//some functions that may be useful in manipulating the data
 
 public class ManipulateData
 {
+	/////////////////////////////////////////////////////////////////////////////////////
+	//the makeArrays methods reads in the dataset file, which should be in a CSV file format
+	//it takes in two arrays, where the yArray should hold all the y-labels.
+	//PUT THE Y LABELS IN THE LAST COLUMN.
+	//ALL VALUES ONLY NUMBERS SEPARATED BY ONE COMMA. MAKE SURE NOTHING IS MISSING
+	/////////////////////////////////////////////////////////////////////////////////////
+	
 	public static void makeArrays(double[][]xArray, double[]yArray)
 	{
 		//Create the array to hold the data first
@@ -59,8 +66,11 @@ public class ManipulateData
 	}//end makeArrays
 	
 	
+	/////////////////////////////////////////////////////
+	//the following three methods prints a two dimensional array or one dim array; used for testing stuff
+	///////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static void printArrays(double[][]xArray, double []yArray)
+	public static void printAllArrays(double[][]xArray, double []yArray)
 	{
 		for(int i = 0; i < xArray.length;i++)
 		{
@@ -78,7 +88,51 @@ public class ManipulateData
 		{
 			System.out.print(yArray[i] + " ");
 		}
-	}//end printArrays
+	}//end printAllArrays
+	
+	//print any 2d array
+	public static void print2DArray(double [][]TwoDArray)
+	{
+		for(int i = 0; i < TwoDArray.length;i++)
+		{
+			for(int j = 0; j < TwoDArray[i].length; j++)
+			{
+				System.out.print(TwoDArray[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}//end print2darray
+	
+	//print any 1d array
+	public static void printArray (double [] array)
+	{
+		for (int i = 0; i < array.length; i++)
+		{
+			System.out.print(array[i] + " ");
+		}
+	}//end printarray
+	
+	
+	
+	//////////////////////////////////////////////////
+	//makeYLabels will look at the precipitation values and assign a 0 for no prcp or 1 for prcp
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static void makeYLabels(double[]yArray)
+	{
+		for (int i = 0; i < yArray.length; i++)
+		{
+			if (yArray[i] != 0)
+			{
+				yArray[i] = 1.0;
+			}
+		}
+		
+		System.out.println("Turned yArray values into binary outputs.");
+		
+	}//end makeYLabels
+	
+	
 }
 		
 		

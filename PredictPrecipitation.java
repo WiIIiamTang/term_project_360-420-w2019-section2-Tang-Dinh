@@ -12,5 +12,7 @@ public class PredictPrecipitation
 			
 			md.makeArrays(xArray, yArray);
 			
+			md.makeYLabels(yArray);
+			
 		}
 }
