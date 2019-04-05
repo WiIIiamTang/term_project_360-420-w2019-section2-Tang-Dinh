@@ -133,6 +133,152 @@ public class ManipulateData
 	}//end makeYLabels
 	
 	
+	
+	////////////////////////////////////////////////////////////////////////
+	/////not the best way of randomizing position of data points but ok
+	/////takes in a twoD array and a normal array and randomizes the points.
+	/////in the case of the twoD array it will move the rows around.
+	///////////////////////////////////////////////////////////////////////////////////
+	public static void shuffleData(double[][]xArray, double[]yArray)
+	{
+		int max = (xArray.length-1);
+		int min = 0;
+		int rollRange = (max - min) + 1;
+		int roll = 0;
+		double[][]temp = new double [xArray.length][xArray[0].length];
+		double[]tempY = new double [yArray.length];
+		
+		
+		System.out.println("Shuffling data...");
+		
+		try
+		{
+			for (int i = 0; i < xArray.length; i++)
+			{
+				roll = (int) ((Math.random() * rollRange) + min);//Generate the row to swap with the ith row.
+				
+				tempY[i] = yArray[i]; //store the ith value in a temp array.
+				
+				yArray[i] = yArray[roll]; //ith row array is replaced by the value to swap.
+				
+				yArray[roll] = tempY[i]; //the value to swap is replaced by the temp array.
+				
+				for (int j = 0; j < xArray[0].length;j++)
+				{
+					
+					temp[i][j] = xArray[i][j]; //Store the ith row in a temp array.
+					
+					xArray[i][j] = xArray[roll][j]; //ith row array is replaced by the row to swap.
+					
+					xArray[roll][j] = temp[i][j]; //the row to swap is replaced by the temp array.
+					
+				}
+			}//repeats for all rows i.
+		}
+		catch (Exception e)
+		{
+			System.out.println("Something went wrong.");
+			System.out.println(e);
+		}
+		
+		System.out.println("Finished randomizing positions of data points.");
+		
+	}//end shuffleData
+	
+	
+	
+	////////////////////////////////////////
+	//Computes and returns the mean from a 2D array, it's the mean OF ONE COLUMN.
+	//Useful for putting the temperatures on a normalized distribution, for example
+	////////////////////////////////////////////////////////////////////////////////
+	public static double computeMean(double[][]xArray, int col)
+	{
+		double sum = 0;
+		double average = 0;
+		
+		for (int i = 0; i < xArray.length; i++)
+		{
+			sum = sum + xArray[i][col];
+		}
+		
+		average = (sum / xArray.length);
+		
+		return average;
+	} //end computeMean
+	
+	///////////////////////////////////////////
+	//Computes and returns the standard deviation from a 2D array, its the sd OF ONE COLUMN.
+	/////////////////////////////////////////////////////////////
+	public static double computeSD(double[][]xArray, int col)
+	{
+		double meanDiff = 0;
+		double sumMeanDiff = 0;
+		double sd = 0;
+		double mean = computeMean(xArray, col);
+		
+		for (int i = 0; i < xArray.length; i++)
+		{
+			meanDiff = Math.pow((xArray[i][col] - mean),2);
+			
+			sumMeanDiff = sumMeanDiff + meanDiff;
+		}
+		
+		sd = Math.sqrt(sumMeanDiff / (xArray.length));
+		
+		return sd;
+	}//end sd
+			
+	
+	////////////////////////////////////////////////////////////////
+	/////Standardize data - just taking the z-score
+	/////CONVERTS ONE COLUMN INTO Z-SCORES
+	/////////////////////////////////////////////////////////////////////////////
+	public static void convertToZScore(double[][]xArray, int col)
+	{
+		double zScore = 0;
+		double mean = computeMean(xArray, col);
+		double sd = computeSD(xArray, col);
+		
+		System.out.println ("Converting column " + col + " to Z scores...");
+		for (int i = 0; i < xArray.length; i++)
+		{
+			zScore = ((xArray[i][col] - mean ) / sd);
+			xArray[i][col] = zScore;
+		}
+		
+		
+		System.out.println ("Done converting column.");
+	}//endzscore
+		
+	////////////////////////////////////////////////
+	///Splits data selon a certain percent level
+	///Will take in first the TARGET ARRAY, then the INITIAL ARRAY, then the INDEX OF WHERE YOU WANT TO STOP, then THE STARTING INDEX.
+	///Will copy rows like this: always starts from INDEX startingIndex, THEN GOES UP UNTIL IT REACHES THAT INDEX OF THE INITIAL ARRAY STOPSPLIT.
+	/////////////////////////////////////////////////////////
+	public static void dataSplit2D(double[][]targetArray, double[][]iniArray, int stopSplit, int startingIndex)
+	{
+		
+		for (int i = 0; i < (stopSplit-startingIndex);i++)
+		{
+			for(int j = 0; j < targetArray[0].length; j++)
+			{
+				targetArray[i][j] = iniArray[startingIndex+i][j];
+			}
+		}
+		
+	}//end dataSplit2D
+	
+	public static void dataSplitNormal(double [] targetArray, double []iniArray, int stopSplit, int startingIndex)
+	{
+		
+		for (int i = 0; i < (stopSplit-startingIndex); i++)
+		{
+			targetArray[i] = iniArray[startingIndex+i];
+		}
+		
+	}//end dataSplitNormal
+	
+	
 }
 		
 		
