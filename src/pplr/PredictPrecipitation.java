@@ -1,5 +1,7 @@
 package pplr;
 
+import org.math.io.*;
+import org.math.plot.*;
 
 /**This is the class that contains the main method for the program
 **The PredictPrecipitation will take a dataset and perform a logistic regression
