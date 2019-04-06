@@ -1,4 +1,4 @@
-package mdata;
+
 
 import java.util.Scanner;
 import java.io.*;
@@ -22,7 +22,7 @@ public class ManipulateData
 		//Create other variables
 		Scanner scanIn = null;
 		String inputRow = "";
-		String fileLocation = "mdata/dataset.txt"; //<<INSERT FILE LOCATION HERE
+		String fileLocation = "data/dataset.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 		int col = 0;
 		
