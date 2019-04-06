@@ -1,3 +1,4 @@
+package pplr;
 
 
 import java.util.Scanner;
@@ -25,7 +26,7 @@ public class ManipulateData
 		//Create other variables
 		Scanner scanIn = null;
 		String inputRow = ""; //this will be the variable that holds the row!
-		String fileLocation = "data/dataset.txt"; //<<INSERT FILE LOCATION HERE
+		String fileLocation = "src/data/dataset.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 		int col = 0;
 		
