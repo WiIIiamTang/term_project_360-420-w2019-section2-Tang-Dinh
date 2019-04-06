@@ -3,12 +3,15 @@
 import java.util.Scanner;
 import java.io.*;
 
-//some functions that may be useful in manipulating the data
+/**some functions that may be useful in manipulating the data
+**/
 
 public class ManipulateData
 {
+	
+	
 	/////////////////////////////////////////////////////////////////////////////////////
-	//the makeArrays methods reads in the dataset file, which should be in a CSV file format
+	//the makeArrays method reads in the dataset file, which should be in a CSV file format
 	//it takes in two arrays, where the yArray should hold all the y-labels.
 	//PUT THE Y LABELS IN THE LAST COLUMN.
 	//ALL VALUES ONLY NUMBERS SEPARATED BY ONE COMMA. MAKE SURE NOTHING IS MISSING
@@ -21,12 +24,12 @@ public class ManipulateData
 		
 		//Create other variables
 		Scanner scanIn = null;
-		String inputRow = "";
+		String inputRow = ""; //this will be the variable that holds the row!
 		String fileLocation = "data/dataset.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 		int col = 0;
 		
-		System.out.println("I'm reading the dataset.txt and setting up the arrays...");
+		System.out.println("Reading the dataset.txt and setting up the arrays...");
 		
 		
 		try
@@ -36,12 +39,10 @@ public class ManipulateData
 			while (scanIn.hasNextLine())
 			{
 				inputRow = scanIn.nextLine(); //read row from dataset.txt
-				//System.out.println("Reading row");
+				
 				
 				inputArray = inputRow.split(","); //store that row into array
-				//System.out.println("Splitting and storing into array");
 				
-				//System.out.println("Copying row into main arrays..");
 				for (int i = 0; i < ((inputArray.length)-1); i++) //Copying that array into our xarray
 				{
 					xArray[row][i] = Double.parseDouble(inputArray[i]);
@@ -136,8 +137,8 @@ public class ManipulateData
 	
 	////////////////////////////////////////////////////////////////////////
 	/////not the best way of randomizing position of data points but ok
-	/////takes in a twoD array and a normal array and randomizes the points.
-	/////in the case of the twoD array it will move the rows around.
+	/////takes in a twoD array and a normal array and randomizes the points; ONE WHOLE ROW with its corresponding YLABEL must be swapped with another ROW and its YLABEL
+	/////in the case of the twoD array it will move the rows around, and in the yArray it just shuffles the values around
 	///////////////////////////////////////////////////////////////////////////////////
 	public static void shuffleData(double[][]xArray, double[]yArray)
 	{
@@ -188,7 +189,7 @@ public class ManipulateData
 	
 	
 	////////////////////////////////////////
-	//Computes and returns the mean from a 2D array, it's the mean OF ONE COLUMN.
+	//Computes and returns the mean from a 2D array, it's the mean OF ONE COLUMN - usually it will be ONE FEATURE VARIABLE, LIKE TEMPERATURE
 	//Useful for putting the temperatures on a normalized distribution, for example
 	////////////////////////////////////////////////////////////////////////////////
 	public static double computeMean(double[][]xArray, int col)
@@ -207,7 +208,7 @@ public class ManipulateData
 	} //end computeMean
 	
 	///////////////////////////////////////////
-	//Computes and returns the standard deviation from a 2D array, its the sd OF ONE COLUMN.
+	//Computes and returns the standard deviation from a 2D array, its the sd OF ONE COLUMN
 	/////////////////////////////////////////////////////////////
 	public static double computeSD(double[][]xArray, int col)
 	{
@@ -250,8 +251,10 @@ public class ManipulateData
 		System.out.println ("Done converting column.");
 	}//endzscore
 		
+	
+	
 	////////////////////////////////////////////////
-	///Splits data selon a certain percent level
+	///Splits data with a certain percent level
 	///Will take in first the TARGET ARRAY, then the INITIAL ARRAY, then the INDEX OF WHERE YOU WANT TO STOP, then THE STARTING INDEX.
 	///Will copy rows like this: always starts from INDEX startingIndex, THEN GOES UP UNTIL IT REACHES THAT INDEX OF THE INITIAL ARRAY STOPSPLIT.
 	/////////////////////////////////////////////////////////
