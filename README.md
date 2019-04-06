@@ -8,7 +8,7 @@ making a machine learning model that will learn to predict possibility of precip
 
 our question asks if a linear regression model would be appropriate to model something like this in weather. We tried to make a logistic regression program from scratch.
 
-to start the program, compile and run the PredictPrecipitation class.
+to start the program, compile and run the PredictPrecipitation class, or run the jar file.
 If you want to change the dataset, you have to replace the dataset.txt file in src/data/dataset.txt
 
 
