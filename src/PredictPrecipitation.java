@@ -1,4 +1,4 @@
-import mdata.*;
+
 
 
 public class PredictPrecipitation
@@ -15,8 +15,9 @@ public class PredictPrecipitation
 			double[][] xArray = new double[rows][columns];
 			double[] yArray = new double[rows];
 			
-			//Creating object
+			//Creating objects
 			ManipulateData md = new ManipulateData();
+			LogRegress lr = new LogRegress();
 			
 			
 			//now you can put the dataset into the arrays and move them around
