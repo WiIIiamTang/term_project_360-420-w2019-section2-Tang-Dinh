@@ -24,9 +24,7 @@ public class PredictPrecipitation
 			double[] yArray = new double[rows];
 			
 			//Creating objects
-			ManipulateData md = new ManipulateData();
-			LogRegress lr = new LogRegress();
-			
+			ManipulateData md = new ManipulateData();			
 			
 			//now you can put the dataset into the arrays and move them around
 			md.makeArrays(xArray, yArray);
@@ -59,5 +57,14 @@ public class PredictPrecipitation
 			///////////Logistic Regression//////////////////////////////////////////////////////////////////
 			///////////////////////////////////////////////////////////////////////////////////////////////////////////
 			
+			
+			//Creating object
+			LogRegress lr = new LogRegress();
+			
+			//Creating the array to hold the parameters
+			double[] parameters = new double[xArray[0].length];
+			
+			//Gradient Descent
+			lr.gradientDescent(xArray);
 		}
 }

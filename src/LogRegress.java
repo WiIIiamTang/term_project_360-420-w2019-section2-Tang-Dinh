@@ -1,7 +1,5 @@
 
 
-
-
 public class LogRegress
 {
 	public static double computeHypothesis()
