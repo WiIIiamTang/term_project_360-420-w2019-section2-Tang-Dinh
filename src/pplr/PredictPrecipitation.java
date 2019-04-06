@@ -32,7 +32,7 @@ public class PredictPrecipitation
 			md.makeYLabels(yArray);
 			md.shuffleData(xArray, yArray);
 			
-			//standardize some data columns if u want (try with/without this method)
+			//standardize some data columns if u want                                        ////////////(try with/without this method)
 			md.convertToZScore(xArray, 1); //maybe TMAX, TMIN, wind speed
 			md.convertToZScore(xArray, 2);
 			

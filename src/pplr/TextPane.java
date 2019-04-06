@@ -12,7 +12,7 @@ public class TextPane
 {
 	public static void makeTextPane(double[][]xTrainArray, double[]yTestArray,double[][]xTestArray, double[]yTrainArray)
 	{
-		JFrame frame = new JFrame("Logistic Regression");
+		JFrame frame = new JFrame("Logistic Regression[unfinished]");
 		JTextPane pane = new JTextPane();
 		JLabel label1 = new JLabel();
 		
