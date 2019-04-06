@@ -2,7 +2,7 @@
 
 binary logistic regression to predict precipitation probability
 
-making a machine learning model that will learn to predict possibility of precipitation on a day given some factors (Temperature, wind, snowfall, season)
+making a machine learning model that will learn to predict possibility of precipitation on a day given some factors (Temperature, wind, snowfall, season). made in java wihtout any ml libraries
 
 # Instructions
 
