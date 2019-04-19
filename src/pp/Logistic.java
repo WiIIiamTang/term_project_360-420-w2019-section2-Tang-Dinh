@@ -8,8 +8,7 @@ public class Logistic
 {
 	
 	/** Methods
-	 * 
-	 */
+	 **/
 
 	/////////////////////////////////////////////////////////////////////////////////////
 	//the makeArrays method reads in the dataset file, which should be in a CSV file format
@@ -28,7 +27,6 @@ public class Logistic
 		String inputRow = ""; //this will be the variable that holds the row!
 		String fileLocation = "src/data/dataset.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
-		int col = 0;
 		
 		System.out.println("Reading the dataset.txt and setting up the arrays...");
 	
@@ -139,7 +137,7 @@ public class Logistic
 	
 	
 	////////////////////////////////////////////////////////////////////////
-	/////not the best way of randomizing position of data points but ok
+	/////some way of randomizing position of data points
 	/////takes in a twoD array and a normal array and randomizes the points; ONE WHOLE ROW with its corresponding YLABEL must be swapped with another ROW and its YLABEL
 	/////in the case of the twoD array it will move the rows around, and in the yArray it just shuffles the values around
 	///////////////////////////////////////////////////////////////////////////////////
@@ -341,10 +339,138 @@ public class Logistic
 	}
 	
 	
+	////////////////////////////////////////////////////////////////////////
+	///Computes the sum of the initial linear equation y = theta0 + theta1 * x1 + ...
+	////////////////////////////////////////////////////////////////////////////
+	
+    public static double linearSum(double[][] x, double[] beta, int row)
+    {
+        double sum = 1.;
+
+        sum = beta[0];
+        
+        for (int i = 1; i < x[0].length; i++)
+        {
+            sum += beta[i] * x[row][i];
+        }
+        
+        return sum;
+    }
+	
+    ///////////////////////////////////////////
+    ///Computes the value of the hypothesis func
+    ////////////////////////////////////////////
+    
+    public static double hypothesis(double[][] x, double[] beta, int row)
+    {
+        double sigmoid = 0.;
+
+        sigmoid = 1/(-Math.pow(Math.E,-linearSum(x, beta, row)));
+
+        return sigmoid;
+    }
+    
+    //////////////////////////////////////////
+    ///Computes the value of the costFunction
+    ////////////////////////////////////////////
+    
+    public static double costFunction(double[][] x, double[] y, double[] beta)
+    {
+        int m = x.length;
+        double cost = 0.;
+        double sum = 0.;
+
+        for (int i = 0; i < m; i++)
+        {
+            sum = y[i] * Math.log(hypothesis(x, beta, i)) + (1-y[i])*Math.log(1 - hypothesis(x, beta, i));
+        }
+
+        cost= -1/m * sum;
+
+        return cost;
+    }
+    
+    //////////////////////////////////////////////
+    ///Computes the value of the partial derivative
+    /////////////////////////////////////////////////
+    
+    public static double gradient(double[][] x, double[] y, double[] beta, int betaNum)
+    {
+        double sum = 0.;
+        double m = x.length;
+
+      
+        for(int i =0; i < m; i++)
+        {
+            sum += hypothesis(x, beta, i) - y[i];
+            
+            if(betaNum != 0)
+            {
+            	return (1/m) * sum;
+            }
+            else
+            {
+            	sum *= x[i][betaNum];
+            }
+            
+            
+        }
+
+        return  1/m * sum;
+    }
+    
+    ////////////////////////////////////////////
+    ///Performs the gradient descent method
+    ///and returns the theta array containing 
+    ///the optimal parameters
+    /////////////////////////////////////////////
+    
+    public static void gradientDescent(double[][]x, double[] y, double[] beta)
+    {
+        double alpha = 0.0001;
+        double[] betaNew = new double[beta.length];
+        double difference[] = new double[beta.length];
+        double tolerance = 0.001;
+        int iterations = 0;
+        boolean checkDifference = true;
+
+        while (checkDifference)
+        {
+
+            for(int i = 0; i < beta.length; i++)
+            {
+               betaNew[i] -= alpha * gradient(x, y, beta, i);
+               difference[i] = Math.abs(betaNew[i] - beta[i]);
+               beta[i] = betaNew[i];
+            }
+
+           for(int i = 0; i < difference.length; i++)
+           {
+                if (difference[i]>tolerance)
+                {
+                    break;
+                }
+            checkDifference = false;
+           }
+           
+           if(iterations % 50 == 0)
+           {
+        	   System.out.println("Cost at " + costFunction(x, y, beta));
+           }
+        }
+        
+    }
+	
+	
 	
 	
 	
 	/**Main
+	 * 
+	 * Note: Before starting the program a CSV file with the name dataset.txt should be in the right place
+	 * For now the number of rows and columns needs to be input manually; CHANGE rows AND col 
+	 * If the dataset changes. Excel can show the number of rows.
+	 * One "row" corresponds to one data point (like one day), the "columns" hold the feature variable data(temp, wind speed, snow,etc.)
 	**/
 	
 	public static void main(String [] args)
@@ -355,9 +481,9 @@ public class Logistic
 		
 		//Creating the arrays to hold the data points
 		//x holds the feature variables
-		//y holds the labels: 0 or 1
-		int rows = 12505;
-		int columns = 7;
+		//y holds the labels
+		int rows = 12505; // <<check if good
+		int columns = 7; // <<check if good
 		double[][] xArray = new double[rows][columns];
 		double[] yArray = new double[rows];
 		
@@ -366,14 +492,10 @@ public class Logistic
 		makeArrays(xArray, yArray);
 		makeYLabels(yArray);
 		shuffleData(xArray, yArray);
-		
-		//standardize some data columns if u want (try with/without this method)
-		convertToZScore(xArray, 0);
-		convertToZScore(xArray, 1); //maybe TMAX, TMIN, wind speed, and snowfall?
-		convertToZScore(xArray, 2);
+
 		
 		//Creating the test set and training set
-		double trainingSplitPercent = 0.80; //modify how much is training/test
+		double trainingSplitPercent = 0.70; //modify how much is training/test
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
@@ -392,6 +514,33 @@ public class Logistic
 		
 		//print2DArray(xArray); //test print
 		
+		
+		//standardize some data columns if u want (try with/without this method; min-max or zscore)
+		convertToZScore(xTrainArray, 0);
+		convertToZScore(xTrainArray, 1);
+		convertToZScore(xTrainArray, 2);
+		
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////
+		///////////Logistic Regression//////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
+		double [] beta = new double[xTrainArray[0].length + 1];
+		
+		//Do gradient Descent
+		System.out.println("Initial cost at " + costFunction(xTrainArray, yTrainArray, beta));
+		gradientDescent(xTrainArray, yTrainArray, beta);
+		
+		System.out.println("Optimal coefficients found at ");
+		for (double i: beta)
+		{
+			System.out.println(i);
+		}
+		
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////
+		///////////Model Evaluation//////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 	}//end main
 
