@@ -1,10 +1,10 @@
 public class Functions {
     public static double hypothesis(double[][] x, double[] beta, int row){
-        double sigma = 0.;
+        double sigmoid = 0.;
 
-        sigma = 1/(-Math.pow(Math.E,-linearSum(x, beta, row)));
+        sigmoid = 1/(-Math.pow(Math.E,-linearSum(x, beta, row)));
 
-        return sigma;
+        return sigmoid;
     }
 
     public static double linearSum(double[][] x, double[] beta, int row){
