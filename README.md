@@ -6,14 +6,9 @@ making a machine learning model that will learn to predict possibility of precip
 
 # Instructions
 
-our question asks if a linear regression model would be appropriate to model something like this in weather, so we made one from scratch to see
+our question asks if a linear regression model would be appropriate to model something like this in weather
 
-to start the program, compile and run the PredictPrecipitation class.
 If you want to change the dataset, you have to replace the dataset.txt file in src/data/dataset.txt
 
 
 a term project by William Tang and Jason Dinh
-
-
-More info here:
-https://drive.google.com/open?id=1VLX5l3xqehr5EhiEzan4DMfQ6oI7C8IUF8C6Im5Mkeo
