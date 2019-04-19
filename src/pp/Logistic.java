@@ -390,7 +390,7 @@ public class Logistic
 		System.out.println("yTrainArray has " + yTrainArray.length + " rows; yTrainArray has " + yTestArray.length + " rows");
 		//Done creating the test set and training set.
 		
-		//print2DArray(xArray); //test printsldfkja;slkdjfl;sak
+		//print2DArray(xArray); //test print
 		
 		
 	}//end main
