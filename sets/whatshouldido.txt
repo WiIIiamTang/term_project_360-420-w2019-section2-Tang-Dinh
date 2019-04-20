@@ -1,4 +1,0 @@
-dataset.txt is the csv file to read into the program. DO NOT CHANGE THE LOCATION NOR THE NAME OF THIS FILE.
-
-Replace the dataset.txt by any csv file to change what the dataset is, or make your own.
-Make sure the #col and #rows are good in the code - Array sizes should be changed accordingly in main class
