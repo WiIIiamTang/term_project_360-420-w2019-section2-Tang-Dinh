@@ -2,7 +2,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
-public class Logistic
+//This predicts for wine type 2(0) and type 3(1).
+
+public class LogisticWine2
 {
 
 	/** Methods
@@ -23,7 +25,7 @@ public class Logistic
 		//Create other variables
 		Scanner scanIn = null;
 		String inputRow = ""; //this will be the variable that holds the row!
-		String fileLocation = "data/dataset.txt"; //<<INSERT FILE LOCATION HERE
+		String fileLocation = "data/dataset_wine2.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 
 		System.out.println("Reading the dataset.txt and setting up the arrays...");
@@ -447,7 +449,7 @@ public class Logistic
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.00001;
+        double alpha = 0.0001;
         double[] betaNew = new double[beta.length];
         double difference[] = new double[beta.length];
         double tolerance = 0.00000001;
@@ -494,7 +496,7 @@ public class Logistic
 
 		public static void assignRandom(double[]array)
 		{
-			double max = 0.5;
+			double max = 0.01;
 			double min = 0.;
 			double rollRange = (max - min);
 			double roll = 0;
@@ -584,7 +586,7 @@ public class Logistic
 		//Creating the arrays to hold the data points
 		//x holds the feature variables
 		//y holds the labels
-		int rows = 130; // <<check if good
+		int rows = 119; // <<check if good
 		int columns = 13; // <<check if good
 		double[][] xArray = new double[rows][columns];
 		double[] yArray = new double[rows];
@@ -629,8 +631,8 @@ public class Logistic
 
 
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
-		double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
-		//assignRandom(beta);
+		double [] beta = new double[xTrainArray[0].length];
+		assignRandom(beta);
 		for (double i: beta)
 		{
 			System.out.println(i);
