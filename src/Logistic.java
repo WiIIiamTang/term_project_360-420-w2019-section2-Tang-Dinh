@@ -1,5 +1,3 @@
-package pp;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
@@ -25,7 +23,7 @@ public class Logistic
 		//Create other variables
 		Scanner scanIn = null;
 		String inputRow = ""; //this will be the variable that holds the row!
-		String fileLocation = "src/data/dataset.txt"; //<<INSERT FILE LOCATION HERE
+		String fileLocation = "data/dataset.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 		
 		System.out.println("Reading the dataset.txt and setting up the arrays...");
@@ -439,7 +437,7 @@ public class Logistic
 
             for(int i = 0; i < beta.length; i++)
             {
-               betaNew[i] -= alpha * gradient(x, y, beta, i);
+               betaNew[i] = beta[i] - alpha * gradient(x, y, beta, i);
                difference[i] = Math.abs(betaNew[i] - beta[i]);
                beta[i] = betaNew[i];
             }
@@ -492,10 +490,10 @@ public class Logistic
 		makeArrays(xArray, yArray);
 		makeYLabels(yArray);
 		shuffleData(xArray, yArray);
-
+		
 		
 		//Creating the test set and training set
-		double trainingSplitPercent = 0.70; //modify how much is training/test
+		double trainingSplitPercent = 0.80; //modify how much is training/test
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
@@ -509,12 +507,13 @@ public class Logistic
 		dataSplitNormal(yTrainArray, yArray, (yArray.length), splitIndex);
 		System.out.println ("Done.");
 		System.out.println("xTrainArray has " + xTrainArray.length + " rows; xTestArray has " + xTestArray.length + " rows");
-		System.out.println("yTrainArray has " + yTrainArray.length + " rows; yTrainArray has " + yTestArray.length + " rows");
+		System.out.println("yTrainArray has " + yTrainArray.length + " rows; yTestArray has " + yTestArray.length + " rows");
 		//Done creating the test set and training set.
 		
-		//print2DArray(xArray); //test print
+		printArray(yArray); //test print
 		
 		
+		/*
 		//standardize some data columns if u want (try with/without this method; min-max or zscore)
 		convertToZScore(xTrainArray, 0);
 		convertToZScore(xTrainArray, 1);
@@ -541,7 +540,7 @@ public class Logistic
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////Model Evaluation//////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+		**/
 	}//end main
 
 	
