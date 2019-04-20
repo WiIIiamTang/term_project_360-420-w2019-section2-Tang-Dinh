@@ -233,18 +233,25 @@ public class Logistic
 	/////Standardize data - just taking the z-score
 	/////CONVERTS ONE COLUMN INTO Z-SCORES
 	/////////////////////////////////////////////////////////////////////////////
-	public static void convertToZScore(double[][]xArray, int col)
+	public static void convertToZScore(double[][]xArray, double[][]xTestArray, int col)
 	{
-		double zScore = 0;
+		double zScore1 = 0;
+		double zScore2 = 0;
 		double mean = computeMean(xArray, col);
 		double sd = computeSD(xArray, col);
 
 		System.out.println ("Converting column " + col + " to Z scores...");
 		for (int i = 0; i < xArray.length; i++)
 		{
-			zScore = ((xArray[i][col] - mean ) / sd);
-			xArray[i][col] = zScore;
+			zScore1 = ((xArray[i][col] - mean ) / sd);
+			xArray[i][col] = zScore1;
 		}
+		for (int i = 0; i < xTestArray.length; i++)
+		{
+			zScore2 = ((xTestArray[i][col] - mean) / sd);
+			xTestArray[i][col] = zScore2;
+		}
+
 
 
 		System.out.println ("Done converting column.");
@@ -310,8 +317,7 @@ public class Logistic
 
 	////////////////////////////////////////////////////////
 	//Min-Max normalization; we should test with this way
-	//of normalizing too because i dont think temperature
-	//is normally distributed...
+	//of normalizing too
 	///////////////////////////////////////////////////
 
 	public static void minMaxNormal(double[][]x, int col)
@@ -441,14 +447,14 @@ public class Logistic
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.001;
+        double alpha = 0.00001;
         double[] betaNew = new double[beta.length];
         double difference[] = new double[beta.length];
-        double tolerance = 0.000001;
+        double tolerance = 0.00000001;
         double iterations = 0;
         boolean checkDifference = true;
 
-        while (checkDifference)
+        while (iterations < 1000000)
         {
 
             for(int i = 0; i < beta.length; i++)
@@ -461,7 +467,7 @@ public class Logistic
 						{
 							beta[i] = betaNew[i];
 						}
-
+						/*
            for(int i = 0; i < difference.length; i++)
            {
                 if (difference[i] > tolerance)
@@ -469,30 +475,27 @@ public class Logistic
                     break;
                 }
             checkDifference = false;
-           }
+					} **/
 
 					 //Print cost function every few iterations
-           if(iterations % 10000 == 0)
+           if(iterations % 100000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
            }
 					 iterations++;
-					 if (iterations >= 50000)
-					 {
-						 break;
-					 }
+
         }
 
     }
 
 		////////////////////////////////////////////////////////////////
-		///assign random values from 0 - 0.05 to each position of array
+		///assign random values from 0 - 0.5 to each position of array
 		////////////////////////////////////////////////////////////////////
 
 		public static void assignRandom(double[]array)
 		{
-			double max = 0.02;
-			double min = 0;
+			double max = 0.5;
+			double min = 0.;
 			double rollRange = (max - min);
 			double roll = 0;
 
@@ -506,7 +509,7 @@ public class Logistic
 		///////////////////////////////////////////////////
 		//runs the hypothesis function through the beta
 		//array; if the probability is higher than 0.5
-		//it will predict 1.0, precipitation
+		//it will predict 1.0
 		///////////////////////////////////////////////////
 
 		public static void computePredictions(double[][]xArray, double[]predicted, double[]beta)
@@ -533,13 +536,13 @@ public class Logistic
 		///Tests the model against the test set.
 		/////////////////////////////////////////////////////////////
 
-	public static double getAccuracy(double [][] xTest, double[]yLabels, double[]predictedYLabels, double[]beta)
+	public static double getAccuracy(double[]yLabels, double[]predictedYLabels, double[]beta)
 	{
 		double good = 0;
 		double bad = 0;
 		double accuracy = 0;
 
-		for (int i = 0; i < yLabels.length; i++)
+		for (int i = 0; i < predictedYLabels.length; i++)
 		{
 			if (yLabels[i] == predictedYLabels[i])
 			{
@@ -549,7 +552,7 @@ public class Logistic
 			else
 			{
 				bad++;
-				System.out.println(yLabels[i] + "  bad   "  + predictedYLabels[i]);
+				System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
 			}
 		}
 
@@ -581,8 +584,8 @@ public class Logistic
 		//Creating the arrays to hold the data points
 		//x holds the feature variables
 		//y holds the labels
-		int rows = 8302; // <<check if good
-		int columns = 4; // <<check if good
+		int rows = 130; // <<check if good
+		int columns = 13; // <<check if good
 		double[][] xArray = new double[rows][columns];
 		double[] yArray = new double[rows];
 
@@ -594,7 +597,7 @@ public class Logistic
 
 
 		//Creating the test set and training set
-		double trainingSplitPercent = 0.70; //modify how much is training/test
+		double trainingSplitPercent = 0.80; //modify how much is training/test
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
@@ -613,10 +616,11 @@ public class Logistic
 
 
 		//standardize some data columns if u want (try with/without this method; min-max or zscore)
-		convertToZScore(xTrainArray, 0);
-		convertToZScore(xTrainArray, 1);
-		convertToZScore(xTrainArray, 2);
-		convertToZScore(xTrainArray, 3);
+		for(int i = 0; i<xTrainArray[0].length; i++)
+		{
+		convertToZScore(xTrainArray, xTestArray, i);
+		}
+
 		//printAllArrays(xTrainArray,yTrainArray); //test print
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -625,8 +629,8 @@ public class Logistic
 
 
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
-		double [] beta = new double[xTrainArray[0].length + 1];
-		assignRandom(beta);
+		double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
+		//assignRandom(beta);
 		for (double i: beta)
 		{
 			System.out.println(i);
@@ -648,20 +652,26 @@ public class Logistic
 		///////////Model Evaluation//////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		//Training Set
 		//Create the prediction array that holds the predictions from the test set. Use xTestArray.
-		double[]predictions = new double [xTestArray.length];
-
-		//Normalize the xTestArray data with the values from xTrainArray.
-		convertToZScoreTest(xTrainArray, xTestArray, 0);
-		convertToZScoreTest(xTrainArray, xTestArray, 1);
-		convertToZScoreTest(xTrainArray, xTestArray, 2);
-		convertToZScoreTest(xTrainArray, xTestArray, 3);
+		double[]predictions = new double [xTrainArray.length];
 
 		//get predictions
-		computePredictions(xTestArray, predictions, beta);
+		computePredictions(xTrainArray, predictions, beta);
 
-		//Get the accuracy of the model on the y Test set
-		System.out.println("Has a " + getAccuracy(xTestArray, yTestArray, predictions, beta) + " percent.");
+		//Get the accuracy of the model
+		System.out.println("Has a " + getAccuracy(yTrainArray, predictions, beta) + " percent.");
+
+
+		//Test Set
+		//Create the prediction array that holds the predictions from the test set. Use xTestArray.
+		double[]predictions2 = new double [xTestArray.length];
+
+		//get predictions
+		computePredictions(xTestArray, predictions2, beta);
+
+		//Get the accuracy of the model
+		System.out.println("Has a " + getAccuracy(yTestArray, predictions2, beta) + " percent.");
 
 
 	}//end main
