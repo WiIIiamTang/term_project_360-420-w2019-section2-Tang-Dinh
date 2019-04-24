@@ -25,7 +25,7 @@ public class LogisticWine1
 		//Create other variables
 		Scanner scanIn = null;
 		String inputRow = ""; //this will be the variable that holds the row!
-		String fileLocation = "data/dataset_wine1.txt"; //<<INSERT FILE LOCATION HERE
+		String fileLocation = "dataset/dataset_wine1.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 
 		System.out.println("Reading the dataset.txt and setting up the arrays...");
