@@ -2,9 +2,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
-//This predicts for wine type 1(1) and type 2(0).
+//This predicts for wine type 2(0) and type 3(1).
 
-public class LogisticWine1
+public class LogisticWine2
 {
 
 	/** Methods
@@ -25,7 +25,7 @@ public class LogisticWine1
 		//Create other variables
 		Scanner scanIn = null;
 		String inputRow = ""; //this will be the variable that holds the row!
-		String fileLocation = "dataset/dataset_wine1.txt"; //<<INSERT FILE LOCATION HERE
+		String fileLocation = "dataset/dataset_wine2.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 
 		System.out.println("Reading the dataset.txt and setting up the arrays...");
@@ -449,14 +449,14 @@ public class LogisticWine1
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.00001;
+        double alpha = 0.001;
         double[] betaNew = new double[beta.length];
         double difference[] = new double[beta.length];
-        double tolerance = 0.00000001;
+        double tolerance = 0.0000001;
         double iterations = 0;
         boolean checkDifference = true;
 
-        while (iterations < 1000000)
+        while (iterations < 60000)
         {
 
             for(int i = 0; i < beta.length; i++)
@@ -469,7 +469,7 @@ public class LogisticWine1
 						{
 							beta[i] = betaNew[i];
 						}
-						/*
+/*
            for(int i = 0; i < difference.length; i++)
            {
                 if (difference[i] > tolerance)
@@ -480,7 +480,7 @@ public class LogisticWine1
 					} **/
 
 					 //Print cost function every few iterations
-           if(iterations % 100000 == 0)
+           if(iterations % 5000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
            }
@@ -496,7 +496,7 @@ public class LogisticWine1
 
 		public static void assignRandom(double[]array)
 		{
-			double max = 0.5;
+			double max = 0.02;
 			double min = 0.;
 			double rollRange = (max - min);
 			double roll = 0;
@@ -586,7 +586,7 @@ public class LogisticWine1
 		//Creating the arrays to hold the data points
 		//x holds the feature variables
 		//y holds the labels
-		int rows = 130; // <<check if good
+		int rows = 119; // <<check if good
 		int columns = 13; // <<check if good
 		double[][] xArray = new double[rows][columns];
 		double[] yArray = new double[rows];
@@ -599,7 +599,7 @@ public class LogisticWine1
 
 
 		//Creating the test set and training set
-		double trainingSplitPercent = 0.80; //modify how much is training/test
+		double trainingSplitPercent = 0.70; //modify how much is training/test
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
@@ -631,7 +631,7 @@ public class LogisticWine1
 
 
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
-		double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
+		double [] beta = {0.011596,0.0000752,0.0160791,0.009643381,0.0107545390,0.0145858468,0.002271765,0.01792779,0.00381291,0.009225,0.0095177,0.0198228,0.01918205};
 		//assignRandom(beta);
 		for (double i: beta)
 		{
