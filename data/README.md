@@ -8,4 +8,4 @@ so that we could do a binary logistic regression.
 For the [breast cancer](https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(original)) data, we had to remove some data points 
 that had missing values in them (indicated with a "?" symbol).
 
-The modified datasets can be found [here](term_project_360-420-w2019-section2-Tang-Dinh/src/dataset/).
+The modified datasets can be found [here](/src/dataset/).
