@@ -372,11 +372,11 @@ public class LogisticWine1
 
     public static double linearSum(double[][] x, double[] beta, int row)
     {
-        double sum = 1.;
+        double sum = 0.;
 
-        sum = beta[0];
+        sum = sum + beta[0];
 
-        for (int i = 1; i < x[0].length; i++)
+        for (int i = 1; i < beta.length; i++)
         {
             sum = sum + (beta[i] * x[row][i-1]);
         }
@@ -449,16 +449,16 @@ public class LogisticWine1
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.01;
+        double alpha = 0.00001;
         double[] betaNew = new double[beta.length];
-        double difference[] = new double[beta.length];
-        double tolerance = 0.000000000000001;
+        //double difference[] = new double[beta.length];
+        //double tolerance = 0.000000000000001;
         double iterations = 0;
-        boolean checkDifference = true;
+        //boolean checkDifference = true;
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 20000)
+        while (iterations < 1500000)
         {
 					  currentCost = costFunction(x,y,beta);
 
@@ -468,9 +468,20 @@ public class LogisticWine1
 							 //difference[i] = Math.abs(beta[i] - betaNew[i]);
 						}
 
-						for(int i = 0; i < beta.length;i++)
+						if (currentCost < costFunction(x,y,betaNew))
 						{
-							beta[i] = betaNew[i];
+							//alpha = alpha * 0.1;
+							//System.out.println(alpha);
+							break;
+						}
+						else
+						{
+
+							for(int i = 0; i < beta.length;i++)
+							{
+								beta[i] = betaNew[i];
+							}
+
 						}
 
 /*
@@ -486,7 +497,7 @@ public class LogisticWine1
 						//if (currentCost < costFunction(x,y,beta)) break;
 
 					 //Print cost function every few iterations
-           if(iterations % 100 == 0)
+           if(iterations % 10000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
 						 //System.out.println(gradient(x,y,beta,0));
@@ -494,16 +505,17 @@ public class LogisticWine1
 					 iterations++;
 
         }
+				System.out.println("The loop was terminated. Total iterations: " + iterations + "\n");
 
     }
 
 		////////////////////////////////////////////////////////////////
-		///assign random values from 0 - 0.5 to each position of array
+		///assign random values from 0 - 1.0 to each position of array
 		////////////////////////////////////////////////////////////////////
 
 		public static void assignRandom(double[]array)
 		{
-			double max = 0.5;
+			double max = 1.0;
 			double min = 0.;
 			double rollRange = (max - min);
 			double roll = 0;
@@ -527,7 +539,7 @@ public class LogisticWine1
 
 			for(int i = 0; i<predicted.length; i++)
 			{
-				System.out.println(hypothesis(xArray, beta, i));
+				//System.out.println(hypothesis(xArray, beta, i));
 				if(hypothesis(xArray, beta, i) > threshold)
 				{
 					predicted[i] = 1.0;
@@ -556,12 +568,12 @@ public class LogisticWine1
 			if (yLabels[i] == predictedYLabels[i])
 			{
 				good++;
-				System.out.println(yLabels[i] + "  good   "  + predictedYLabels[i]);
+				//System.out.println(yLabels[i] + "  good   "  + predictedYLabels[i]);
 			}
 			else
 			{
 				bad++;
-				System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
+				//System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
 			}
 		}
 
@@ -624,7 +636,7 @@ public class LogisticWine1
 		//Done creating the test set and training set.
 
 
-		//standardize some data columns if u want (try with/without this method; min-max or zscore)
+		//standardize some data columns (try with/without this method; min-max or zscore)
 		for(int i = 0; i<xTrainArray[0].length; i++)
 		{
 		convertToZScore(xTrainArray, xTestArray, i);
@@ -639,12 +651,8 @@ public class LogisticWine1
 
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
 		//double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
-		double [] beta = new double[xTrainArray[0].length];
-		//assignRandom(beta);
-		for (double i: beta)
-		{
-			System.out.println(i);
-		}
+		double [] beta = new double[xTrainArray[0].length+1];
+		assignRandom(beta);
 
 		//Do gradient Descent
 		System.out.println("Initial cost at " + costFunction(xTrainArray, yTrainArray, beta));
@@ -670,7 +678,7 @@ public class LogisticWine1
 		computePredictions(xTrainArray, predictions, beta);
 
 		//Get the accuracy of the model
-		System.out.println("Has a " + getAccuracy(yTrainArray, predictions, beta) + " percent.");
+		System.out.println("\n\n TRAINING Has a " + getAccuracy(yTrainArray, predictions, beta) + " percent.");
 
 
 		//Test Set
@@ -681,7 +689,7 @@ public class LogisticWine1
 		computePredictions(xTestArray, predictions2, beta);
 
 		//Get the accuracy of the model
-		System.out.println("Has a " + getAccuracy(yTestArray, predictions2, beta) + " percent.");
+		System.out.println("\n TEST Has a " + getAccuracy(yTestArray, predictions2, beta) + " percent.");
 
 	}//end main
 

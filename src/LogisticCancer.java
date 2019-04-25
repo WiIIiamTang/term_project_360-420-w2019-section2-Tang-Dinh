@@ -372,11 +372,11 @@ public class LogisticCancer
 
     public static double linearSum(double[][] x, double[] beta, int row)
     {
-        double sum = 1.;
+        double sum = 0.;
 
-        sum = beta[0];
+        sum = sum + beta[0];
 
-        for (int i = 1; i < x[0].length; i++)
+        for (int i = 1; i < beta.length; i++)
         {
             sum = sum + (beta[i] * x[row][i-1]);
         }
@@ -507,6 +507,7 @@ public class LogisticCancer
 					 iterations++;
 
         }
+				System.out.println("Loop finished, iterations: " + iterations);
 
     }
 
@@ -652,12 +653,8 @@ public class LogisticCancer
 
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
 		//double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
-		double [] beta = new double[xTrainArray[0].length];
+		double [] beta = new double[xTrainArray[0].length+1];
 		assignRandom(beta);
-		for (double i: beta)
-		{
-			System.out.println(i);
-		}
 
 		//Do gradient Descent
 		System.out.println("Initial cost at " + costFunction(xTrainArray, yTrainArray, beta));
