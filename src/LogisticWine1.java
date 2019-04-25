@@ -458,46 +458,38 @@ public class LogisticWine1
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 150000)
+        while (iterations < 20000)
         {
+					  currentCost = costFunction(x,y,beta);
 
 						for(int i = 0; i < beta.length; i++)
 						{
 							 betaNew[i] = beta[i] - alpha * gradient(x, y, beta, i);
-							 difference[i] = Math.abs(beta[i] - betaNew[i]);
+							 //difference[i] = Math.abs(beta[i] - betaNew[i]);
 						}
 
-						currentCost = costFunction(x,y,betaNew);
-
-						if (currentCost < bestCost)
+						for(int i = 0; i < beta.length;i++)
 						{
-							for(int i = 0; i < beta.length;i++)
-							{
-								beta[i] = betaNew[i];
-							}
+							beta[i] = betaNew[i];
+						}
 
-							bestCost = currentCost;
 /*
-		           for(int i = 0; i < difference.length; i++)
-		           {
-		                if (difference[i] > tolerance)
-		                {
-		                    break;
-		                }
-		            checkDifference = false;
-							} */
-				  	}
-						else
-						{
-							alpha = alpha * 0.80;
-							//System.out.println("The alpha is at " + alpha);
-						}
+	           for(int i = 0; i < difference.length; i++)
+	           {
+	                if (difference[i] > tolerance)
+	                {
+	                    break;
+	                }
+	            checkDifference = false;
+						} */
 
+						//if (currentCost < costFunction(x,y,beta)) break;
 
 					 //Print cost function every few iterations
-           if(iterations % 1000 == 0)
+           if(iterations % 100 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
+						 //System.out.println(gradient(x,y,beta,0));
            }
 					 iterations++;
 
@@ -690,7 +682,6 @@ public class LogisticWine1
 
 		//Get the accuracy of the model
 		System.out.println("Has a " + getAccuracy(yTestArray, predictions2, beta) + " percent.");
-
 
 	}//end main
 
