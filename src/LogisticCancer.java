@@ -451,14 +451,14 @@ public class LogisticCancer
     {
         double alpha = 0.001;
         double[] betaNew = new double[beta.length];
-        double difference[] = new double[beta.length];
-        double tolerance = 0.000000000000001;
+        //double difference[] = new double[beta.length];
+        //double tolerance = 0.000000000000001;
         double iterations = 0;
-        boolean checkDifference = true;
+        //boolean checkDifference = true;
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 100000)
+        while (iterations < 200000)
         {
 					  currentCost = costFunction(x,y,beta);
 
@@ -499,7 +499,7 @@ public class LogisticCancer
 
 
 					 //Print cost function every few iterations
-           if(iterations % 1000 == 0)
+           if(iterations % 5000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
 						 //System.out.println(gradient(x,y,beta,0));
