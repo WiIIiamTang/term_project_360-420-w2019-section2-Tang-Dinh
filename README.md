@@ -3,9 +3,8 @@
 
 **Term Project: Logistic Regression in Wine Classification**
 
-Dinh, Jason
+Dinh, Jason and Tang, William
 
-Tang, William
 
 Section: 02
 
