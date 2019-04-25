@@ -455,13 +455,14 @@ public class LogisticWine1
         double tolerance = 0.00000001;
         double iterations = 0;
         boolean checkDifference = true;
-				double bestCost = costFunction(x,y,beta);
+				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
         while (iterations < 300000)
         {
+						currentCost = costFunction(x,y,beta);
 
-						if (currentCost <= bestCost)
+						if (currentCost < bestCost)
 						{
 	            for(int i = 0; i < beta.length; i++)
 	            {
