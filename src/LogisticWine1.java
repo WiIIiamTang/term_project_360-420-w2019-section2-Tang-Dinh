@@ -449,38 +449,50 @@ public class LogisticWine1
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.00001;
+        double alpha = 0.0001;
         double[] betaNew = new double[beta.length];
         double difference[] = new double[beta.length];
         double tolerance = 0.00000001;
         double iterations = 0;
         boolean checkDifference = true;
+				double bestCost = costFunction(x,y,beta);
+				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 1000000)
+        while (iterations < 300000)
         {
 
-            for(int i = 0; i < beta.length; i++)
-            {
-               betaNew[i] = beta[i] - alpha * gradient(x, y, beta, i);
-               difference[i] = Math.abs(beta[i] - betaNew[i]);
-            }
-
-						for(int i = 0; i < beta.length;i++)
+						if (currentCost <= bestCost)
 						{
-							beta[i] = betaNew[i];
+	            for(int i = 0; i < beta.length; i++)
+	            {
+	               betaNew[i] = beta[i] - alpha * gradient(x, y, beta, i);
+	               difference[i] = Math.abs(beta[i] - betaNew[i]);
+	            }
+
+							for(int i = 0; i < beta.length;i++)
+							{
+								beta[i] = betaNew[i];
+							}
+
+							bestCost = currentCost;
+							/*
+	           for(int i = 0; i < difference.length; i++)
+	           {
+	                if (difference[i] > tolerance)
+	                {
+	                    break;
+	                }
+	            checkDifference = false;
+						 } **/
+				  	}
+						else
+						{
+							alpha = alpha * 0.99;
 						}
-						/*
-           for(int i = 0; i < difference.length; i++)
-           {
-                if (difference[i] > tolerance)
-                {
-                    break;
-                }
-            checkDifference = false;
-					} **/
+
 
 					 //Print cost function every few iterations
-           if(iterations % 100000 == 0)
+           if(iterations % 10000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
            }
