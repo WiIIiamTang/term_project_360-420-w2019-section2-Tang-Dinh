@@ -449,51 +449,53 @@ public class LogisticWine1
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.0001;
+        double alpha = 0.01;
         double[] betaNew = new double[beta.length];
         double difference[] = new double[beta.length];
-        double tolerance = 0.00000001;
+        double tolerance = 0.000000000000001;
         double iterations = 0;
         boolean checkDifference = true;
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 300000)
+        while (iterations < 150000)
         {
-						currentCost = costFunction(x,y,beta);
+
+						for(int i = 0; i < beta.length; i++)
+						{
+							 betaNew[i] = beta[i] - alpha * gradient(x, y, beta, i);
+							 difference[i] = Math.abs(beta[i] - betaNew[i]);
+						}
+
+						currentCost = costFunction(x,y,betaNew);
 
 						if (currentCost < bestCost)
 						{
-	            for(int i = 0; i < beta.length; i++)
-	            {
-	               betaNew[i] = beta[i] - alpha * gradient(x, y, beta, i);
-	               difference[i] = Math.abs(beta[i] - betaNew[i]);
-	            }
-
 							for(int i = 0; i < beta.length;i++)
 							{
 								beta[i] = betaNew[i];
 							}
 
 							bestCost = currentCost;
-							/*
-	           for(int i = 0; i < difference.length; i++)
-	           {
-	                if (difference[i] > tolerance)
-	                {
-	                    break;
-	                }
-	            checkDifference = false;
-						 } **/
+/*
+		           for(int i = 0; i < difference.length; i++)
+		           {
+		                if (difference[i] > tolerance)
+		                {
+		                    break;
+		                }
+		            checkDifference = false;
+							} */
 				  	}
 						else
 						{
-							alpha = alpha * 0.99;
+							alpha = alpha * 0.80;
+							//System.out.println("The alpha is at " + alpha);
 						}
 
 
 					 //Print cost function every few iterations
-           if(iterations % 10000 == 0)
+           if(iterations % 1000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
            }
@@ -612,7 +614,7 @@ public class LogisticWine1
 
 
 		//Creating the test set and training set
-		double trainingSplitPercent = 0.80; //modify how much is training/test
+		double trainingSplitPercent = 0.70; //modify how much is training/test
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
@@ -644,7 +646,8 @@ public class LogisticWine1
 
 
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
-		double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
+		//double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
+		double [] beta = new double[xTrainArray[0].length];
 		//assignRandom(beta);
 		for (double i: beta)
 		{
