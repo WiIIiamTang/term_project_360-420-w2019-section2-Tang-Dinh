@@ -120,6 +120,8 @@ wines. This was as simple as comparing the prediction of the trained model with 
 the total number of good answers by the total number of tries. The results are promising so far. From our repeated tests, the accuracy
 of this test case ranges anywhere from 80 to 90 percent on the training set. More importantly, similar results are observed on the test
 set - **about 80 percent accuracy on average.**
+
+
 A very small alpha leads to slow convergence. One run of this test program took ** about 3-4 minutes**, which is quite long. However, 
 one observation that was made during testing was that if we changed the alpha to higher numbers, results could become unpredictable. 
 At times, the cost function would decrease at a very large rate and the model would get an accuracy in the high 90s; in other instances, it would immediately diverge and the resulting accuracy would be in the 40s. Even with small alpha, the cost function does not always decrease. Further testing is needed.
