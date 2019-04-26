@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 //This predicts for wine type 1(1) and type 2(0).
 
-public class LogisticWine1
+public class LogisticCancer
 {
 
 	/** Methods
@@ -25,7 +25,7 @@ public class LogisticWine1
 		//Create other variables
 		Scanner scanIn = null;
 		String inputRow = ""; //this will be the variable that holds the row!
-		String fileLocation = "dataset/dataset_wine1.txt"; //<<INSERT FILE LOCATION HERE
+		String fileLocation = "dataset/breast-cancer-wisconsin-copy.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 
 		System.out.println("Reading the dataset.txt and setting up the arrays...");
@@ -449,7 +449,7 @@ public class LogisticWine1
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.00001;
+        double alpha = 0.001;
         double[] betaNew = new double[beta.length];
         //double difference[] = new double[beta.length];
         //double tolerance = 0.000000000000001;
@@ -458,7 +458,7 @@ public class LogisticWine1
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 1500000)
+        while (iterations < 200000)
         {
 					  currentCost = costFunction(x,y,beta);
 
@@ -484,6 +484,9 @@ public class LogisticWine1
 
 						}
 
+
+
+
 /*
 	           for(int i = 0; i < difference.length; i++)
 	           {
@@ -494,10 +497,9 @@ public class LogisticWine1
 	            checkDifference = false;
 						} */
 
-						//if (currentCost < costFunction(x,y,beta)) break;
 
 					 //Print cost function every few iterations
-           if(iterations % 10000 == 0)
+           if(iterations % 5000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
 						 //System.out.println(gradient(x,y,beta,0));
@@ -505,7 +507,7 @@ public class LogisticWine1
 					 iterations++;
 
         }
-				System.out.println("The loop was terminated. Total iterations: " + iterations + "\n");
+				System.out.println("Loop finished, iterations: " + iterations);
 
     }
 
@@ -605,8 +607,8 @@ public class LogisticWine1
 		//Creating the arrays to hold the data points
 		//x holds the feature variables
 		//y holds the labels
-		int rows = 130; // <<check if good
-		int columns = 13; // <<check if good
+		int rows = 684; // <<check if good
+		int columns = 9; // <<check if good
 		double[][] xArray = new double[rows][columns];
 		double[] yArray = new double[rows];
 
@@ -618,7 +620,7 @@ public class LogisticWine1
 
 
 		//Creating the test set and training set
-		double trainingSplitPercent = 0.70; //modify how much is training/test
+		double trainingSplitPercent = 0.80; //modify how much is training/test
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
@@ -636,7 +638,7 @@ public class LogisticWine1
 		//Done creating the test set and training set.
 
 
-		//standardize some data columns (try with/without this method; min-max or zscore)
+		//standardize some data columns if u want (try with/without this method; min-max or zscore)
 		for(int i = 0; i<xTrainArray[0].length; i++)
 		{
 		convertToZScore(xTrainArray, xTestArray, i);
@@ -678,7 +680,7 @@ public class LogisticWine1
 		computePredictions(xTrainArray, predictions, beta);
 
 		//Get the accuracy of the model
-		System.out.println("\n\n TRAINING Has a " + getAccuracy(yTrainArray, predictions, beta) + " percent.");
+		System.out.println("\n\nTRAINING Has a " + getAccuracy(yTrainArray, predictions, beta) + " percent.");
 
 
 		//Test Set
@@ -689,7 +691,7 @@ public class LogisticWine1
 		computePredictions(xTestArray, predictions2, beta);
 
 		//Get the accuracy of the model
-		System.out.println("\n TEST Has a " + getAccuracy(yTestArray, predictions2, beta) + " percent.");
+		System.out.println("\nTEST Has a " + getAccuracy(yTestArray, predictions2, beta) + " percent.");
 
 	}//end main
 
