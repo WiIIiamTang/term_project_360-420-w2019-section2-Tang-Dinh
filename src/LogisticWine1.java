@@ -618,7 +618,7 @@ public class LogisticWine1
 
 
 		//Creating the test set and training set
-		double trainingSplitPercent = 0.70; //modify how much is training/test
+		double trainingSplitPercent = 0.80; //modify how much is training/test
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
