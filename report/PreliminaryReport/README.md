@@ -13,7 +13,7 @@ Intro to Programming
 
 ## Topic: Wine Classification
 
-*note: the pdf version of this document can be found [here](/PrelimVersionReport.pdf).*
+*note: this is a transcription of the pdf version.*
 
 
 ### Introduction
