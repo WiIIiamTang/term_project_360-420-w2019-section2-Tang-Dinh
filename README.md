@@ -1,9 +1,11 @@
-# logistic regression
-
-binary logistic regression to predict wine type
-
-machine learning model made from scratch that will learn to predict type of wine based on 13 different features
+# 360-420 Intro to Programming
 
 
+**Term Project: Logistic Regression in Wine Classification**
 
-William Tang and Jason Dinh
+Tang, William and Dinh, Jason
+
+
+Section: 02
+
+Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
