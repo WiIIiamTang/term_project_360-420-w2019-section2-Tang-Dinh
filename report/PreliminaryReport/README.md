@@ -13,7 +13,7 @@ Intro to Programming
 
 ## Topic: Wine Classification
 
-*note: this is a transcription of the pdf version.*
+*note: this is an updated version of the pdf version, with minor additions/changes.*
 
 
 ### Introduction
@@ -27,37 +27,41 @@ wine at a time. Validation is done simply by comparing the prediction output of 
 ### Model
 To classify things in supervised learning, we will be using logistic regression. Logistic regression takes the data as an input 
 (in our case, characteristics of the wine) and outputs the appropriate category for that element (type of wine). To simplify things, 
-we deal with binary logistic regression; our program will categorize between two different things at a time only. 
-So the goal in logistic regression is to put things of one type in one category, and things of another type in the other category. 
-It uses a sigmoid function to return a probability value between 0 and 1. Based on some threshold that we decide, that value will be 
-rounded to a 0 or a 1 - these represent the categories, and the program can now make the prediction.
+we deal with binary logistic regression: our code will categorize between two different things at a time only. 
+The goal in logistic regression is to put things of one type in one category, and things of another type in the other category. 
+It uses a sigmoid function to return a probability value between 0 and 1. Based on some threshold that we decide (0.5 is common), that value will be rounded to a 0 or a 1 - these represent the categories, and the program can now make the prediction.
 The sigmoid function is what allows us to do this. It maps any real value into another value in the range (0,1). It is given by:
 
 <img src="https://latex.codecogs.com/svg.latex?{\sigma}(z)&space;=&space;\frac{1}{1&plus;e^{-z}}" title="{\sigma}(z) = \frac{1}{1+e^{-z}}" />
 
-Now, where do the characteristics of the wine come in? We’ll make up some equation that takes a linear combination of the 
+Now, where do the characteristics of the wine come in? First of all, we’ll make up some equation that takes a linear combination of the 
 characteristics, plus a constant. The equation that takes the linear sum of all the feature variables (that are multiplied by some 
 coefficients beta) is given as follows :
 
 <img src="https://latex.codecogs.com/svg.latex?y&space;=&space;{\beta}_{0}&space;&plus;&space;{\beta}_{1}x_{1}&space;&plus;&space;{\beta}_{2}x_{2}&space;&plus;&space;{\beta}_{3}x_{3}&space;&plus;&space;..." title="y = {\beta}_{0} + {\beta}_{1}x_{1} + {\beta}_{2}x_{2} + {\beta}_{3}x_{3} + ..." />
 
-Where the x variables are the numerical values of the characteristics of the wine. In order to get the “prediction”, we’ll run 
+Where the x variables are the numerical values of the characteristics of the wine.
+
+So now we've added all the x values (multiplied by some coefficient) together. In order to get the “prediction”, we’ll run 
 the value of this sum through the sigmoid function.
 
 <img src="https://latex.codecogs.com/svg.latex?h(x)&space;=&space;\frac{1}{1&plus;e^{-({\beta}_{0}&space;&plus;&space;{\beta}_{1}x_{1}&space;&plus;&space;{\beta}_{2}x_{2}&space;&plus;&space;...)}}" title="h(x) = \frac{1}{1+e^{-({\beta}_{0} + {\beta}_{1}x_{1} + {\beta}_{2}x_{2} + ...)}}" />
 
 This is called the hypothesis function. Now we have something that, given a set of input parameters (characteristics of wine), will 
-spit out a number between 0 and 1 and make a prediction on the type. Our goal will be to find the best 0,1,2,...parameters that will
-give the most accurate predictions. 
-To achieve this, we need another function in our model: something that will calculate the error between the prediction the program
-gives and the actual answer. In logistic regression, the mathematical equation of the error J is given as:
+spit out a number between 0 and 1. 
+
+It turns out that this can acutally be a pretty effective classifying things, as long as we have the right coefficients beta! So the next step would be to find a way to get the best beta parameters that will give the most accurate predictions. 
+To achieve this, a logistic regression model has a really useful equation. It's something that will calculate the error between the prediction the program gives and the actual answer.
+
+In logistic regression, the mathematical equation of the error J is given as:
 
 <img src="https://latex.codecogs.com/svg.latex?J&space;=&space;cost(h(x),y)&space;=&space;-\frac{1}{m}\sum_{i=1}^{m}y_{i}log(h(x))&space;&plus;&space;(1-y_{i})log(1-h(x))" title="J = cost(h(x),y) = -\frac{1}{m}\sum_{i=1}^{m}y_{i}log(h(x)) + (1-y_{i})log(1-h(x))" />
 
-Again, the x variables represent the numerical values of the characteristics of the wine, and the y variables indicate the type of 
-wine (turned into 0 or 1). m is the total number of data points. We call this the cost function. In order to find the best parameters
-that give the most accurate predictions, we will have to minimize the error between predictions and real answers, which in turn means 
-minimizing the the function that represents the error - the cost function.
+Where the x variables represent the numerical values of the characteristics of the wine, and the y variables indicate the type of 
+wine (turned into 0 or 1). m is the total number of data points. We call this the cost function. Again, the cost function represents the 
+error/difference between the prediction of the program, and the actual answer. The logarithm is just to make the function smooth and convex - if we didn't use it, the cost function would have a bunch of local minima and the method we describe later wouldn't work at all!
+
+Now, in order to find the best parameters that give the most accurate predictions, the most obvious solution would be to minimize the error between predictions and real answers, which in turn means minimizing the cost function.
 
 In the end, logistic regression will be interested in finding the 0,1,2,... parameters that should give the smallest value for the
 cost function. We describe the method used to achieve this in the following section.
@@ -108,16 +112,10 @@ change much after a certain point, this way could be faster.
 
 <img src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSLaBXWsiiBeu1zfTqPmq8iLXzsaX7IG35gAjtbNRTAyaonVMbvmKgCfkXKAsa0MJCr2SwRC1Env2ru/pubchart?oid=38998274&amp;format=image"/>
 
-This is **one example run** of our program (Training set accuracy 88%, Test set 84%) that tests wine 1 vs. wine 2; the cost function seems 
-to consistently decrease as the beta coefficients are updated. The cost function does not seem to decrease significantly past 1 million
-iterations (and in some cases even increased). What this graph tells us is that the error between the predictions the program will give
-and the actual answers is being reduced, which is a good thing. Notice that the cost function does not decrease by a large amount; at 
-the end of the loop it had decreased to about 0.31 from 0.35. We are still working on this issue. In any case, the logistic regression still seemed to work: if you had initialized the betas and instantly tried to make it predict the wine type, its performance would be much worse than trained model.
-Which brings us to the next part, validation. After our prototype was built, we had to test it and see if it correctly categorizes the 
+This is **one example run** of our program (Training set accuracy 88%, Test set 84%) that tests wine 1 vs. wine 2; the cost function seems to consistently decrease as the beta coefficients are updated. The cost function does not seem to decrease significantly past 1 million iterations (and in some cases even increased). What this graph tells us is that the error between the predictions the program will give and the actual answers is being reduced, which is a good thing. Notice that the cost function does not decrease by a large amount; at the end of the loop it had decreased to about 0.31 from 0.35. We are still working on this issue. In any case, the logistic regression still seemed to work: if you had initialized the betas and instantly tried to make it predict the wine type, its performance would be much worse than trained model.
+This brings us to the next part, validation. After our prototype was built, we had to test it and see if it correctly categorizes the 
 wines. This was as simple as comparing the prediction of the trained model with the actual answers, one by one. At the end, we divided 
-the total number of good answers by the total number of tries. From our repeated tests, the accuracy
-of this test case ranges anywhere from 70 to 90 percent on the training set. More importantly, similar results are observed on the test
-set - **about 70-90 percent accuracy.** What is strange about this is how varied the accuracy seems to be, an issue that we are still working on.
+the total number of good answers by the total number of tries. From our repeated tests, the accuracy of this test case ranges anywhere from 70 to 90 percent on the training set. More importantly, similar results are observed on the test set - **about 70-90 percent accuracy.** What is strange about this is how varied the accuracy seems to be, an issue that we are still working on.
 
 
 A very small alpha leads to slow convergence. One run of this test program took **about 3 minutes**, which is quite long. However, 
@@ -127,6 +125,8 @@ At times, the cost function would decrease at a very large rate and the model wo
 In summary, we managed to implement a working logistic regression model in java, but there is still some tweaking to do and issues to
 fix. The accuracy results, for whatever reason, are very varied. We should also look into other ways of evaluating the performance of our logistic regression, such as the effectiveness of each
 feature variable.
+
+
 
 ### References
 
