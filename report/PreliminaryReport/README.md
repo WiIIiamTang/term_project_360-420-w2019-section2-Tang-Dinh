@@ -13,7 +13,7 @@ Intro to Programming
 
 ## Topic: Wine Classification
 
-*note: the pdf version of this document can be found [here]().*
+*note: the pdf version of this document can be found [here](report/PreliminaryReport/PrelimVersionReport.pdf).*
 
 
 ### Introduction
@@ -122,7 +122,7 @@ of this test case ranges anywhere from 80 to 90 percent on the training set. Mor
 set - **about 80 percent accuracy on average.**
 
 
-A very small alpha leads to slow convergence. One run of this test program took ** about 3-4 minutes**, which is quite long. However, 
+A very small alpha leads to slow convergence. One run of this test program took **about 3-4 minutes**, which is quite long. However, 
 one observation that was made during testing was that if we changed the alpha to higher numbers, results could become unpredictable. 
 At times, the cost function would decrease at a very large rate and the model would get an accuracy in the high 90s; in other instances, it would immediately diverge and the resulting accuracy would be in the 40s. Even with small alpha, the cost function does not always decrease. Further testing is needed.
 In summary, we managed to implement a working logistic regression model in java, but there is still some tweaking to do and issues to
