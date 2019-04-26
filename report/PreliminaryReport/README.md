@@ -108,25 +108,24 @@ change much after a certain point, this way could be faster.
 
 <img src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSLaBXWsiiBeu1zfTqPmq8iLXzsaX7IG35gAjtbNRTAyaonVMbvmKgCfkXKAsa0MJCr2SwRC1Env2ru/pubchart?oid=38998274&amp;format=image"/>
 
-This is an example run of our program (Training set accuracy 88%, Test set 84%) that tests wine 1 vs. wine 2; the cost function seems 
+This is **one example run** of our program (Training set accuracy 88%, Test set 84%) that tests wine 1 vs. wine 2; the cost function seems 
 to consistently decrease as the beta coefficients are updated. The cost function does not seem to decrease significantly past 1 million
 iterations (and in some cases even increased). What this graph tells us is that the error between the predictions the program will give
 and the actual answers is being reduced, which is a good thing. Notice that the cost function does not decrease by a large amount; at 
-the end of the loop it had decreased to about 0.31 from 0.35. We are still working on this issue. In any case, this did not seem to
-affect the results: if you had initialized the betas and instantly tried to make it predict the wine type, its performance would be 
-abysmal (worse than just guessing 50/50), whereas the trained model was much better.
+the end of the loop it had decreased to about 0.31 from 0.35. We are still working on this issue. In any case, the logistic regression still seemed to work: if you had initialized the betas and instantly tried to make it predict the wine type, its performance would be much worse than trained model.
 Which brings us to the next part, validation. After our prototype was built, we had to test it and see if it correctly categorizes the 
 wines. This was as simple as comparing the prediction of the trained model with the actual answers, one by one. At the end, we divided 
-the total number of good answers by the total number of tries. The results are promising so far. From our repeated tests, the accuracy
-of this test case ranges anywhere from 80 to 90 percent on the training set. More importantly, similar results are observed on the test
-set - **about 80 percent accuracy on average.**
+the total number of good answers by the total number of tries. From our repeated tests, the accuracy
+of this test case ranges anywhere from 70 to 90 percent on the training set. More importantly, similar results are observed on the test
+set - **about 70-90 percent accuracy.** What is strange about this is how varied the accuracy seems to be, an issue that we are still working on.
 
 
-A very small alpha leads to slow convergence. One run of this test program took **about 3-4 minutes**, which is quite long. However, 
+A very small alpha leads to slow convergence. One run of this test program took **about 3 minutes**, which is quite long. However, 
 one observation that was made during testing was that if we changed the alpha to higher numbers, results could become unpredictable. 
-At times, the cost function would decrease at a very large rate and the model would get an accuracy in the high 90s; in other instances, it would immediately diverge and the resulting accuracy would be in the 40s. Even with small alpha, the cost function does not always decrease. Further testing is needed.
+At times, the cost function would decrease at a very large rate and the model would get an accuracy in the high 90s; in other instances, it would immediately diverge and the resulting accuracy would be in the 40s. Even with small alpha, the cost function does not always decrease smoothly. Further testing is needed.
+
 In summary, we managed to implement a working logistic regression model in java, but there is still some tweaking to do and issues to
-fix. We should also look into other ways of evaluating the performance of our logistic regression, such as the effectiveness of each
+fix. The accuracy results, for whatever reason, are very varied. We should also look into other ways of evaluating the performance of our logistic regression, such as the effectiveness of each
 feature variable.
 
 ### References
