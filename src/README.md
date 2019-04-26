@@ -12,7 +12,7 @@ LogisticWine3 classifies between wine 1 and wine 3.
 We checked if our actual implementation of logistic regression was working by testing it against another dataset.
 
 
-## Some Preliminary Results
+## Some Results
 
 26/04/2019
 
