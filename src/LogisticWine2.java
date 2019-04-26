@@ -2,9 +2,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
-//This predicts for wine type 1(1) and type 2(0).
+//This predicts for wine type 2(0) and type 3(1).
 
-public class LogisticWine1
+public class LogisticWine2
 {
 
 	/** Methods
@@ -25,7 +25,7 @@ public class LogisticWine1
 		//Create other variables
 		Scanner scanIn = null;
 		String inputRow = ""; //this will be the variable that holds the row!
-		String fileLocation = "dataset/dataset_wine1.txt"; //<<INSERT FILE LOCATION HERE
+		String fileLocation = "dataset/dataset_wine2.txt"; //<<INSERT FILE LOCATION HERE
 		int row = 0;
 
 		System.out.println("Reading the dataset.txt and setting up the arrays...");
@@ -449,14 +449,18 @@ public class LogisticWine1
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.00001;
+        double alpha = 0.001;
         double[] betaNew = new double[beta.length];
+        double difference[] = new double[beta.length];
+        double tolerance = 0.0000001;
+=======
         //double difference[] = new double[beta.length];
         //double tolerance = 0.000000000000001;
         double iterations = 0;
         //boolean checkDifference = true;
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
+
 
         while (iterations < 1500000)
         {
@@ -474,6 +478,20 @@ public class LogisticWine1
 							//System.out.println(alpha);
 							break;
 						}
+
+/*
+           for(int i = 0; i < difference.length; i++)
+           {
+                if (difference[i] > tolerance)
+                {
+                    break;
+                }
+            checkDifference = false;
+					} **/
+
+					 //Print cost function every few iterations
+           if(iterations % 5000 == 0)
+=======
 						else
 						{
 
@@ -498,6 +516,7 @@ public class LogisticWine1
 
 					 //Print cost function every few iterations
            if(iterations % 10000 == 0)
+
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
 						 //System.out.println(gradient(x,y,beta,0));
@@ -605,7 +624,7 @@ public class LogisticWine1
 		//Creating the arrays to hold the data points
 		//x holds the feature variables
 		//y holds the labels
-		int rows = 130; // <<check if good
+		int rows = 119; // <<check if good
 		int columns = 13; // <<check if good
 		double[][] xArray = new double[rows][columns];
 		double[] yArray = new double[rows];
@@ -649,7 +668,6 @@ public class LogisticWine1
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
 		//double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
 		double [] beta = new double[xTrainArray[0].length+1];
 		assignRandom(beta);
