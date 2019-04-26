@@ -16,6 +16,6 @@ We checked if our actual implementation of logistic regression was working by te
 
 26/04/2019
 
-***LogisticWine1:*** a consistent test set accuracy of about 80% over repeated trials, a varied training set accuracy of about 70-90% over repeated trials.
+***LogisticWine1:*** a varied test & training set accuracy of about 70-90% over repeated trials.
 
 ***Breast Cancer:*** consistent test & training set accuracy of about 94-97% over repeated trials.
