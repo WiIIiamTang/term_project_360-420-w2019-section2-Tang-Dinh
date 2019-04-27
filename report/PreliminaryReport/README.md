@@ -124,7 +124,7 @@ At times, the cost function would decrease at a very large rate and the model wo
 
 In summary, we managed to implement a working logistic regression model in java, but there is still some tweaking to do and issues to
 fix. The accuracy results, for whatever reason, are very varied. We should also look into other ways of evaluating the performance of our logistic regression, such as the effectiveness of each
-feature variable.
+feature variable, and comparing it with premade logisitic regression libraries, such as sklearn.
 
 
 
