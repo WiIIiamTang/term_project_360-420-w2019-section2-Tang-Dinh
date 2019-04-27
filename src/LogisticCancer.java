@@ -449,7 +449,7 @@ public class LogisticCancer
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.1;
+        double alpha = 1.0;
         double[] betaNew = new double[beta.length];
         //double difference[] = new double[beta.length];
         //double tolerance = 0.000000000000001;
@@ -458,7 +458,7 @@ public class LogisticCancer
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 200000)
+        while (iterations < 22000)
         {
 					  currentCost = costFunction(x,y,beta);
 

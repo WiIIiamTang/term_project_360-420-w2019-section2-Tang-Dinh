@@ -458,7 +458,7 @@ public class LogisticMarks
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 200000)
+        while (iterations < 80000)
         {
 					  currentCost = costFunction(x,y,beta);
 
@@ -500,10 +500,10 @@ public class LogisticMarks
 
 
 					 //Print cost function every few iterations
-           if(iterations % 10000 == 0)
+           if(iterations % 1000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
-						 //System.out.println(gradient(x,y,beta,0));
+						 //System.out.println(gradient(x,y,beta,2));
            }
 					 iterations++;
 
@@ -616,7 +616,7 @@ public class LogisticMarks
 
 		//put the dataset into the arrays
 		makeArrays(xArray, yArray);
-		makeYLabels(yArray);
+		//makeYLabels(yArray);
 		//shuffleData(xArray, yArray);
 
 
@@ -625,8 +625,8 @@ public class LogisticMarks
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
-		double [][]xTestArray = new double [xArray.length - splitIndex][columns];
-		double []yTestArray = new double [yArray.length - splitIndex];
+		double [][]xTestArray = new double [rows-splitIndex][columns];
+		double []yTestArray = new double [rows-splitIndex];
 
 		System.out.println("Splitting up data...");
 		dataSplit2D(xTrainArray, xArray, splitIndex, 0);
@@ -638,6 +638,8 @@ public class LogisticMarks
 		System.out.println("yTrainArray has " + yTrainArray.length + " rows; yTestArray has " + yTestArray.length + " rows");
 		//Done creating the test set and training set.
 
+		printAllArrays(xTrainArray,yTrainArray);
+		System.out.println(yTrainArray.length);
 
 		//standardize some data columns if u want (try with/without this method; min-max or zscore)
 		for(int i = 0; i<xTrainArray[0].length; i++)
