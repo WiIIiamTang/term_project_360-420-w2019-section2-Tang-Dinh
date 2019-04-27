@@ -43,11 +43,11 @@ def get_data():
 x_train, y_train, x_test, y_test = get_data()
 
 scaler = StandardScaler().fit(x_train)
-scaler.transform(x_train)
-scaler.transform(x_test)
+#scaler.transform(x_train)
+#scaler.transform(x_test)
 
 #now use sklearn to do logistic Regression
-model = LogisticRegression(C=10000)
+model = LogisticRegression(C=100)
 model.fit(x_train, y_train)
 predicted_classes = model.predict(x_test)
 accuracy = accuracy_score(y_test,predicted_classes)

@@ -449,7 +449,7 @@ public class LogisticCancer
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.001;
+        double alpha = 0.1;
         double[] betaNew = new double[beta.length];
         //double difference[] = new double[beta.length];
         //double tolerance = 0.000000000000001;
@@ -470,9 +470,10 @@ public class LogisticCancer
 
 						if (currentCost < costFunction(x,y,betaNew))
 						{
-							//alpha = alpha * 0.1;
+							//alpha = alpha * 0.99;
 							//System.out.println(alpha);
 							break;
+
 						}
 						else
 						{
@@ -499,7 +500,7 @@ public class LogisticCancer
 
 
 					 //Print cost function every few iterations
-           if(iterations % 5000 == 0)
+           if(iterations % 500 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
 						 //System.out.println(gradient(x,y,beta,0));
@@ -518,7 +519,7 @@ public class LogisticCancer
 		public static void assignRandom(double[]array)
 		{
 			double max = 1.0;
-			double min = 0.;
+			double min = 0.0;
 			double rollRange = (max - min);
 			double roll = 0;
 
@@ -616,7 +617,7 @@ public class LogisticCancer
 		//put the dataset into the arrays
 		makeArrays(xArray, yArray);
 		makeYLabels(yArray);
-		shuffleData(xArray, yArray);
+		//shuffleData(xArray, yArray);
 
 
 		//Creating the test set and training set
@@ -641,7 +642,7 @@ public class LogisticCancer
 		//standardize some data columns if u want (try with/without this method; min-max or zscore)
 		for(int i = 0; i<xTrainArray[0].length; i++)
 		{
-		convertToZScore(xTrainArray, xTestArray, i);
+			convertToZScore(xTrainArray, xTestArray, i);
 		}
 
 		//printAllArrays(xTrainArray,yTrainArray); //test print
@@ -654,7 +655,7 @@ public class LogisticCancer
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
 		//double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
 		double [] beta = new double[xTrainArray[0].length+1];
-		assignRandom(beta);
+		//assignRandom(beta);
 
 		//Do gradient Descent
 		System.out.println("Initial cost at " + costFunction(xTrainArray, yTrainArray, beta));
