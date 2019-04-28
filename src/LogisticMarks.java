@@ -322,7 +322,7 @@ public class LogisticMarks
 	//of normalizing too
 	///////////////////////////////////////////////////
 
-	public static void minMaxNormal(double[][]x, int col)
+	public static void minMaxNormal(double[][]x, double [][]xTestArray, int col)
 	{
 		double max = getMax(x,col);
 		double min = getMin(x, col);
@@ -330,6 +330,11 @@ public class LogisticMarks
 		for(int i = 0; i < x.length; i++)
 		{
 			x[i][col] = (x[i][col] - min) / (max-min);
+		}
+
+		for (int i = 0; i < xTestArray.length; i++)
+		{
+			xTestArray[i][col] = (xTestArray[i][col] - min) / (max-min);
 		}
 
 	}
@@ -596,7 +601,7 @@ public class LogisticMarks
 	 * Note: Before starting the program a CSV file with the name dataset.txt should be in the right place
 	 * For now the number of rows and columns needs to be input manually; CHANGE rows AND col
 	 * If the dataset changes. Excel can show the number of rows.
-	 * One "row" corresponds to one data point (like one day), the "columns" hold the feature variable data(temp, wind speed, snow,etc.)
+	 * One "row" corresponds to one data point (like one day), the "columns" hold the feature variable data
 	**/
 
 	public static void main(String [] args)
@@ -645,6 +650,7 @@ public class LogisticMarks
 		for(int i = 0; i<xTrainArray[0].length; i++)
 		{
 			convertToZScore(xTrainArray, xTestArray, i);
+			//minMaxNormal(xTrainArray, xTestArray, i);
 		}
 
 		//printAllArrays(xTrainArray,yTrainArray); //test print

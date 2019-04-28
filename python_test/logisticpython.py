@@ -10,10 +10,10 @@ from sklearn.metrics import accuracy_score
 #you can test it on wine, breast cancer, marks
 
 #dataset = pd.read_csv("breast-cancer-wisconsin-copy.csv")
-#dataset = pd.read_csv("marks.csv")
-dataset = pd.read_csv("dataset_wine1_copy.csv")
+dataset = pd.read_csv("marks.csv")
+#dataset = pd.read_csv("dataset_wine1_copy.csv")
 X = dataset.iloc[:, :-1].values
-y = dataset.iloc[:, 13]
+y = dataset.iloc[:, -1]
 
 X, y = shuffle(X, y)
 
@@ -28,7 +28,7 @@ X_train = sc_X.transform(X_train)
 X_test = sc_X.transform(X_test)
 
 #evaluate
-classifier = LogisticRegression(C = 10)
+classifier = LogisticRegression()
 classifier.fit(X_train,y_train)
 
 y_pred = classifier.predict(X_test)

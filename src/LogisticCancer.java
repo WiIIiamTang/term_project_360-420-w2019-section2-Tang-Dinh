@@ -322,7 +322,7 @@ public class LogisticCancer
 	//of normalizing too
 	///////////////////////////////////////////////////
 
-	public static void minMaxNormal(double[][]x, int col)
+	public static void minMaxNormal(double[][]x, double [][]xTestArray, int col)
 	{
 		double max = getMax(x,col);
 		double min = getMin(x, col);
@@ -330,6 +330,11 @@ public class LogisticCancer
 		for(int i = 0; i < x.length; i++)
 		{
 			x[i][col] = (x[i][col] - min) / (max-min);
+		}
+
+		for (int i = 0; i < xTestArray.length; i++)
+		{
+			xTestArray[i][col] = (xTestArray[i][col] - min) / (max-min);
 		}
 
 	}
@@ -409,9 +414,16 @@ public class LogisticCancer
 
         for (int i = 0; i < m; i++)
         {
-            sum = sum + (y[i] * Math.log(hypothesis(x, beta, i)) + (1-y[i])*Math.log(1 - hypothesis(x, beta, i)));
+						if (y[i] == 1.0)
+						{
+            	sum = sum + (Math.log(hypothesis(x, beta, i)));
+						}
+						else
+						{
+							sum = sum + Math.log(1 - hypothesis(x, beta, i));
+						}
         }
-
+				//System.out.println(sum);
         cost= -(sum/m);
 
         return cost;
@@ -449,7 +461,7 @@ public class LogisticCancer
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 1.0;
+        double alpha = 0.1;
         double[] betaNew = new double[beta.length];
         //double difference[] = new double[beta.length];
         //double tolerance = 0.000000000000001;
@@ -472,7 +484,11 @@ public class LogisticCancer
 						{
 							//alpha = alpha * 0.99;
 							//System.out.println(alpha);
-							break;
+							//break;
+							for(int i = 0; i < beta.length;i++)
+							{
+								beta[i] = betaNew[i];
+							}
 
 						}
 						else
@@ -503,6 +519,7 @@ public class LogisticCancer
            if(iterations % 500 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
+						 //System.out.println(hypothesis(x,beta,0));
 						 //System.out.println(gradient(x,y,beta,0));
            }
 					 iterations++;
@@ -643,9 +660,10 @@ public class LogisticCancer
 		for(int i = 0; i<xTrainArray[0].length; i++)
 		{
 			convertToZScore(xTrainArray, xTestArray, i);
+			//minMaxNormal(xTrainArray, xTestArray, i);
 		}
 
-		//printAllArrays(xTrainArray,yTrainArray); //test print
+		printAllArrays(xTrainArray,yTrainArray); //test print
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////Logistic Regression//////////////////////////////////////////////////////////////////
