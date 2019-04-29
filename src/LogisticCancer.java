@@ -322,7 +322,7 @@ public class LogisticCancer
 	//of normalizing too
 	///////////////////////////////////////////////////
 
-	public static void minMaxNormal(double[][]x, int col)
+	public static void minMaxNormal(double[][]x, double [][]xTestArray, int col)
 	{
 		double max = getMax(x,col);
 		double min = getMin(x, col);
@@ -330,6 +330,11 @@ public class LogisticCancer
 		for(int i = 0; i < x.length; i++)
 		{
 			x[i][col] = (x[i][col] - min) / (max-min);
+		}
+
+		for (int i = 0; i < xTestArray.length; i++)
+		{
+			xTestArray[i][col] = (xTestArray[i][col] - min) / (max-min);
 		}
 
 	}
@@ -406,13 +411,26 @@ public class LogisticCancer
         int m = x.length;
         double cost = 0.;
         double sum = 0.;
+				double regularizationSum = 0;
+				int n = beta.length;
 
         for (int i = 0; i < m; i++)
         {
-            sum = sum + (y[i] * Math.log(hypothesis(x, beta, i)) + (1-y[i])*Math.log(1 - hypothesis(x, beta, i)));
+						if (y[i] == 1.0)
+						{
+            	sum = sum + (Math.log(hypothesis(x, beta, i)));
+						}
+						else
+						{
+							sum = sum + Math.log(1 - hypothesis(x, beta, i));
+						}
         }
+				for(int j = 0; j < n; j++ )
+				{
+					regularizationSum += (beta[j]*beta[j]);
+				}
 
-        cost= -(sum/m);
+        cost= -(sum/m) + (1/(2*m)) * regularizationSum;
 
         return cost;
     }
@@ -423,22 +441,33 @@ public class LogisticCancer
 
     public static double gradient(double[][] x, double[] y, double[] beta, int betaNum)
     {
-        double sum = 0.;
-        double m = x.length;
+			double sum = 0.;
+			double toAdd = 0;
+			double m = x.length;
 
 
-        for(int i =0; i < m; i++)
-        {
-            sum += (hypothesis(x, beta, i) - y[i]);
+			for(int i =0; i < m; i++)
+			{
+					toAdd = 0;
 
-            if(betaNum != 0)
-            {
-            	sum *= x[i][betaNum-1];
-            }
+					toAdd += (hypothesis(x, beta, i) - y[i]);
 
-        }
+					if(betaNum != 0)
+					{
+						toAdd *= x[i][betaNum-1];
+					}
 
-        return sum/m;
+					sum += toAdd;
+			}
+
+				sum = sum/m;
+
+				if (betaNum != 0)
+				{
+					sum += ((1/m) * beta[betaNum]);
+				}
+
+        return sum;
     }
 
     ////////////////////////////////////////////
@@ -458,7 +487,7 @@ public class LogisticCancer
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 200000)
+        while (iterations < 30000)
         {
 					  currentCost = costFunction(x,y,beta);
 
@@ -470,9 +499,14 @@ public class LogisticCancer
 
 						if (currentCost < costFunction(x,y,betaNew))
 						{
-							//alpha = alpha * 0.1;
+							//alpha = alpha * 0.99;
 							//System.out.println(alpha);
-							break;
+							//break;
+							for(int i = 0; i < beta.length;i++)
+							{
+								beta[i] = betaNew[i];
+							}
+
 						}
 						else
 						{
@@ -499,9 +533,10 @@ public class LogisticCancer
 
 
 					 //Print cost function every few iterations
-           if(iterations % 5000 == 0)
+           if(iterations % 500 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
+						 //System.out.println(hypothesis(x,beta,0));
 						 //System.out.println(gradient(x,y,beta,0));
            }
 					 iterations++;
@@ -518,7 +553,7 @@ public class LogisticCancer
 		public static void assignRandom(double[]array)
 		{
 			double max = 1.0;
-			double min = 0.;
+			double min = 0.0;
 			double rollRange = (max - min);
 			double roll = 0;
 
@@ -620,7 +655,7 @@ public class LogisticCancer
 
 
 		//Creating the test set and training set
-		double trainingSplitPercent = 0.80; //modify how much is training/test
+		double trainingSplitPercent = 0.70; //modify how much is training/test
 		int splitIndex = (int) (xArray.length * trainingSplitPercent);
 		double [][]xTrainArray = new double [splitIndex][columns];
 		double []yTrainArray = new double [splitIndex];
@@ -641,10 +676,11 @@ public class LogisticCancer
 		//standardize some data columns if u want (try with/without this method; min-max or zscore)
 		for(int i = 0; i<xTrainArray[0].length; i++)
 		{
-		convertToZScore(xTrainArray, xTestArray, i);
+			convertToZScore(xTrainArray, xTestArray, i);
+			//minMaxNormal(xTrainArray, xTestArray, i);
 		}
 
-		//printAllArrays(xTrainArray,yTrainArray); //test print
+		printAllArrays(xTrainArray,yTrainArray); //test print
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////Logistic Regression//////////////////////////////////////////////////////////////////
@@ -654,7 +690,7 @@ public class LogisticCancer
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
 		//double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
 		double [] beta = new double[xTrainArray[0].length+1];
-		assignRandom(beta);
+		//assignRandom(beta);
 
 		//Do gradient Descent
 		System.out.println("Initial cost at " + costFunction(xTrainArray, yTrainArray, beta));
