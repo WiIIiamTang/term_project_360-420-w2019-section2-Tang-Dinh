@@ -22,4 +22,4 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 - added a regularization parameter to the gradient and cost function (still in testing)
 - Changed readme info in scr folder: added "Validation" section for breast cancer, school marks, python; removed "results" section, logwine2 and logwine3 for now
 - added python implementation of logistic regression
-- added marks.csv in resources
+- added marks.csv in resources, added marks txt file in src/dataset folder
