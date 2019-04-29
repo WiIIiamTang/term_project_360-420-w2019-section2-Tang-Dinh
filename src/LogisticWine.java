@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 //This predicts for wine type 1(1) and type 2(0).
 
-public class LogisticWine1
+public class LogisticWine
 {
 
 	/** Methods

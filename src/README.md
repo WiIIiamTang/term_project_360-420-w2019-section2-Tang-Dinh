@@ -1,15 +1,12 @@
 # Logistic Regression
 
-LogisticWine1 classifies between wine 1 and wine 2.
-
-LogisticWine2 classifies between wine 2 and wine 3.
-
-LogisticWine3 classifies between wine 1 and wine 3.
+LogisticWine classifies between two sorts of wine denoted by 0 and 1.
 
 
-## Breast Cancer
+## Validatation against other datasets
 
-We checked if our actual implementation of logistic regression was working by testing it against another dataset.
+Just to see if the results we get aren't based on luck, we checked if our actual implementation of logistic regression was working by testing it against another dataset.
+We used the breast cancer data as well as some school exam marks.
 
 
 ## Some Preliminary Results
