@@ -409,15 +409,29 @@ public class LogisticMarks
     public static double costFunction(double[][] x, double[] y, double[] beta)
     {
         int m = x.length;
+				int n = beta.length;
         double cost = 0.;
         double sum = 0.;
+				double regularizationSum = 0;
 
         for (int i = 0; i < m; i++)
         {
-            sum = sum + (y[i] * Math.log(hypothesis(x, beta, i)) + (1-y[i])*Math.log(1 - hypothesis(x, beta, i)));
+					if (y[i] == 1.0)
+					{
+						sum = sum + (Math.log(hypothesis(x, beta, i)));
+					}
+					else
+					{
+						sum = sum + Math.log(1 - hypothesis(x, beta, i));
+					}
         }
 
-        cost= -(sum/m);
+				for(int j = 0; j < n; j++ )
+				{
+					regularizationSum += (beta[j]*beta[j]);
+				}
+
+        cost= -(sum/m) + (10/(2*m)) * regularizationSum;
 
         return cost;
     }
@@ -429,21 +443,32 @@ public class LogisticMarks
     public static double gradient(double[][] x, double[] y, double[] beta, int betaNum)
     {
         double sum = 0.;
+				double toAdd = 0;
         double m = x.length;
 
 
         for(int i =0; i < m; i++)
         {
-            sum += (hypothesis(x, beta, i) - y[i]);
+						toAdd = 0;
+
+            toAdd += (hypothesis(x, beta, i) - y[i]);
 
             if(betaNum != 0)
             {
-            	sum *= x[i][betaNum-1];
+            	toAdd *= x[i][betaNum-1];
             }
 
+						sum += toAdd;
         }
 
-        return sum/m;
+				sum = sum/m;
+
+				if (betaNum != 0)
+				{
+					sum += ((10/m) * beta[betaNum]);
+				}
+
+        return sum;
     }
 
     ////////////////////////////////////////////
@@ -454,7 +479,7 @@ public class LogisticMarks
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.01;
+        double alpha = 0.001;
         double[] betaNew = new double[beta.length];
         //double difference[] = new double[beta.length];
         //double tolerance = 0.000000000000001;
@@ -463,7 +488,7 @@ public class LogisticMarks
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 80000)
+        while (iterations < 250000)
         {
 					  currentCost = costFunction(x,y,beta);
 
@@ -505,7 +530,7 @@ public class LogisticMarks
 
 
 					 //Print cost function every few iterations
-           if(iterations % 1000 == 0)
+           if(iterations % 10000 == 0)
            {
         	   System.out.println("Cost at " + costFunction(x, y, beta));
 						 //System.out.println(gradient(x,y,beta,2));
@@ -622,7 +647,7 @@ public class LogisticMarks
 		//put the dataset into the arrays
 		makeArrays(xArray, yArray);
 		//makeYLabels(yArray);
-		//shuffleData(xArray, yArray);
+		shuffleData(xArray, yArray);
 
 
 		//Creating the test set and training set
@@ -643,8 +668,8 @@ public class LogisticMarks
 		System.out.println("yTrainArray has " + yTrainArray.length + " rows; yTestArray has " + yTestArray.length + " rows");
 		//Done creating the test set and training set.
 
-		printAllArrays(xTrainArray,yTrainArray);
-		System.out.println(yTrainArray.length);
+		//printAllArrays(xTrainArray,yTrainArray);
+		//System.out.println(yTrainArray.length);
 
 		//standardize some data columns if u want (try with/without this method; min-max or zscore)
 		for(int i = 0; i<xTrainArray[0].length; i++)
@@ -653,7 +678,7 @@ public class LogisticMarks
 			//minMaxNormal(xTrainArray, xTestArray, i);
 		}
 
-		//printAllArrays(xTrainArray,yTrainArray); //test print
+		printAllArrays(xTrainArray,yTrainArray); //test print
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
 		///////////Logistic Regression//////////////////////////////////////////////////////////////////

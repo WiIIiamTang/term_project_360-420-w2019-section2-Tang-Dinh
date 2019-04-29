@@ -403,18 +403,31 @@ public class LogisticWine1
 
     public static double costFunction(double[][] x, double[] y, double[] beta)
     {
-        int m = x.length;
-        double cost = 0.;
-        double sum = 0.;
+			int m = x.length;
+			double cost = 0.;
+			double sum = 0.;
+			double regularizationSum = 0;
+			int n = beta.length;
 
-        for (int i = 0; i < m; i++)
-        {
-            sum = sum + (y[i] * Math.log(hypothesis(x, beta, i)) + (1-y[i])*Math.log(1 - hypothesis(x, beta, i)));
-        }
+			for (int i = 0; i < m; i++)
+			{
+					if (y[i] == 1.0)
+					{
+						sum = sum + (Math.log(hypothesis(x, beta, i)));
+					}
+					else
+					{
+						sum = sum + Math.log(1 - hypothesis(x, beta, i));
+					}
+			}
+			for(int j = 0; j < n; j++ )
+			{
+				regularizationSum += (beta[j]*beta[j]);
+			}
 
-        cost= -(sum/m);
+			cost= -(sum/m) + (1/(2*m)) * regularizationSum;
 
-        return cost;
+			return cost;
     }
 
     //////////////////////////////////////////////
@@ -423,22 +436,32 @@ public class LogisticWine1
 
     public static double gradient(double[][] x, double[] y, double[] beta, int betaNum)
     {
-        double sum = 0.;
-        double m = x.length;
+			double sum = 0.;
+			double toAdd = 0;
+			double m = x.length;
 
 
-        for(int i =0; i < m; i++)
-        {
-            sum += (hypothesis(x, beta, i) - y[i]);
+			for(int i =0; i < m; i++)
+			{
+					toAdd = 0;
 
-            if(betaNum != 0)
-            {
-            	sum *= x[i][betaNum-1];
-            }
+					toAdd += (hypothesis(x, beta, i) - y[i]);
 
-        }
+					if(betaNum != 0)
+					{
+						toAdd *= x[i][betaNum-1];
+					}
 
-        return sum/m;
+					sum += toAdd;
+			}
+			sum = sum/m;
+
+			if (betaNum != 0)
+			{
+				sum += ((1/m) * beta[betaNum]);
+			}
+
+			return sum;
     }
 
     ////////////////////////////////////////////
@@ -449,7 +472,7 @@ public class LogisticWine1
 
     public static void gradientDescent(double[][]x, double[] y, double[] beta)
     {
-        double alpha = 0.0001;
+        double alpha = 0.01;
         double[] betaNew = new double[beta.length];
         //double difference[] = new double[beta.length];
         //double tolerance = 0.000000000000001;
@@ -458,7 +481,7 @@ public class LogisticWine1
 				double bestCost = 1000;
 				double currentCost = costFunction(x,y,beta);
 
-        while (iterations < 1300000)
+        while (iterations < 30000)
         {
 					  currentCost = costFunction(x,y,beta);
 
@@ -638,7 +661,7 @@ public class LogisticWine1
 		//standardize some data columns (try with/without this method; min-max or zscore)
 		for(int i = 0; i<xTrainArray[0].length; i++)
 		{
-		convertToZScore(xTrainArray, xTestArray, i);
+			convertToZScore(xTrainArray, xTestArray, i);
 		}
 
 		//printAllArrays(xTrainArray,yTrainArray); //test print
@@ -651,10 +674,12 @@ public class LogisticWine1
 		//Create beta array, holds the coefficients of the linear equation y = theta0 + theta1*x1 + ...
 		//double [] beta = {0.238246, 0.33663, 0.01239,0.2972292, 0.16020,0.40,0.362,0.3373,0.195,0.103875,0.336,0.2432,0.2674,0.48619};
 		double [] beta = new double[xTrainArray[0].length+1];
+/*
 		do
 		{
 			assignRandom(beta);
 		} while (costFunction(xTrainArray,yTrainArray,beta) > 0.500);
+		*/
 
 		//Do gradient Descent
 		System.out.println("Initial cost at " + costFunction(xTrainArray, yTrainArray, beta));
