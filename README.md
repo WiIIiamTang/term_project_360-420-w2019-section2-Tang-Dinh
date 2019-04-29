@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-this is a branch for testing new features/changes
-=======
 # 360-420 Intro to Programming
 
 
@@ -19,4 +16,3 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 ### 26-04-2019
 - first "working" version LogisticWine1 + LogisticCancer
 - prelim report
->>>>>>> origin/master
