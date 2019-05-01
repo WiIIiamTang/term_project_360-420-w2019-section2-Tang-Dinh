@@ -33,5 +33,6 @@ Classes Update
   - metrics: contains methods useful for evaulating accuracy of model's predictions
   - made MachineLearn.java: this is the main class to run the program now. It would be necessary to import the /ai classes first.
   - added deprecated folder to move our old version into (serves as a "backup" in case this version goes wrong somehow)
+  - added dataset "fullwine.txt" that contains all three types of wines in the src/dataset folder
   - readme description in src directory made more clearer, and added instructions on how to run the program.
   - readme description in resources edited to be more clearer
