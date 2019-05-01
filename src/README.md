@@ -2,6 +2,11 @@
 
 LogisticWine classifies between two sorts of wine denoted by 0 and 1.
 
+**Instructions**: To run the program, compile and run MachineLearn.java
+
+Modify parameters or whatever as you want in this java file.
+We'd recomend not changing anything in the /ai directory.
+
 
 ## Validation against other datasets
 
