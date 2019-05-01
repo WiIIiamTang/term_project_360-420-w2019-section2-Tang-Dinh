@@ -12,3 +12,7 @@ For the [breast cancer](https://archive.ics.uci.edu/ml/datasets/breast+cancer+wi
 that had missing values in them (indicated with a "?" symbol).
 
 The modified datasets can be found [here](/src/dataset/). This is the folder that the program will look in to load in the data.
+
+## How do we validate our results?
+
+Use the methods provided in the [metrics](/src/ai/metrics) to check the results of the program with the real class labels. You can also test the model against other datasets, or even compare it to other machine learning libraries. Read more about it [here](/src).
