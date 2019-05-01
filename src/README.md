@@ -3,7 +3,7 @@
 **Instructions**: To run the program, compile and run MachineLearn.java. This is set by default to classify the wine dataset (dataset_wine1.txt holds label 1: wine 1 and label 0: wine 2).
 
 Modify parameters or whatever as you want in this java file.
-We'd recomend not changing anything in the /ai directory.
+We'd recommend not changing anything in the /ai directory.
 
 
 ## Validation against other datasets
