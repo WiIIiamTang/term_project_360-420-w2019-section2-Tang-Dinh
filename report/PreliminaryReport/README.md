@@ -110,7 +110,7 @@ change much after a certain point, this way could be faster.
  parameter was at 0.00001 and we ran it for 1 million iterations. After the optimal weights (betas) were calculated, we set the 
  prediction threshold at 0.5: any prediction above this value would round to a 1, and anything below 0.
 
-<img src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSLaBXWsiiBeu1zfTqPmq8iLXzsaX7IG35gAjtbNRTAyaonVMbvmKgCfkXKAsa0MJCr2SwRC1Env2ru/pubchart?oid=38998274&amp;format=image"/>
+<img src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSLaBXWsiiBeu1zfTqPmq8iLXzsaX7IG35gAjtbNRTAyaonVMbvmKgCfkXKAsa0MJCr2SwRC1Env2ru/pubchart?oid=38998274&format=image"/>
 
 This is **one example run** of our program (Training set accuracy 88%, Test set 84%) that tests wine 1 vs. wine 2; the cost function seems to consistently decrease as the beta coefficients are updated. The cost function does not seem to decrease significantly past 1 million iterations (and in some cases even increased). What this graph tells us is that the error between the predictions the program will give and the actual answers is being reduced, which is a good thing. Notice that the cost function does not decrease by a large amount; at the end of the loop it had decreased to about 0.31 from 0.35. We are still working on this issue. In any case, the logistic regression still seemed to work: if you had initialized the betas and instantly tried to make it predict the wine type, its performance would be much worse than trained model.
 This brings us to the next part, validation. After our prototype was built, we had to test it and see if it correctly categorizes the 
