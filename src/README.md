@@ -13,4 +13,4 @@ We used the breast cancer data as well as some school exam marks.
 
 You can change what the program classifies by changing the file path in the code.
 
-There is also a [python implementation](/python_implementation) using sklearn that we use to compare our model with other machine learning libraries.
+There is also a [python implementation](/python_implementation) using sklearn that we use to compare our model with a premade machine learning library.
