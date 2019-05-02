@@ -18,7 +18,7 @@ You can change what the program classifies by changing the file path in the code
 There is also a [python implementation](/python_implementation) using sklearn that we use to compare our model with a premade machine learning library.
 
 
-## The ai directory
+## The ai library
 
 This contains useful classes for machine learning and data analysis. See below for details:
 
