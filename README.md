@@ -1,4 +1,4 @@
-# 360-420 Intro to Programming
+﻿# 360-420 Intro to Programming
 
 
 **Term Project: Logistic Regression in Wine Classification**
@@ -9,6 +9,8 @@ William Tang and Jason Dinh
 Section: 02
 
 Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
+
+hi this is a test push for the class
 
 
 ## Changelog
