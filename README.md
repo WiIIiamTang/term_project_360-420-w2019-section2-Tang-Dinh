@@ -40,3 +40,4 @@ Classes Update
  
  ### 02-05-2019
  - added classes description in readme file in /src
+ - added .jar
