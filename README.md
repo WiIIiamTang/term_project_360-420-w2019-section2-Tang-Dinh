@@ -32,7 +32,7 @@ Classes Update
   - models: contains the logistic regression model (gradient descent)
   - metrics: contains methods useful for evaulating accuracy of model's predictions
   - made MachineLearn.java: this is the main class to run the program now. It would be necessary to import the ai/ classes first.
-  - added deprecated folder to move our old version into (serves as a "backup" in case this version goes wrong somehow)
+  - added deprecated folder to move our old version into (will be removed after a while)
   - added dataset "fullwine.txt" that contains all three types of wines in the src/dataset folder
   - added subdirectories in the resources folder to organize content better
   - readme description in src directory made more clearer, and added instructions on how to run the program.
