@@ -14,6 +14,7 @@ Intro to Programming
 ## Topic: Wine Classification
 
 *note: this is an updated version of the pdf version, with minor additions/changes.*
+*note: this report is based on a old version of our program made on april 4th, 2019, and does not reflect the nature of the current project.*
 
 
 ### Introduction
