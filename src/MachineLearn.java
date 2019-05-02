@@ -40,11 +40,11 @@ public class MachineLearn
     scaler.standardScaler(x_train, x_test);
 
     //Now we can do logistic regression stuff.
-    //make a new classifier object with the arrays that we got from the dataloader:
-    LogisticRegression classifier = new LogisticRegression(data.returnXTrainArray(), data.returnXTestArray(), data.returnYTrainArray(), data.returnYTestArray());
+    //make a new classifier object with the arrays that we have:
+    LogisticRegression classifier = new LogisticRegression(x_train, x_test, y_train, y_test);
 
     //We'll fit this using gradient descent:
-    classifier.fit(0.001,30000,2,false); //alpha, maxiterations, regularizationParameter, randomize intial weights or not
+    classifier.fit(0.001,50000,0,false); //alpha, maxiterations, regularizationParameter, randomize intial weights or not
 
     //Now we can get the predictions with the trained model:
     double[] predictionsOnTrainSet = classifier.predictTrainSet(0.5);
