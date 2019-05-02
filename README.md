@@ -37,3 +37,6 @@ Classes Update
   - added subdirectories in the resources folder to organize content better
   - readme description in src directory made more clearer, and added instructions on how to run the program.
   - readme description in resources/originaldata edited to be more clearer
+ 
+ ### 02-05-2019
+ - added classes description in readme file in /src
