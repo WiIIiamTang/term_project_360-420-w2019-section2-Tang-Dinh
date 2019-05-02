@@ -2,7 +2,8 @@
 
 **Instructions**: To run the program, compile and run MachineLearn.java. This is set by default to classify the wine dataset (dataset_wine1.txt holds label 1: wine 1 and label 0: wine 2).
 
-Modify parameters or whatever you want in this java file. For example, in the gradient descent, you'll use the fit() method. You can change the alpha(learning rate), max num of iterations, regularization, and tolerance level for the stopping condition. We will indicate in our report the parameters that we used.
+Modify parameters or whatever you want in this java file. We will indicate in our report the parameters that we used.
+The datasets are found in the dataset folder.
 
 We'd recommend not changing anything in the src/ai directory.
 
