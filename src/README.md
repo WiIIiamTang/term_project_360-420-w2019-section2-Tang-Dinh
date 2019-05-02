@@ -114,7 +114,7 @@ public void fit(double learningRate, double maxIterations, double regularization
 //indicate true in the boolean if you want the initial beta weights to be assigned random values from 0 to 1.
 //finally, you can also indicate the tolerance level. At each iteration of the gradient descent, the difference is calculated between //each element of the beta array and value it had before. 
 //If all of the differences are below your tolerance level, the loop is terminated.
-//If you don't want to check for this tolerance level, you can omit the checkForDifference variable while calling the method, and it //will still work.
+//If you don't want to check for this tolerance level, you can omit the checkForDifference variable while calling the method, and it will still work.
 ```
 
 #### predictTrainSet
