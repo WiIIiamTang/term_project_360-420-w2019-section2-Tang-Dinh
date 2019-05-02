@@ -10,8 +10,6 @@ Section: 02
 
 Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 
-hi this is a test push for the class
-
 
 ## Changelog
 
