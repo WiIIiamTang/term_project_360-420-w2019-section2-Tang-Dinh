@@ -46,7 +46,7 @@ public void makeArrays(String filelocation)
 //pass in the file path as a string (eg. "dataset/marks.txt");
 ```
 
-### makeYLabels
+#### makeYLabels
 
 ```java
 public void makeYLabels(double checkIfThis, double assignThis, double assignThisOtherwise)
@@ -59,7 +59,7 @@ public void makeYLabels(double checkIfThis, double assignThis, double assignThis
 // We check if the label is 2 here, and assign it to 1. Everything else is 0.
 ```
 
-### shuffleData
+#### shuffleData
 ```java
 public void shuffleData()
 
@@ -67,7 +67,7 @@ public void shuffleData()
 //just make sure you have already make the initial arrays allX and allY beforehand
 ```
 
-### trainTestSplit
+#### trainTestSplit
 ```java
 public void trainTestSplit(double trainingSplitPercent)
 
@@ -75,11 +75,11 @@ public void trainTestSplit(double trainingSplitPercent)
 //indicate the proportion of the datapoints that should go into the training set in percentage terms.
 ```
 
-## preprocessing - FeatureScaling.java
+### preprocessing - FeatureScaling.java
 - This is more or less an optional step, but it's always good to normalize your data.
 - Because of this, the feature scaling is in a class of its own; pass in your arrays through the class to scale them
 
-### standardScaler
+#### standardScaler
 ```java
 public void standardScaler(double[][] xTrainArray, double[][] xTestArray)
 
@@ -87,7 +87,7 @@ public void standardScaler(double[][] xTrainArray, double[][] xTestArray)
 //variable will have a mean of 0 and standard deviation of 1 in the dataset.
 //test set data is scaled with the training mean and standard deviation.
 ```
-### minMaxScaler
+#### minMaxScaler
 ```java
 public void minMaxScaler(double[][] xTrainArray, double[][] xTestArray)
 
@@ -95,7 +95,7 @@ public void minMaxScaler(double[][] xTrainArray, double[][] xTestArray)
 //test set data is scaled with the training max and min.
 ```
 
-## models - LogisticRegression.java
+### models - LogisticRegression.java
 
 - This is what you would use if you want to perform a logistic regression on your dataset. You always have the option of returning or printing the arrays with the appropriate method (eg. logisticregression.returnXTrainArray(), logisticregression.printXTrainArray()).
 - construct the object first by passing in the 4 training/test sets like so:
@@ -105,7 +105,7 @@ LogisticRegression regression = new LogisticRegression(xtrain, xtest, ytrain, yt
 
 - then it is as simple as calling a few methods for the rest:
 
-### fit
+#### fit
 ```java
 public void fit(double learningRate, double maxIterations, double regularizationParameter, boolean randomize, double checkforDifference)
 
@@ -116,7 +116,7 @@ public void fit(double learningRate, double maxIterations, double regularization
 //If you don't want to check for this tolerance level, you can omit the checkForDifference variable while calling the method, and it //will still work.
 ```
 
-### predictTrainSet
+#### predictTrainSet
 ```java
 public double[] predictTrainSet(double predictionThreshold)
 
@@ -125,19 +125,19 @@ public double[] predictTrainSet(double predictionThreshold)
 //indicate what the prediction threshold should be (usually it's 0.5)
 ```
 
-### predictTestSet
+#### predictTestSet
 ```java
 public double[] predictTestSet(double predictionThreshold)
 
 //this is the same as the previous method but for the x-test set.
 ```
 
-## metrics - ModelEvaluator.java
+### metrics - ModelEvaluator.java
 
 - After having trained your model, you can check your results with this class
 - You will need an array ready with predicted values
 
-### getAccuracy
+#### getAccuracy
 ```java
 public double getAccuracy(double[] yLabels, double[] predictedYLabels)
 
