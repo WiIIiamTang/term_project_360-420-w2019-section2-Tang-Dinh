@@ -118,6 +118,38 @@ public class Dataloader
     }
   }
 
+  //finally some stuff to manually enter in the arrays.
+
+  public void setAllX(double[][] x)
+  {
+    allX = x;
+  }
+
+  public void setAllY(double[] y)
+  {
+    allY = y;
+  }
+
+  public void setTrainX(double[][]x)
+  {
+    xTrain = x;
+  }
+
+  public void setTestX(double[][]x)
+  {
+    xTest = x;
+  }
+
+  public void setTrainY(double[]y)
+  {
+    yTrain = y;
+  }
+
+  public void setTestY(double[]y)
+  {
+    yTest = y;
+  }
+
 
   ////Ok now the actual stuff
 
@@ -260,15 +292,18 @@ public class Dataloader
 
   public void makeYLabels(double checkIfThis, double assignThis, double assignThisOtherwise)
   {
+    //System.out.println("making y labels");
     for (int i = 0; i < allY.length; i++)
     {
-      if (allY[i] != checkIfThis)
+      if (allY[i] == checkIfThis)
       {
-        allY[i] = assignThisOtherwise;
+        allY[i] = assignThis;
+        //System.out.print(allY[i]+ " ");
       }
       else
       {
-        allY[i] = assignThis;
+        allY[i] = assignThisOtherwise;
+        //System.out.print(allY[i]+ " ");
       }
     }
 
