@@ -43,6 +43,10 @@ public class MachineLearn
     //make a new classifier object with the arrays that we have:
     LogisticRegression classifier = new LogisticRegression(x_train, x_test, y_train, y_test);
 
+    /////////////note
+    //if you didnt scale the features(which is ok too) you don't even need to create more arrays in your main class.
+    //just use the data.return* methods to get your arrays
+
     //We'll fit this using gradient descent:
     classifier.fit(0.001,50000,0,false); //alpha, maxiterations, regularizationParameter, randomize intial weights or not
 

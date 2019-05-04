@@ -349,6 +349,30 @@ public class LogisticRegression
     }
   }
 
+  public double[] getPredictionsProbabilityTrain()
+  {
+    double[] prob = new double[x_train.length];
+
+    for(int i = 0; i < prob.length; i++)
+    {
+      prob[i] = hypothesis(x_train, beta, i);
+    }
+
+    return prob;
+  }
+
+  public double[] getPredictionsProbabilityTest()
+  {
+    double[] prob = new double[x_test.length];
+
+    for(int i = 0; i < prob.length; i++)
+    {
+      prob[i] = hypothesis(x_test, beta, i);
+    }
+
+    return prob;
+  }
+
 
   public double[] predictTrainSet(double predictionThreshold)
   {
