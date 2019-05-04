@@ -1,6 +1,6 @@
 # Logistic Regression
 
-**Instructions**: To run the program, compile and run MachineLearn.java. This is set by default to classify the wine dataset (dataset_wine1.txt holds label 1: wine 1 and label 0: wine 2).
+**Instructions**: This is a binomial logistic regression. To run the program, compile and run MachineLearn.java. This is set by default to classify the wine dataset (dataset_wine1.txt holds label 1: wine 1 and label 0: wine 2).
 
 Modify parameters or whatever you want in this java file. We will indicate in our report the parameters that we used.
 The datasets are found in the dataset folder.
@@ -24,7 +24,7 @@ There is also a [python implementation](/python_implementation) using sklearn th
 
 ## The ai library
 
-This contains useful classes for machine learning and data analysis. If you want to recreate the project or make your own logistic regression program or something, you can just take the ai library jar file found in this repo and use the classes for yourself. See below for details:
+This contains useful classes for the binominal logistic regression. If you want to recreate the project or make your own logistic regression program or something, you can just take the ai library jar file found in this repo and use the classes for yourself. See below for details:
 
 ### preprocessing - Dataloader.java
 
