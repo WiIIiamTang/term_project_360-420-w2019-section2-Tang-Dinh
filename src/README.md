@@ -24,7 +24,7 @@ There is also a [python implementation](/python_implementation) using sklearn th
 
 ## The ai library
 
-This contains useful classes for the binominal logistic regression. If you want to recreate the project or make your own logistic regression program or something, you can just take the ai library jar file found in this repo and use the classes for yourself. See below for details:
+This contains useful classes for the binominal logistic regression. If you want to recreate the project or make your own logistic regression program or something, you can use these classes for yourself. See below for details:
 
 ### preprocessing - Dataloader.java
 
