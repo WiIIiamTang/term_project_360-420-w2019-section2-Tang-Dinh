@@ -7,6 +7,8 @@ The datasets are found in the dataset folder.
 
 We'd recommend not changing anything in the src/ai directory.
 
+multinominal: idk where to put this so i just added a different branch (is this part of my ce?)
+
 ## Reproducibility
 
 steps to reproduce results should go here later.
