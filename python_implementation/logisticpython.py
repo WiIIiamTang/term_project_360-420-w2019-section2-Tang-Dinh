@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score
 #you can test it on wine, breast cancer, marks
 
 #dataset = pd.read_csv("dataset/breast-cancer-wisconsin-copy.csv")
-dataset = pd.read_csv("dataset/marks.csv")
+dataset = pd.read_csv("dataset/dataset_wine1_copy.csv")
 #dataset = pd.read_csv("dataset/dataset_wine1_copy.csv")
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1]
