@@ -9,7 +9,7 @@ package ai.metrics;
 
 public class ModelEvaluator
 {
-  public double getAccuracy(double[]yLabels, double[]predictedYLabels)
+  public static double getAccuracy(double[]yLabels, double[]predictedYLabels)
   {
     double good = 0;
     double bad = 0;
