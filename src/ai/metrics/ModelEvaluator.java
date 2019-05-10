@@ -45,6 +45,7 @@ public class ModelEvaluator
     int fn = 0; //false negatives
     int actualZero = 0;
     int actualOne = 0;
+    int predictedOne = 0;
 
     for(int i = 0; i < predictedYLabels.length; i++)
     {
@@ -53,6 +54,7 @@ public class ModelEvaluator
       {
         tp++;
         actualOne++;
+        predictedOne++;
       }
       //true negatives
       else if ((yLabels[i] == predictedYLabels[i]) && (yLabels[i] == 0))
@@ -65,6 +67,7 @@ public class ModelEvaluator
       {
         fp++;
         actualZero++;
+        predictedOne++;
       }
       //false negatives
       else if ((yLabels[i] == 1) && (predictedYLabels[i] == 0))
@@ -78,8 +81,13 @@ public class ModelEvaluator
     System.out.print("\tPredicted:0\tPredicted:1\n");
     System.out.print("Actual:0\t" + tn +"\t" + fp + "\n");
     System.out.print("Actual:1\t" + fn +"\t" + tp + "\n");
-    System.out.println("\nSensitivity=\t" + ((double)tp/actualOne));
-    System.out.println("False Positive Rate=\t" + ((double)fp/actualZero));
+    System.out.println("\nAccuracy =\t\t" + ((double)(tp+tn)/(tp+tn+fp+fn)));
+    System.out.println("Error Rate =\t\t" + ((double)(fp+fn)/(tp+tn+fp+fn)));
+    System.out.println("Sensitivity/Recall =\t" + ((double)tp/actualOne));
+    System.out.println("False Positive Rate =\t" + ((double)fp/actualZero));
+    System.out.println("Specificity =\t\t" + ((double)tn/actualZero));
+    System.out.println("Precision =\t\t" + ((double)tp/predictedOne));
+    System.out.println("Prevalence =\t\t" + ((double)actualOne/(tp+tn+fp+fn)));
 
   }
 }
