@@ -293,7 +293,7 @@ public class LogisticRegression
           for(int i = 0; i < beta.length; i++)
           {
              betaNew[i] = beta[i] - (alpha * gradient(x_train, y_train, beta, i, regularizationParameter));
-             //difference[i] = Math.abs(beta[i] - betaNew[i]);
+             difference[i] = Math.abs(beta[i] - betaNew[i]);
           }
 
           if (currentCost < costFunction(x_train,y_train,betaNew, regularizationParameter))

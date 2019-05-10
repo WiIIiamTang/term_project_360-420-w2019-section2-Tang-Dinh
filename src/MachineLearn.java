@@ -17,11 +17,11 @@ public class MachineLearn
 {
   public static void main (String[] args)
   {
-    //The dataloader object is created first.
+    //An instance of a dataloader object is created first.
     Dataloader data = new Dataloader();
 
     //We'll be using the wine dataset.
-    data.makeArrays("dataset/dataset_wine1.txt");
+    data.makeArrays("dataset/breast-cancer-wisconsin-copy.txt");
     data.shuffleData();
     data.trainTestSplit(0.70);
 
@@ -35,9 +35,7 @@ public class MachineLearn
     y_test = data.returnYTestArray();
 
     //Now we can scale them to z scores using the feature scaler:
-    FeatureScaling scaler = new FeatureScaling();
-
-    scaler.standardScaler(x_train, x_test);
+    FeatureScaling.standardScaler(x_train, x_test);
 
     //Now we can do logistic regression stuff.
     //make a new classifier object with the arrays that we have:
@@ -48,7 +46,7 @@ public class MachineLearn
     //just use the data.return* methods to get your arrays
 
     //We'll fit this using gradient descent:
-    classifier.fit(0.001,50000,0,false); //alpha, maxiterations, regularizationParameter, randomize intial weights or not
+    classifier.fit(0.0001,50000,0,false); //alpha, maxiterations, regularizationParameter, randomize intial weights or not, check for tolerance level
 
     //Now we can get the predictions with the trained model:
     double[] predictionsOnTrainSet = classifier.predictTrainSet(0.5);
@@ -56,17 +54,17 @@ public class MachineLearn
 
 
     //last step - lets get some way of evaluating the accuracy of the model:
-    ModelEvaluator me = new ModelEvaluator();
     double acc1 = 0;
     double acc2 = 0;
 
-    acc1 = me.getAccuracy(y_train, predictionsOnTrainSet);
+    acc1 = ModelEvaluator.getAccuracy(y_train, predictionsOnTrainSet);
     System.out.println();
-    acc2 = me.getAccuracy(y_test, predictionsOnTestSet);
+    acc2 = ModelEvaluator.getAccuracy(y_test, predictionsOnTestSet);
 
     //Print out the results
     System.out.println("Model finished with " + acc1 + " accuracy on the training set.");
     System.out.println("It got " + acc2 + " accuracy on the test set.");
+    ModelEvaluator.confusionMatrix(y_test, predictionsOnTestSet);
 
   }
 }

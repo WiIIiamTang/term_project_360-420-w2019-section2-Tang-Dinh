@@ -10,7 +10,7 @@ public class FeatureScaling
 
 	//Computes and returns the mean from a 2D array, it's the mean OF ONE COLUMN - usually it will be ONE FEATURE VARIABLE, LIKE TEMPERATURE
 	//Useful for putting the data on a normalized distribution
-	public double computeMean(double[][]xArray, int col)
+	public static double computeMean(double[][]xArray, int col)
 	{
 		double sum = 0;
 		double average = 0;
@@ -27,7 +27,7 @@ public class FeatureScaling
 
 
 	//Computes and returns the standard deviation from a 2D array, its the sd OF ONE COLUMN
-	public double computeSD(double[][]xArray, int col)
+	public static double computeSD(double[][]xArray, int col)
 	{
 		double meanDiff = 0;
 		double sumMeanDiff = 0;
@@ -50,7 +50,7 @@ public class FeatureScaling
 
 	/////Standardize data - just taking the z-score
   /////you put in the training array first, then the test array. All the columns will be standardized to the mean and sd of the training set.
-	public void standardScaler(double[][]xTrainArray, double[][]xTestArray)
+	public static void standardScaler(double[][]xTrainArray, double[][]xTestArray)
 	{
 		double zScore1 = 0;
 		double zScore2 = 0;
