@@ -21,7 +21,7 @@ public class MachineLearn
     Dataloader data = new Dataloader();
 
     //We'll be using the wine dataset.
-    data.makeArrays("dataset/dataset_wine1.txt");
+    data.makeArrays("dataset/breast-cancer-wisconsin-copy.txt");
     data.shuffleData();
     data.trainTestSplit(0.70);
 
@@ -46,7 +46,7 @@ public class MachineLearn
     //just use the data.return* methods to get your arrays
 
     //We'll fit this using gradient descent:
-    classifier.fit(0.001,50000,0,false); //alpha, maxiterations, regularizationParameter, randomize intial weights or not
+    classifier.fit(0.0001,50000,0,false); //alpha, maxiterations, regularizationParameter, randomize intial weights or not, check for tolerance level
 
     //Now we can get the predictions with the trained model:
     double[] predictionsOnTrainSet = classifier.predictTrainSet(0.5);
@@ -64,6 +64,7 @@ public class MachineLearn
     //Print out the results
     System.out.println("Model finished with " + acc1 + " accuracy on the training set.");
     System.out.println("It got " + acc2 + " accuracy on the test set.");
+    ModelEvaluator.confusionMatrix(y_test, predictionsOnTestSet);
 
   }
 }

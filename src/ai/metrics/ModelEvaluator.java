@@ -35,4 +35,51 @@ public class ModelEvaluator
     accuracy = (good/(good+bad))*100;
     return accuracy;
   }
+
+  //c.m. for a binary situation. everything should be 0 or 1.
+  public static void confusionMatrix(double[] yLabels, double[] predictedYLabels)
+  {
+    int tp = 0; //true positives
+    int tn = 0; //true negatives
+    int fp = 0; //false positives
+    int fn = 0; //false negatives
+    int actualZero = 0;
+    int actualOne = 0;
+
+    for(int i = 0; i < predictedYLabels.length; i++)
+    {
+      //true positive
+      if ((yLabels[i] == predictedYLabels[i]) && (yLabels[i] == 1))
+      {
+        tp++;
+        actualOne++;
+      }
+      //true negatives
+      else if ((yLabels[i] == predictedYLabels[i]) && (yLabels[i] == 0))
+      {
+        tn++;
+        actualZero++;
+      }
+      //false positives
+      else if ((yLabels[i] == 0) && (predictedYLabels[i] == 1))
+      {
+        fp++;
+        actualZero++;
+      }
+      //false negatives
+      else if ((yLabels[i] == 1) && (predictedYLabels[i] == 0))
+      {
+        fn++;
+        actualOne++;
+      }
+    }
+
+    System.out.print("\n*****Confusion Matrix*****\n");
+    System.out.print("\tPredicted:0\tPredicted:1\n");
+    System.out.print("Actual:0\t" + tn +"\t" + fp + "\n");
+    System.out.print("Actual:1\t" + fn +"\t" + tp + "\n");
+    System.out.println("\nSensitivity=\t" + ((double)tp/actualOne));
+    System.out.println("False Positive Rate=\t" + ((double)fp/actualZero));
+
+  }
 }
