@@ -26,7 +26,7 @@ public class AccVSAlpha&Iteration
 	
 	for(int iteration = 1000; iteration < 50000; iteration += 5000){
 		
-		for(double alpha = 0.01; alpha < 0.100; alpha += 0.010){
+		for(double alpha = 0.001; alpha < 0.100; alpha += 0.005){
 			
 			for (int i = 0; i < accuracy.length; i++){
 					
@@ -70,7 +70,7 @@ public class AccVSAlpha&Iteration
 			
 			System.out.printf("%.5f", acc);
 			System.out.print(",");
-			System.out.printf("%.2f", alpha);
+			System.out.printf("%.3f", alpha);
 			System.out.print(",");
 			System.out.println(iteration);
 			
