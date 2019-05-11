@@ -19,14 +19,14 @@ public class AccVSAlpha&Iteration
   {
     //An instance of a dataloader object is created first.
     Dataloader data = new Dataloader();
-	int time = 50;
+	int time = 100;
 	double[] accuracy = new double [time];
 	double sum = 0.;
 	double acc = 0.;
 	
 	for(int iteration = 1000; iteration < 50000; iteration += 5000){
 		
-		for(double alpha = 0.001; alpha < 0.100; alpha += 0.005){
+		for(double alpha = 0.001; alpha < 0.1; alpha += 0.001){
 			
 			for (int i = 0; i < accuracy.length; i++){
 					
