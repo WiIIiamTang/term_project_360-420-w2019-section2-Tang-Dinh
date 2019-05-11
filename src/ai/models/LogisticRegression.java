@@ -134,12 +134,11 @@ public class LogisticRegression
   ///Computes the value of the costFunction
   ////////////////////////////////////////////
 
-  public double costFunction(double[][] x, double[] y, double[] beta, double c)
+  public double costFunction(double[][] x, double[] y, double[] beta)
   {
     int m = x.length;
     double cost = 0.;
     double sum = 0.;
-    double regularizationSum = 0;
     int n = beta.length;
 
     for (int i = 0; i < m; i++)
@@ -153,12 +152,9 @@ public class LogisticRegression
           sum = sum + Math.log(1 - hypothesis(x, beta, i));
         }
     }
-    for(int j = 0; j < n; j++ )
-    {
-      regularizationSum += (beta[j]*beta[j]);
-    }
 
-    cost= -(sum/m) + (c/(2*m)) * regularizationSum;
+
+    cost= -(sum/m);
 
     return cost;
   }
@@ -167,7 +163,7 @@ public class LogisticRegression
   ///Computes the value of the partial derivative
   /////////////////////////////////////////////////
 
-  public double gradient(double[][] x, double[] y, double[] beta, int betaNum, double c)
+  public double gradient(double[][] x, double[] y, double[] beta, int betaNum)
   {
     double sum = 0.;
     double toAdd = 0;
@@ -189,11 +185,6 @@ public class LogisticRegression
     }
     sum = sum/m;
 
-    if (betaNum != 0)
-    {
-      sum += ((c/m) * beta[betaNum]);
-    }
-
     return sum;
   }
 
@@ -203,16 +194,13 @@ public class LogisticRegression
   ///the optimal parameters
   /////////////////////////////////////////////
 
-  public void fit(double learningRate, double maxIterations, double regularizationParameter, boolean randomize)
+  public void fit(double learningRate, double maxIterations, boolean randomize)
   {
       double alpha = learningRate;
       double[] betaNew = new double[beta.length];
-      //double difference[] = new double[beta.length];
-      //double tolerance = 0.000000000000001;
       double iterations = 0;
-      //boolean checkDifference = true;
       double bestCost = 10000000;
-      double currentCost = costFunction(x_train,y_train,beta, regularizationParameter);
+      double currentCost = costFunction(x_train,y_train,beta);
 
       if (randomize == true)
       {
@@ -221,56 +209,34 @@ public class LogisticRegression
 
       while (iterations < maxIterations)
       {
-          currentCost = costFunction(x_train,y_train,beta, regularizationParameter);
+          currentCost = costFunction(x_train,y_train,beta);
 
           for(int i = 0; i < beta.length; i++)
           {
-             betaNew[i] = beta[i] - (alpha * gradient(x_train, y_train, beta, i, regularizationParameter));
-             //difference[i] = Math.abs(beta[i] - betaNew[i]);
+             betaNew[i] = beta[i] - (alpha * gradient(x_train, y_train, beta, i));
           }
 
-          if (currentCost < costFunction(x_train,y_train,betaNew, regularizationParameter))
+          for(int i = 0; i < beta.length;i++)
           {
-            //alpha = alpha / (1 + 0.1);
-            break;
+            beta[i] = betaNew[i];
           }
-          else
-          {
-
-            for(int i = 0; i < beta.length;i++)
-            {
-              beta[i] = betaNew[i];
-            }
-
-          }
-
-/*
-           for(int i = 0; i < difference.length; i++)
-           {
-                if (difference[i] > tolerance)
-                {
-                    break;
-                }
-            checkDifference = false;
-          } */
-
-          //if (currentCost < costFunction(x,y,beta)) break;
 
          //Print cost function every few iterations
+
          if(iterations % 1000 == 0)
          {
-           System.out.println("Cost at " + costFunction(x_train, y_train, beta, regularizationParameter));
+           //System.out.println("Cost at " + costFunction(x_train, y_train, beta));
            //System.out.println(gradient(x,y,beta,0));
          }
          iterations++;
 
       }
-      System.out.println("The loop was terminated. Total iterations: " + iterations + "\n");
+      //System.out.println("The loop was terminated. Total iterations: " + iterations + "\n");
 
   }
 
 
-  public void fit(double learningRate, double maxIterations, double regularizationParameter, boolean randomize, double checkForDifference)
+  public void fit(double learningRate, double maxIterations, boolean randomize, double checkForDifference)
   {
       double alpha = learningRate;
       double[] betaNew = new double[beta.length];
@@ -279,7 +245,7 @@ public class LogisticRegression
       double iterations = 0;
       boolean checkDifference = true;
       double bestCost = 1000000;
-      double currentCost = costFunction(x_train,y_train,beta, regularizationParameter);
+      double currentCost = costFunction(x_train,y_train,beta);
 
       if (randomize == true)
       {
@@ -288,27 +254,17 @@ public class LogisticRegression
 
       while (iterations < maxIterations && checkDifference == true)
       {
-          currentCost = costFunction(x_train,y_train,beta, regularizationParameter);
+          currentCost = costFunction(x_train,y_train,beta);
 
           for(int i = 0; i < beta.length; i++)
           {
-             betaNew[i] = beta[i] - (alpha * gradient(x_train, y_train, beta, i, regularizationParameter));
+             betaNew[i] = beta[i] - (alpha * gradient(x_train, y_train, beta, i));
              difference[i] = Math.abs(beta[i] - betaNew[i]);
           }
 
-          if (currentCost < costFunction(x_train,y_train,betaNew, regularizationParameter))
+          for(int i = 0; i < beta.length;i++)
           {
-            //alpha = alpha / (1 + 0.1);
-            break;
-          }
-          else
-          {
-
-            for(int i = 0; i < beta.length;i++)
-            {
-              beta[i] = betaNew[i];
-            }
-
+            beta[i] = betaNew[i];
           }
 
 
@@ -322,15 +278,16 @@ public class LogisticRegression
           }
 
          //Print cost function every few iterations
+         /*
          if(iterations % 1000 == 0)
          {
            System.out.println("Cost at " + costFunction(x_train, y_train, beta, regularizationParameter));
            //System.out.println(gradient(x,y,beta,0));
-         }
+         } **/
          iterations++;
 
       }
-      System.out.println("The loop was terminated. Total iterations: " + iterations + "\n");
+      //System.out.println("The loop was terminated. Total iterations: " + iterations + "\n");
 
   }
 

@@ -1,10 +1,6 @@
 package ai.metrics;
 
-/** Unfinished.
-** maybe add confusion matrix, cost function graph, roc curve, recall/precision table...
-**
-**
-*/
+import java.util.*;
 
 
 public class ModelEvaluator
@@ -20,12 +16,12 @@ public class ModelEvaluator
       if (yLabels[i] == predictedYLabels[i])
       {
         good++;
-        System.out.println(yLabels[i] + "  good   "  + predictedYLabels[i]);
+        //System.out.println(yLabels[i] + "  good   "  + predictedYLabels[i]);
       }
       else
       {
         bad++;
-        System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
+        //System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
       }
     }
 
@@ -34,6 +30,37 @@ public class ModelEvaluator
 
     accuracy = (good/(good+bad))*100;
     return accuracy;
+  }
+
+  public static double getBaselineAcc(double[] yLabels)
+  {
+    int one = 0;
+    int zero = 0;
+    double mostfreq = 0;
+
+    for (int i = 0; i < yLabels.length; i++)
+    {
+      if(yLabels[i] == 1.0)
+      {
+        one++;
+      }
+      else
+      {
+        zero++;
+      }
+    }
+
+    if (one > zero)
+    {
+      mostfreq = one;
+    }
+    else
+    {
+      mostfreq = zero;
+    }
+
+    return mostfreq/(one+zero);
+
   }
 
   //c.m. for a binary situation. everything should be 0 or 1.
@@ -89,5 +116,144 @@ public class ModelEvaluator
     System.out.println("Precision =\t\t" + ((double)tp/predictedOne));
     System.out.println("Prevalence =\t\t" + ((double)actualOne/(tp+tn+fp+fn)));
 
+  }
+
+  public static double linearSum(double[][] x, double[] beta, int row)
+  {
+      double sum = 0.;
+
+      sum = sum + beta[0];
+
+      for (int i = 1; i < beta.length; i++)
+      {
+          sum = sum + (beta[i] * x[row][i-1]);
+      }
+
+      return sum;
+  }
+
+  public static double hypothesis(double[][] x, double[] beta, int row)
+  {
+      double sigmoid = 0.;
+
+      sigmoid = 1/(1+Math.pow(Math.E,-linearSum(x, beta, row)));
+
+      return sigmoid;
+  }
+
+  public static double logLikelihood(double[][] x, double[] y, double[] beta)
+  {
+    int m = x.length;
+    double cost = 0.;
+    double sum = 0.;
+    int n = beta.length;
+
+    for (int i = 0; i < m; i++)
+    {
+        if (y[i] == 1.0)
+        {
+          sum = sum + (Math.log(hypothesis(x, beta, i)));
+        }
+        else
+        {
+          sum = sum + Math.log(1 - hypothesis(x, beta, i));
+        }
+    }
+
+    cost= (sum/m);
+
+    return cost;
+  }
+
+  public static double mcfaddenRSquared(double[][] x, double[] yLabels, double[] beta)
+  {
+    double rSquare = 0;
+    double ones = 0;
+    double zeroes = 0;
+    double overallProb = 0;
+    double[] overallBeta = new double[1];
+    double logLikeliOverall = 0;
+    double logLikeliModel = 0;
+
+    for (int i = 0; i < yLabels.length; i++)
+    {
+      if (yLabels[i] == 1)
+      {
+        ones++;
+      }
+      else
+      {
+        zeroes++;
+      }
+    }
+
+    overallProb = ones/(zeroes+ones);
+    overallBeta[0] = overallProb;
+
+    logLikeliOverall = logLikelihood(x, yLabels, overallBeta);
+    logLikeliModel = logLikelihood(x, yLabels, beta);
+
+    rSquare = (logLikeliOverall - logLikeliModel) / logLikeliOverall;
+
+
+
+    return rSquare;
+  }
+
+  public static void rankWeights(double[] array)
+  {
+    double temp = 0;
+    double max = 0.;
+    int maxIndex = 0;
+    int count = 0;
+
+    double[] original = new double[array.length];
+
+    for (int i = 0; i < original.length; i++)
+    {
+      original[i] = array[i];
+    }
+
+    System.out.println("\nWeight Ranking\nCoefficient\t\tFeatureNumber");
+
+
+		for (int j = 0; j < array.length; j++)
+		{
+			max = array[count];
+
+			for (int i = count; i < array.length; i++)
+			{
+				if (Math.abs(array[i]) >= Math.abs(max))
+				{
+					max = array[i];
+					maxIndex = i;
+				}
+			}
+			//System.out.print(max + "\t" + maxIndex + "\n");
+			temp = array[count];
+			array[count] = array[maxIndex];
+			array[maxIndex] = temp;
+
+			count++;
+    }
+
+    for(int i = 0; i < array.length; i++)
+    {
+      System.out.print(array[i] + "\t" + findOccurence(original, array[i]) + "\n");
+    }
+
+
+  }
+
+  public static int findOccurence(double[] array, double search)
+  {
+    for (int i = 0; i < array.length; i++)
+    {
+      if(array[i] == search)
+      {
+        return i;
+      }
+    }
+    return -1;
   }
 }

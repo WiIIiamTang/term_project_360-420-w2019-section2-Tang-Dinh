@@ -200,7 +200,7 @@ public class Dataloader
     int col = numRandC[1];
     int currentScanrow = 0;
 
-    System.out.println("Reading the dataset.txt and setting up the arrays...");
+    //System.out.println("Reading the dataset.txt and setting up the arrays...");
     //System.out.println(new File(".").getAbsoluteFile());
 
     //make the initial arrays
@@ -238,7 +238,7 @@ public class Dataloader
   }
 
 
-    System.out.println("Finished making arrays. There is an xArray with " + allX.length + " rows and " + allX[0].length + " columns, and a yArray (for labels) with " +  allY.length + " rows.");
+    //System.out.println("Finished making arrays. There is an xArray with " + allX.length + " rows and " + allX[0].length + " columns, and a yArray (for labels) with " +  allY.length + " rows.");
   }//end makeArrays
 
 
@@ -322,7 +322,7 @@ public class Dataloader
     double[]tempY = new double [allY.length];
 
 
-    System.out.println("Shuffling data...");
+    //System.out.println("Shuffling data...");
 
     try
     {
@@ -354,7 +354,7 @@ public class Dataloader
       System.out.println(e);
     }
 
-    System.out.println("Finished randomizing positions of data points.");
+    //System.out.println("Finished randomizing positions of data points.");
 
   }//end shuffleData
 
