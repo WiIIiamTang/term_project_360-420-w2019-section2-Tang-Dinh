@@ -49,6 +49,7 @@ Classes Update
      4. added ranking of weights by abs. value
  - added jmathplot to src
  - added new java file ROCgraph.java that will generate the ROC curve of a logistic regression model
+ - added new java file RecallPrecisiongraph.java that will generate the recall-precision curve of a logistic regression model
  - removed regularization parameter
  - removed print statements in logistic regression classes (Dataloader, LogisticRegression, FeatureScaling, ModelEvaluator)
  - added command line args in MachineLearn.java
