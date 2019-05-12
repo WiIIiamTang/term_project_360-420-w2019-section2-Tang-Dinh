@@ -259,7 +259,7 @@ public class LogisticRegression
          //Print cost function every few iterations
          if(iterations % 1000 == 0)
          {
-           System.out.println("Cost at: " + costFunction(x_train, y_train, beta, regularizationParameter));
+           System.out.println("Cost at " + costFunction(x_train, y_train, beta, regularizationParameter));
            //System.out.println(gradient(x,y,beta,0));
          }
          iterations++;

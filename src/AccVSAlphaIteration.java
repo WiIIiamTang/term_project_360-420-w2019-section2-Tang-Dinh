@@ -13,7 +13,7 @@ import ai.metrics.ModelEvaluator;
 */
 
 
-public class AccVSAlpha&Iteration
+public class AccVSAlphaIteration 
 {
   public static void main (String[] args)
   {
@@ -77,6 +77,7 @@ public class AccVSAlpha&Iteration
 			sum = 0.;
 			acc = 0.;
 			accuracy = new double [time];
+			
 
 		/*
 				//last step - lets get some way of evaluating the accuracy of the model:
