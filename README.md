@@ -47,10 +47,16 @@ Classes Update
      2. added confusion matrix and associated measures of error
      3. added McFadden's R squared value
      4. added ranking of weights by abs. value
- - added jmathplot to src
+ - added jmathplot library to src
  - added new java file ROCgraph.java that will generate the ROC curve of a logistic regression model
  - added new java file RecallPrecisiongraph.java that will generate the recall-precision curve of a logistic regression model
  - removed regularization parameter
  - removed print statements in logistic regression classes (Dataloader, LogisticRegression, FeatureScaling, ModelEvaluator)
  - added command line args in MachineLearn.java
  - cleaned up some unused code in the logistic regression class
+ 
+ ### 12-05-2019
+ - added new java file AccuracyVsAlphagraph.java, ToleranceVsAlpha.java, MultipleRuns.java (gives confusion matrix after certain number of tries)
+ - exploratory data jupyter notebook for wine dataset added
+ - most README descriptions moved to main page to gather information all in one place
+ - instructions updated
