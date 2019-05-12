@@ -13,7 +13,7 @@ import ai.metrics.ModelEvaluator;
 */
 
 
-public class MachineLearn
+public class Classification
 {
   public static void main (String[] args)
   {
