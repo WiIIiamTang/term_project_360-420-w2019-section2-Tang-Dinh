@@ -12,6 +12,8 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 
 # Logistic Regression
 
+To read about this project, consult the [report](/report) folder.
+
 **Instructions**: This is a binomial logistic regression. To run the main program (one instance of the logistic regression), go to the src folder, and compile and run Classification.java.
 
 To run multiple instances of the logistic regression and obtain the average accuracy over a certain number of tries, compile and run MultipleRuns.java.
