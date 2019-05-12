@@ -59,21 +59,21 @@ public class RecallPrecisiongraph
     }
 
     //Create plot
-    Plot2DPanel roc = new Plot2DPanel();
+    Plot2DPanel panel = new Plot2DPanel();
 
-    roc.addLinePlot("RecallPrecision curve", recall, precision);
-    roc.setAxisLabel(0, "Recall");
-    roc.getAxis(0).setLabelPosition(0.5,-0.1);
-    roc.setAxisLabel(1, "Precision");
-    roc.getAxis(1).setLabelPosition(-0.15,0.5);
+    panel.addLinePlot("RecallPrecision curve", recall, precision);
+    panel.setAxisLabel(0, "Recall");
+    panel.getAxis(0).setLabelPosition(0.5,-0.1);
+    panel.setAxisLabel(1, "Precision");
+    panel.getAxis(1).setLabelPosition(-0.15,0.5);
 
     BaseLabel title = new BaseLabel("Recall-Precision graph for Logistic Regression", Color.BLUE, 0.5, 1.1);
     title.setFont(new Font("Courier", Font.BOLD, 16));
-    roc.addPlotable(title);
+    panel.addPlotable(title);
 
     JFrame frame = new JFrame("Output of RecallPrecisiongraph.java");
     frame.setSize(525, 525);
-    frame.setContentPane(roc);
+    frame.setContentPane(panel);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

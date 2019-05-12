@@ -100,6 +100,14 @@ public class LogisticRegression
     }
   }
 
+  public void resetWeights()
+  {
+    for(int i = 0; i < beta.length; i++)
+    {
+      beta[i] = 0;
+    }
+  }
+
 
 
 
@@ -236,7 +244,7 @@ public class LogisticRegression
   }
 
 
-  public void fit(double learningRate, double maxIterations, boolean randomize, double checkForDifference)
+  public double fit(double learningRate, double maxIterations, boolean randomize, double checkForDifference)
   {
       double alpha = learningRate;
       double[] betaNew = new double[beta.length];
@@ -250,7 +258,7 @@ public class LogisticRegression
       if (randomize == true)
       {
         assignRandom(beta);
-    }
+      }
 
       while (iterations < maxIterations && checkDifference == true)
       {
@@ -288,7 +296,7 @@ public class LogisticRegression
 
       }
       //System.out.println("The loop was terminated. Total iterations: " + iterations + "\n");
-
+      return iterations;
   }
 
 

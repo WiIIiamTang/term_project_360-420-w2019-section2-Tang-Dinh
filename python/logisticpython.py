@@ -8,41 +8,46 @@ from sklearn.metrics import accuracy_score
 
 #ok so heres a better version in python it actually works on stuff
 #you can test it on wine, breast cancer, marks
+iterations = 100
+total_sum = 0
 
-#dataset = pd.read_csv("dataset/breast-cancer-wisconsin-copy.csv")
-dataset = pd.read_csv("dataset/dataset_wine1_copy.csv")
-#dataset = pd.read_csv("dataset/dataset_wine1_copy.csv")
-X = dataset.iloc[:, :-1].values
-y = dataset.iloc[:, -1]
+for i in range(0,iterations):
+    #dataset = pd.read_csv("dataset/breast-cancer-wisconsin-copy.csv")
+    dataset = pd.read_csv("dataset/dataset_wine1_copy.csv")
+    #dataset = pd.read_csv("dataset/dataset_wine1_copy.csv")
+    X = dataset.iloc[:, :-1].values
+    y = dataset.iloc[:, -1]
 
-X, y = shuffle(X, y)
+    X, y = shuffle(X, y)
 
-#print(X)
+    #print(X)
 
-#make arrays for train, test
-X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.30, random_state = 0)
+    #make arrays for train, test
+    X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.30, random_state = 0)
 
-#Scale
-sc_X = StandardScaler().fit(X_train)
-X_train = sc_X.transform(X_train)
-X_test = sc_X.transform(X_test)
+    #Scale
+    sc_X = StandardScaler().fit(X_train)
+    X_train = sc_X.transform(X_train)
+    X_test = sc_X.transform(X_test)
 
-#evaluate
-classifier = LogisticRegression()
-classifier.fit(X_train,y_train)
+    #evaluate
+    classifier = LogisticRegression(solver ='lbfgs')
+    classifier.fit(X_train,y_train)
 
-y_pred = classifier.predict(X_test)
+    y_pred = classifier.predict(X_test)
 
-cm = confusion_matrix(y_test,y_pred)
+    cm = confusion_matrix(y_test,y_pred)
 
-accuracy = accuracy_score(y_test,y_pred)
-sklearn_parameters = classifier.coef_
+    accuracy = accuracy_score(y_test,y_pred)
+    sklearn_parameters = classifier.coef_
+
+    total_sum += accuracy
 
 
 ######################################################
 ##print out the results
+average_acc = total_sum/iterations
+#print("\nParameters = ",sklearn_parameters)
+print("Average test accuracy = ", average_acc)
 
-print("\nParameters = ",sklearn_parameters)
-print("Test accuracy = ",accuracy)
-
-print("confustion matrix\n", cm)
+#print("confustion matrix\n", cm)
