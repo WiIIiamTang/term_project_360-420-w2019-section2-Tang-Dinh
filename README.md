@@ -1,7 +1,7 @@
 ﻿# 360-420 Intro to Programming
 
 
-**Term Project: Modeling Classification Problems in Machine Learning: Logistic Regression**
+**Modeling Classification Problems in Machine Learning: Logistic Regression**
 
 William Tang and Jason Dinh
 
