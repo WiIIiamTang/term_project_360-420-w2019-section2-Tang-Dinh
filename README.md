@@ -281,3 +281,7 @@ Classes Update
  - exploratory data jupyter notebook for wine dataset added
  - most README descriptions moved to main page to gather information all in one place
  - instructions updated
+ 
+ ### 13-05-2019
+ - MultipleRuns.java now correctly displays average + standard deviation of accuracy
+ - added additional instructions, example usage in src README file
