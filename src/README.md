@@ -20,7 +20,7 @@ There are additional java files that allow you make graphs. To use them, follow 
 See the [final report](/report/FinalReport) for information on our results, reproducing our results, and the parameters we used.
 
 
-### Creating a classifier
+### Creating a classifier: a simple example
 
 In general, you would want to first create a dataloader object and load your csv file in using the makeArrays method.
 
