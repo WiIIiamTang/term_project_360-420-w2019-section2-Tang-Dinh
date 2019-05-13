@@ -45,11 +45,11 @@ public class AccuracyVsTolerancegraph
     double[] numIterations = new double[100];
     int count = 0;
 
-    for(double tolerance = 0.0000001; tolerance < 0.001; tolerance += 0.00001)
+    for(double tolerance = 0.00000001; tolerance < 0.0001; tolerance += 0.000001)
     {
       classifier.resetWeights();
 
-      numIterations[count] = Math.log(classifier.fit(0.001,10000, false, tolerance)); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
+      numIterations[count] = Math.log(classifier.fit(0.001,30000, false, tolerance)); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
 
       predictionsOnTestSet = classifier.predictTestSet(0.5);
 

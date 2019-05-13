@@ -40,11 +40,11 @@ public class AccuracyVsAlphagraph
 
 
     double[] predictionsOnTestSet;
-    double[] accuracy = new double[1000];
-    double[] stepSize = new double[1000];
+    double[] accuracy = new double[100];
+    double[] stepSize = new double[100];
     int count = 0;
 
-    for(double alpha = 0.00001; alpha < 0.1; alpha += 0.0001)
+    for(double alpha = 0.0001; alpha < 0.1; alpha += 0.001)
     {
       classifier.resetWeights();
 

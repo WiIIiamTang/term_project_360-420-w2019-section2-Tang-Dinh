@@ -46,7 +46,7 @@ public class Classification
     //just use the data.return* methods to get your arrays
 
     //We'll fit this using gradient descent:
-    classifier.fit(1.0,20000,false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
+    classifier.fit(0.001,1000,false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
 
     //Now we can get the predictions with the trained model:
     double[] predictionsOnTrainSet = classifier.predictTrainSet(0.5);

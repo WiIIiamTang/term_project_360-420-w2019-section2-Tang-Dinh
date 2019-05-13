@@ -38,7 +38,7 @@ public class RecallPrecisiongraph
     //make a new classifier object with the arrays that we have:
     LogisticRegression classifier = new LogisticRegression(x_train, x_test, y_train, y_test);
     //We'll fit this using gradient descent:
-    classifier.fit(0.001,40000, false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
+    classifier.fit(0.001,10000, false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
 
     double[] recallPrecisionVars;
     double[] predictionsOnTestSet;
@@ -120,8 +120,8 @@ public class RecallPrecisiongraph
       }
     }
 
-    var[0] = (double)tp/(tp+fn);
-    var[1] = (double)tp/(tp+fp);
+    var[0] = (double)tp/Math.max(1, (tp+fn));
+    var[1] = (double)tp/Math.max(1,(tp+fp));
 
     return var;
 
