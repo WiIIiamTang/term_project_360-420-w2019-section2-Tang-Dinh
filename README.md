@@ -10,7 +10,20 @@ Section: 02
 
 Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 
-# Logistic Regression
+# 0. Project Structure
+*CE* : Independent study projects, by Jason and William. Extension of term project. Supervisor: Jean-François Brière
+
+*python* : sklearn logisitic regression implementation.
+
+*report* : contains final report, preliminary report.
+
+*resources* : all graphs, images, data generated from project. Also contains the original datasets used in the regression.
+
+*src* : source folder for all the code.
+
+*UCI_wine_data_exploratory.ipynb* : jupyter notebook for some exploratory data.
+
+# 1. Logistic Regression
 
 **To read about this project, consult the [report](/report) folder. The main dataset we look at in this project is the UCI wine dataset, classifying wine 1 vs. wine 2.**
 
@@ -26,6 +39,8 @@ There are also some things to create graphs. You can run AccuracyVsAlphagraph or
 
 Concerning reproducibility, read the [final report](/report/FinalReport) for parameters that we used to generate our results.
 
+For more information on using the program, make sure to read the classes description found here and then consult [this short tutorial](/src).
+
 
 #### Validation
 
@@ -38,7 +53,7 @@ You can change what the program classifies by changing the file path in the comm
 
 There is also a [python implementation](/python) using sklearn that we use to compare our model with a premade machine learning library. Finally, we can compare our model against the [kNN classifier done in class](https://github.com/WiIIiamTang/w19-360420-machine-learning/tree/wine).
 _____________________________________________________________________________________________________________________
-# Data
+# 2. Data
 
 In the [resources/originaldata](/resources/originaldata) folder, you'll see the original sets of data. Most of the datasets were gathered from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/index.php), with the exception of marks.csv. We got this dataset from a machine learning workshop by ConcordAI on 29/03/2019.
 
@@ -52,7 +67,7 @@ The modified datasets can be found [here](/src/dataset/).
 
 
 _____________________________________________________________________________________________________________________
-# Classes description: ai folder
+# 3. Classes description: ai folder
 
 The [/ai](/ai) directory contains useful classes for the binominal logistic regression. If you want to recreate the project or make your own logistic regression program or something, you can use these classes for yourself. See below for details:
 
@@ -232,7 +247,7 @@ public static void rankWeights(double[] array)
 
 _____________________________________________________________________________________________________________________
 
-# Changelog
+# 4. Changelog
 
 ### 26-04-2019
 - first "working" version LogisticWine1 + LogisticCancer
@@ -285,3 +300,4 @@ Classes Update
  ### 13-05-2019
  - MultipleRuns.java now correctly displays average + standard deviation of accuracy
  - added additional instructions, example usage in src README file
+ - requirements.txt in python
