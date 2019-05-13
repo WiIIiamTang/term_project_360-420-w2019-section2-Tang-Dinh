@@ -19,7 +19,7 @@ Also look at the jupyter notebook for some exploratory data analysis.
 
 To run multiple instances of the logistic regression and obtain the average accuracy over a certain number of tries, compile and run MultipleRuns.java.
 
-The program uses command line arguments. Type in the path to the file you want to perform a logistic regression on. In MultipleRuns.java, you also have to indicate how many runs to do. Usually you would use the datasets provided [here](/src/datasets).
+The program uses command line arguments. Type in the path to the file you want to perform a logistic regression on. In MultipleRuns.java, you also have to indicate how many runs to do. Usually you would use the datasets provided [here](/src/dataset).
 
 There are also some things to create graphs. You can run AccuracyVsAlphagraph or AccuracyVsTolerancegraph to get a sense of how a parameter is affecting the accuracy of your model for one single instance. There is also the possibility of creating a ROC curve and a recall-precision graph, which may useful in choosing the prediction threshold and evaluating the performance of the model.
 
