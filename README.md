@@ -13,6 +13,7 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 # Logistic Regression
 
 To read about this project, consult the [report](/report) folder.
+Also look at the jupyter notebook for some exploratory data analysis.
 
 **Instructions**: This is a binomial logistic regression. To run the main program (one instance of the logistic regression), go to the src folder, and compile and run Classification.java.
 
