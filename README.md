@@ -12,10 +12,11 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 
 # Logistic Regression
 
-To read about this project, consult the [report](/report) folder.
-Also look at the jupyter notebook for some exploratory data analysis.
+**To read about this project, consult the [report](/report) folder. The main dataset we look at in this project is the UCI wine dataset, classifying wine 1 vs. wine 2.**
 
-**Instructions**: This is a binomial logistic regression. To run the main program (one instance of the logistic regression), go to the src folder, and compile and run Classification.java.
+Also look at the jupyter notebook for some exploratory data analysis on the wine dataset: in the last section, some scatter plots are presented in the case wine 1 vs. wine 2 classification.
+
+**Instructions**: This is a binomial logistic regression, it only classifies between two classes at a time. To run the main program (one instance of the logistic regression), go to the src folder, and compile and run Classification.java.
 
 To run multiple instances of the logistic regression and obtain the average accuracy over a certain number of tries, compile and run MultipleRuns.java.
 
@@ -31,11 +32,11 @@ Concerning reproducibility, read the [final report](/report/FinalReport) for par
 Use the methods provided in the [metrics](/src/ai/metrics) to check the results of the program with the real class labels.
 
 Also, we checked if our implementation of logistic regression was working correctly by testing it against a few other datasets.
-We used the breast cancer data as well as some school exam marks.
+We used some other combinations of the wine dataset, the breast cancer data as well as some school exam marks.
 
 You can change what the program classifies by changing the file path in the command line argument.
 
-There is also a [python implementation](/python) using sklearn that we use to compare our model with a premade machine learning library.
+There is also a [python implementation](/python) using sklearn that we use to compare our model with a premade machine learning library. Finally, we can compare our model against the [kNN classifier done in class](https://github.com/WiIIiamTang/w19-360420-machine-learning/tree/wine).
 _____________________________________________________________________________________________________________________
 # Data
 
