@@ -37,7 +37,7 @@ data1.shuffleData();
 data1.trainTestSplit(0.70);
 ```
 The object now has the training/test splits ready. If you want to scale your features (with a standardization to z-scores, for example), you can
-do so with the FeatureScaling class. For the standardScaler method, you would want to pass in the training set first, and then the test set.
+do so with the FeatureScaling class. For the standardScaler method, you would want to pass in the training set first, and then the test set. If you do this step, you would need to get the training and test sets from the dataloader object first (use the return methods).
 
 ```java
 FeatureScaling.standardScaler(xTrainArray, xTestArray);
