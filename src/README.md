@@ -22,6 +22,9 @@ See the [final report](/report/FinalReport) for information on our results, repr
 
 ### Creating a classifier: a simple example
 
+If you haven't done so already, see the classes description for more information on how to use these methods and the parameters that they require.
+
+
 In general, you would want to first create a dataloader object and load your csv file in using the makeArrays method.
 
 ```java
@@ -49,8 +52,6 @@ Now all the data is ready. Create a LogisticRegression object with the training/
 LogisticRegression model = new LogisticRegression(xTrainArray, xTestArray, yTrainArray, yTestArray);
 model.fit(0.1,50000,false,0.0000001);
 ```
-See the classes description for more information on how to use these methods and the parameters that they require.
-
 After you've run the gradient descent, the weights should have optimized. The LogisticRegression class also has a couple methods that return the
 predicted label based on these weights:
 
