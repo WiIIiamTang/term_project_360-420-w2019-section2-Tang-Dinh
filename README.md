@@ -144,7 +144,7 @@ public static void minMaxScaler(double[][] xTrainArray, double[][] xTestArray)
 //test set data is scaled with the training max and min.
 ```
 
-### LogisticRegression.java
+## LogisticRegression.java
 
 - This is what you would use if you want to perform a logistic regression on your dataset. You always have the option of returning or printing the arrays with the appropriate method (eg. logisticregression.returnXTrainArray(), logisticregression.printXTrainArray()).
 - construct the object first by passing in the 4 training/test sets like so:
