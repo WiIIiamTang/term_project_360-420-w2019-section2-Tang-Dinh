@@ -37,7 +37,7 @@ You can change what the program classifies by changing the file path in the comm
 
 There is also a [python implementation](/python) using sklearn that we use to compare our model with a premade machine learning library.
 _____________________________________________________________________________________________________________________
-# Datasets
+# Data
 
 In the [resources/originaldata](/resources/originaldata) folder, you'll see the original sets of data. Most of the datasets were gathered from the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/index.php), with the exception of marks.csv. We got this dataset from a machine learning workshop by ConcordAI on 29/03/2019.
 
