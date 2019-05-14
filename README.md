@@ -35,7 +35,7 @@ To run multiple instances of the logistic regression and obtain the average accu
 
 The program uses command line arguments. Type in the path to the file you want to perform a logistic regression on. In MultipleRuns.java, you also have to indicate how many runs to do. Usually you would use the datasets provided [here](/src/dataset).
 
-There are also some things to create graphs. You can run AccuracyVsAlphagraph or AccuracyVsTolerancegraph to get a sense of how a parameter is affecting the accuracy of your model for one single instance. There is also the possibility of creating a ROC curve and a recall-precision graph, which may useful in choosing the prediction threshold and evaluating the performance of the model.
+There are also some things to create graphs. You can run AccuracyVsAlphagraph or AccuracyVsTolerancegraph to get a sense of how a parameter is affecting the accuracy of your model for one single instance. There is also the possibility of creating a ROC curve and a recall-precision graph, which may useful in choosing the prediction threshold and evaluating the performance of the model. Note that these graphs are created for only one single run of the logisitic regression and as such, don't really represent the model as a whole. You would want to use the MultipleRuns.java and get an average over a couple hundred runs for better graphs.
 
 Concerning reproducibility, read the [final report](/report/FinalReport) for parameters that we used to generate our results.
 
