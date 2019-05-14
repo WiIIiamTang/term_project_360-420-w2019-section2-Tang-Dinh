@@ -46,8 +46,8 @@ For more information on using the program, make sure to read the classes descrip
 
 Use the methods provided in the [metrics](/src/ai/metrics) to check the results of the program with the real class labels.
 
-Also, we checked if our implementation of logistic regression was working correctly by testing it against a few other datasets.
-We used some other combinations of the wine dataset, the breast cancer data as well as some school exam marks.
+Although our project concentrated on the wine dataset, you can use our implementation of logistic regression and test it against a few other datasets.
+There are other combinations of the wine dataset, the breast cancer data as well as some school exam marks.
 
 You can change what the program classifies by changing the file path in the command line argument.
 
