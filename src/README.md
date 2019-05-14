@@ -2,7 +2,7 @@
 
 Make sure you have a good dataset in csv format beforehand. [Read about some additional requirements here](/src/dataset).
 
-For logistic regression, you can start off by running the code we already made, Classification.java and MultipleRuns.java.
+For logistic regression, you can start off by running the code we already made, Classification.java and MultipleRuns.java. All the parameters in the logistic regression can be modified in the code.
 When you run the program, you'll have to indicate the file path. For example:
 
 ```
