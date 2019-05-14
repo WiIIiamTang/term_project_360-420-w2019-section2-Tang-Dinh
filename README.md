@@ -29,7 +29,9 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 
 Also look at the jupyter notebook for some exploratory data analysis on the wine dataset: in the last section, some scatter plots are presented in the case wine 1 vs. wine 2 classification.
 
-**Instructions**: This is a binomial logistic regression, it only classifies between two classes at a time. To run the main program (one instance of the logistic regression), go to the src folder, and compile and run Classification.java.
+**Instructions**: This is a binomial logistic regression, it only classifies between two classes at a time. **The two main java files in this project are Classification.java and MultipleRuns.java**.
+
+To run the main program (one instance of the logistic regression), go to the src folder, and compile and run Classification.java.
 
 To run multiple instances of the logistic regression and obtain the average accuracy over a certain number of tries, compile and run MultipleRuns.java.
 
