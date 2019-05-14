@@ -5,6 +5,7 @@
 
 William Tang and Jason Dinh
 
+Wine Classification
 
 Section: 02
 
