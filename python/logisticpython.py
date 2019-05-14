@@ -8,8 +8,9 @@ from sklearn.metrics import accuracy_score
 
 #ok so heres a better version in python it actually works on stuff
 #you can test it on wine, breast cancer, marks
-iterations = 100
+iterations = 1000
 total_sum = 0
+list = list()
 
 for i in range(0,iterations):
     #dataset = pd.read_csv("dataset/breast-cancer-wisconsin-copy.csv")
@@ -41,13 +42,30 @@ for i in range(0,iterations):
     accuracy = accuracy_score(y_test,y_pred)
     sklearn_parameters = classifier.coef_
 
-    total_sum += accuracy
+    list.append(accuracy)
 
 
 ######################################################
 ##print out the results
-average_acc = total_sum/iterations
+def mean (yourlist):
+    sum = 0
+    for a in yourlist:
+        sum += a
+
+    return sum/len(yourlist)
+
+def sd (yourlist):
+    average = mean(yourlist)
+    sum = 0
+    for a in yourlist:
+        sum += (a - average)**2
+
+    return sum/len(yourlist)
+
+average_acc = mean(list)
+standard_deviation = sd(list)
 #print("\nParameters = ",sklearn_parameters)
 print("Average test accuracy = ", average_acc)
+print("Standard deviation = ", standard_deviation)
 
 #print("confustion matrix\n", cm)

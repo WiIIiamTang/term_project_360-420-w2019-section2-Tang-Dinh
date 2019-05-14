@@ -44,10 +44,10 @@ public class MultipleRuns
       LogisticRegression classifier = new LogisticRegression(x_train, x_test, y_train, y_test);
 
 
-      classifier.fit(0.01,5000,false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
+      classifier.fit(0.1,5000,false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
 
       double[] predictionsOnTrainSet = classifier.predictTrainSet(0.5);
-      double[] predictionsOnTestSet = classifier.predictTestSet(0.5);
+      double[] predictionsOnTestSet = classifier.predictTestSet(1.0);
 
       for(int j = 0; j < y_test.length; j++)
       {

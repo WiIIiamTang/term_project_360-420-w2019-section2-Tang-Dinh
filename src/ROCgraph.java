@@ -38,7 +38,7 @@ public class ROCgraph
     //make a new classifier object with the arrays that we have:
     LogisticRegression classifier = new LogisticRegression(x_train, x_test, y_train, y_test);
     //We'll fit this using gradient descent:
-    classifier.fit(0.001,1000, false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
+    classifier.fit(0.1,5000, false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
 
     double[] rocVars;
     double[] predictionsOnTestSet;
