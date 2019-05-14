@@ -15,7 +15,9 @@ In MultipleRuns.java, you'll also have to indicate the number of iterations you 
 java MultipleRuns dataset/wine1vs2.txt 1000
 ```
 
-There are additional java files that allow you make graphs. To use them, follow the same syntax as before. Do not run AccVSAlphaIteration.java, it is only there to show what code we ran to gather data and plot the heatmap in excel.
+There are additional java files that allow you make graphs. To use them, follow the same syntax as before. Because these graphs only run on one single instance of a logistic regression and not an average over a couple hundred runs, we wouldn't recommend using them to represent the general model; they can help, however, to get a sense of how the regression is performing.
+
+Do not run AccVSAlphaIteration.java, it is only there to show what code we ran to gather data and plot the heatmap in excel.
 
 See the [final report](/report/FinalReport) for information on our results, reproducing our results, and the parameters we used.
 
