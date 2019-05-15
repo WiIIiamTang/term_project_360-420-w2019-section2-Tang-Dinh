@@ -22,7 +22,7 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 
 *resources* : all graphs, images, data generated from project. Also contains the original datasets used in the regression.
 
-*src* : source folder for all the code.
+*src* : source folder for all the code of our logistic regression model in java.
 
 *UCI_wine_data_exploratory.ipynb* : jupyter notebook for some exploratory data.
 
