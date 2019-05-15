@@ -14,10 +14,6 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 # 0. Project Structure
 *CE* : Independent study projects, by Jason and William. Extension of term project. Supervisor: Jean-François Brière
 
-*kNN - Class Model*: The kNN classifier we used to compare our logistic regression model to.
-
-*python* : sklearn logisitic regression implementation.
-
 *report* : contains final report, preliminary report.
 
 *resources* : all graphs, images, data generated from project. Also contains the original datasets used in the regression.
