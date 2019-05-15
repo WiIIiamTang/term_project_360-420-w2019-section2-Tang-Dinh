@@ -6,11 +6,10 @@ import java.util.*;
 
 
 /**
-** Machine learning program - Logistic Regression
-** This shows how we can classify a dataset with logistic regression with a few machine learning tools we made
+** Logistic Regression for multiple runs
 **
-** authors: William Tang and Jason Dinh
-** check the github(@WiIIiamTang) for full documentation on the classes
+** prints average acc + standard deviation at the end
+** also displays the confusion matrix
 */
 
 
@@ -25,6 +24,7 @@ public class MultipleRuns
     ArrayList<Double> allPredictions = new ArrayList<Double>();
     ArrayList<Double> allAccuracies = new ArrayList<Double>();
 
+    //This is just normal logistic regression, repeated for however many times you want. see Classification.java for the comments on what is happening.
     for (int i = 0; i < Integer.parseInt(args[1]); i++)
     {
       data.makeArrays(args[0]);
@@ -63,17 +63,21 @@ public class MultipleRuns
     double[] allLabels = new double[allTrueLabels.size()];
     double[] allPredictedLabels = new double[allPredictions.size()];
 
+
+    //we'll move all the accuracies, labels, and predictions to some normal arrays.
     for(int x = 0; x < allLabels.length; x++)
     {
       allLabels[x] = allTrueLabels.get(x);
       allPredictedLabels[x] = allPredictions.get(x);
     }
 
+    //average and s.d. can just be obtained from calling a few methods on the acc. array.
     System.out.println("The average accuracy is " + average(allAccuracies));
     System.out.println("The standard deviation is " + sd(allAccuracies));
 
     System.out.println("\nHere is the confusion matrix: ");
 
+    //we needed the labels and predictions stored to create the confustion matrix after.
     ModelEvaluator.confusionMatrix(allLabels, allPredictedLabels);
 
 

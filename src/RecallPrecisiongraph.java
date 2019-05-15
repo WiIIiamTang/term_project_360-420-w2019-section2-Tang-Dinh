@@ -14,15 +14,13 @@ public class RecallPrecisiongraph
 {
   public static void main (String[] args)
   {
-    //An instance of a dataloader object is created first.
+    //normal log regression stuff:
     Dataloader data = new Dataloader();
 
-    //We'll be using the wine dataset.
     data.makeArrays(args[0]);
     data.shuffleData();
     data.trainTestSplit(0.70);
 
-    //the dataloader object now has the training/test arrays ready. lets get them:
     double [][] x_train, x_test;
     double [] y_train, y_test;
 
@@ -31,13 +29,10 @@ public class RecallPrecisiongraph
     y_train = data.returnYTrainArray();
     y_test = data.returnYTestArray();
 
-    //Now we can scale them to z scores using the feature scaler:
     FeatureScaling.standardScaler(x_train, x_test);
 
-    //Now we can do logistic regression stuff.
-    //make a new classifier object with the arrays that we have:
     LogisticRegression classifier = new LogisticRegression(x_train, x_test, y_train, y_test);
-    //We'll fit this using gradient descent:
+
     classifier.fit(0.001,10000, false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
 
     double[] recallPrecisionVars;
@@ -46,6 +41,9 @@ public class RecallPrecisiongraph
     double[] precision = new double[100];
     int count = 0;
 
+    //now we'll iterate through a bunch of different thresholds of prediction, and get the recall and precision
+    //using a custom method.
+    
     for(double threshold = 0.0; threshold < 1.0; threshold += 0.01)
     {
       predictionsOnTestSet = classifier.predictTestSet(threshold);

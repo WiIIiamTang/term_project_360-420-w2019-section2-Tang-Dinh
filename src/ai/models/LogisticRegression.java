@@ -1,9 +1,7 @@
 package ai.models;
 
 /*
-**
 ** construct the object by passing in the arrays first. then you can do logistic regression.
-**
 */
 
 public class LogisticRegression
@@ -25,7 +23,7 @@ public class LogisticRegression
     y_test = yTestArray;
   }
 
-  //some methods to return the arrays again..
+  //some methods to return the arrays..
   public double[] returnWeights()
   {
     return beta;
@@ -110,6 +108,7 @@ public class LogisticRegression
 
 
 
+  //linear sum of weights and feature var.
 
   public double linearSum(double[][] x, double[] beta, int row)
   {
@@ -125,9 +124,8 @@ public class LogisticRegression
       return sum;
   }
 
-  ///////////////////////////////////////////
-  ///Computes the value of the hypothesis func
-  ////////////////////////////////////////////
+
+  //Computes the value of the hypothesis func
 
   public double hypothesis(double[][] x, double[] beta, int row)
   {
@@ -138,9 +136,8 @@ public class LogisticRegression
       return sigmoid;
   }
 
-  //////////////////////////////////////////
-  ///Computes the value of the costFunction
-  ////////////////////////////////////////////
+
+  //Computes the value of the costFunction
 
   public double costFunction(double[][] x, double[] y, double[] beta)
   {
@@ -167,9 +164,8 @@ public class LogisticRegression
     return cost;
   }
 
-  //////////////////////////////////////////////
-  ///Computes the value of the partial derivative
-  /////////////////////////////////////////////////
+
+  //Computes the value of the partial derivative
 
   public double gradient(double[][] x, double[] y, double[] beta, int betaNum)
   {
@@ -196,19 +192,14 @@ public class LogisticRegression
     return sum;
   }
 
-  ////////////////////////////////////////////
-  ///Performs the gradient descent method
-  ///and returns the theta array containing
-  ///the optimal parameters
-  /////////////////////////////////////////////
+
+  //Performs the gradient descent method
 
   public void fit(double learningRate, double maxIterations, boolean randomize)
   {
       double alpha = learningRate;
       double[] betaNew = new double[beta.length];
       double iterations = 0;
-      double bestCost = 10000000;
-      double currentCost = costFunction(x_train,y_train,beta);
 
       if (randomize == true)
       {
@@ -217,7 +208,6 @@ public class LogisticRegression
 
       while (iterations < maxIterations)
       {
-          currentCost = costFunction(x_train,y_train,beta);
 
           for(int i = 0; i < beta.length; i++)
           {
@@ -244,6 +234,9 @@ public class LogisticRegression
   }
 
 
+  //Performs the gradient descent method
+  //and returns the number of iterations.
+
   public double fit(double learningRate, double maxIterations, boolean randomize, double checkForDifference)
   {
       double alpha = learningRate;
@@ -252,8 +245,6 @@ public class LogisticRegression
       double tolerance = checkForDifference;
       double iterations = 0;
       boolean checkDifference = true;
-      double bestCost = 1000000;
-      double currentCost = costFunction(x_train,y_train,beta);
 
       if (randomize == true)
       {
@@ -262,7 +253,6 @@ public class LogisticRegression
 
       while (iterations < maxIterations && checkDifference == true)
       {
-          currentCost = costFunction(x_train,y_train,beta);
 
           for(int i = 0; i < beta.length; i++)
           {
@@ -300,6 +290,8 @@ public class LogisticRegression
   }
 
 
+  //assigns random doubles of 0 to 1 to the weights.
+
   public void assignRandom(double[]array)
   {
     double max = 1.0;
@@ -314,6 +306,8 @@ public class LogisticRegression
     }
   }
 
+  //returns an array holding all the predictions in probability
+
   public double[] getPredictionsProbabilityTrain()
   {
     double[] prob = new double[x_train.length];
@@ -325,6 +319,8 @@ public class LogisticRegression
 
     return prob;
   }
+
+  //returns an array holding all the predictions in probability
 
   public double[] getPredictionsProbabilityTest()
   {
@@ -338,7 +334,7 @@ public class LogisticRegression
     return prob;
   }
 
-
+  //returns an array holding all the predictions
   public double[] predictTrainSet(double predictionThreshold)
   {
     double [] predicted = new double[x_train.length];
@@ -363,6 +359,8 @@ public class LogisticRegression
 
   }
 
+
+  //returns an array holding all the predictions
   public double[] predictTestSet(double predictionThreshold)
   {
     double [] predicted = new double[x_test.length];

@@ -6,8 +6,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
-#ok so heres a better version in python it actually works on stuff
-#you can test it on wine, breast cancer, marks
+#logistic regression, scikit learn.
+
+
 iterations = 1000
 total_sum = 0
 list = list()
