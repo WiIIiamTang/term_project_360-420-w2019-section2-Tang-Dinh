@@ -1,5 +1,5 @@
-class ModelEvaluator{
-    getAccuracy(labels, predictedLabels){
+//class ModelEvaluator{
+    function getAccuracy(labels, predictedLabels){
         var good = 0;
         var total = 0;
         var accuracy = 0;
@@ -16,7 +16,7 @@ class ModelEvaluator{
         return accuracy;
     }
 
-    confusionMatrix(labels, predictedLabels){
+    function confusionMatrix(labels, predictedLabels){
         var truePos = 0;    //true positives
         var trueNeg = 0;    //true negatives
         var falPos = 0;     //false positives
@@ -59,7 +59,7 @@ class ModelEvaluator{
         }
     }
 
-    getBaselineAcc(labels){
+    function getBaselineAcc(labels){
         var one = 0;
         var zero = 0;
         var mostFreq = 0;
@@ -81,7 +81,7 @@ class ModelEvaluator{
         return mostFreq/(one+zero);
     }
 
-    linearSum(x, beta, row) {
+    function linearSum(x, beta, row) {
         var sum = 0.;
     
         sum = sum + beta[0];
@@ -93,13 +93,13 @@ class ModelEvaluator{
         return sum;
     }
 
-    hypothesis(x, beta, row) {
+    function hypothesis(x, beta, row) {
         var sigmoid = 0.;
         sigmoid = 1/1+(Math.pow(Math.E,-linearSum(x,beta,row)));
         return sigmoid;
     }
 
-    logLikelihood(x, y, beta){
+    function logLikelihood(x, y, beta){
         var m = x.length;
         var cost = 0;
         var sum = 0;
@@ -117,7 +117,7 @@ class ModelEvaluator{
         return cost;
     }
 
-    mcfaddenRSquared(x, labels, beta){
+    function mcFaddenRSquared(x, labels, beta){
         var rSquare = 0;
         var ones = 0;
         var zeroes = 0;
@@ -145,7 +145,7 @@ class ModelEvaluator{
         return rSquare;
     }
     
-    rankWeights(array){
+    function rankWeights(array){
         var temp = 0;
         var max = 0.;
         var maxIndex = 0;
@@ -182,7 +182,7 @@ class ModelEvaluator{
         }
     }
     
-    findOccurence(array, num){
+    function findOccurence(array, num){
         for(var i = 0; i < array.length; i++){
             if (array[i] === num){
                 return i;
@@ -190,4 +190,4 @@ class ModelEvaluator{
         }
         return -1;
     }
-}
+//}

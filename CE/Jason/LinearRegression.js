@@ -1,10 +1,10 @@
 class LogisticRegression{
     constructor(xTrainArray, xTestArray, yTrainArray, yTestArray) {
-        beta = new Array(xTrainArray[0].length+1);
-        x_train = xTrainArray;
-        x_test = xTestArray;
-        y_train = yTrainArray;
-        y_test = yTestArray;
+        this._beta = new Array(xTrainArray[0].length+1);
+        this._xTrain = xTrainArray;
+        this._xTest = xTestArray;
+        this._yTrain = yTrainArray;
+        this._yTest = yTestArray;
     }
 
     linearSum(x, beta, row) {
@@ -85,10 +85,10 @@ class LogisticRegression{
         }
     
         while (iterations < maxIterations){
-            currentCost = costFunction(x_train, y_train, beta, regularizationSum);
+            currentCost = costFunction(xTrain, yTrain, beta, regularizationSum);
     
             for(var i = 0; i < beta.length; i++){
-                betaNew[i] = beta[i] - (alpha * gradient(x_train, y_train, beta, i, regularizationParameter));
+                betaNew[i] = beta[i] - (alpha * gradient(xTrain, yTrain, beta, i, regularizationParameter));
             }
     
             for(var i = 0; i < beta.length;i++) {
@@ -96,7 +96,7 @@ class LogisticRegression{
             }
     
             if(iterations % 1000 === 0) {
-                console.log("Cost at " + costFunction(x_train, y_train, beta));
+                console.log("Cost at " + costFunction(xTrain, yTrain, beta));
                 console.log(gradient(x,y,beta,0));
             }
             iterations++;
@@ -113,17 +113,17 @@ class LogisticRegression{
         var iterations = 0;
         var checkDifference = true;
         var bestCost = 1000000;
-        var currentCost = costFunction(x_train, y_train, beta);
+        var currentCost = costFunction(xTrain, yTrain, beta);
     
         if (randomize === true) {
             assignRandom(beta);
         }
     
         while (iterations < maxIterations && checkDifference === true) {
-            currentCost = costFunction(x_train,y_train,beta);
+            currentCost = costFunction(xTrain,yTrain,beta);
     
             for(var i = 0; i < beta.length; i++) {
-                betaNew[i] = beta[i] - (alpha * gradient(x_train, y_train, beta, i));
+                betaNew[i] = beta[i] - (alpha * gradient(xTrain, yTrain, beta, i));
                 difference[i] = Math.abs(beta[i] - betaNew[i]);
             }
     
@@ -140,7 +140,7 @@ class LogisticRegression{
             }
     
             if(iterations % 1000 === 0) {
-                console.log("Cost at " + costFunction(x_train, y_train, beta, regularizationParameter));
+                console.log("Cost at " + costFunction(xTrain, yTrain, beta, regularizationParameter));
                 console.log(gradient(x,y,beta,0));
             }
             iterations++;
@@ -162,31 +162,31 @@ class LogisticRegression{
     }
 
     getPredictionsProbabilityTrain(){
-        var prob = new Array(x_train.length);
+        var prob = new Array(xTrain.length);
     
-        for(var i = 0; i < x_train.length; i++) {
-            prob[i] = hypothesis(x_train, beta, i);
+        for(var i = 0; i < xTrain.length; i++) {
+            prob[i] = hypothesis(xTrain, beta, i);
         }
         return prob;
     }
 
     getPredictionsProbabilityTest(){
-        var prob = new Array(x_test.length);
+        var prob = new Array(xTest.length);
     
-        for(var i = 0; i < x_test.length; i++) {
-            prob[i] = hypothesis(x_test, beta, i);
+        for(var i = 0; i < xTest.length; i++) {
+            prob[i] = hypothesis(xTest, beta, i);
         }
         return prob;
     }
 
     predictTrainSet(predictionThreshold) {
-        var predicted = new Array (x_train.length);
+        var predicted = new Array (xTrain.length);
         var threshold = predictionThreshold;
     
-        for(var i = 0; i < x_train.length; i++){
-            console.log(hypothesis(x_train, beta, i));
+        for(var i = 0; i < xTrain.length; i++){
+            console.log(hypothesis(xTrain, beta, i));
     
-            if(hypothesis(x_train, beta, i) > threshold) {
+            if(hypothesis(xTrain, beta, i) > threshold) {
                 predicted[i] = 1.0;
             } else {
                 predicted[i] = 0.0;
@@ -198,13 +198,13 @@ class LogisticRegression{
     }
 
     predictTestSet(predictionThreshold) {
-        var predicted = new Array(x_test.length);
+        var predicted = new Array(xTest.length);
         var threshold = predictionThreshold;
     
-        for(var i = 0; i < x_test.length; i++){
-            console.log(hypothesis(x_test, beta, i));
+        for(var i = 0; i < xTest.length; i++){
+            console.log(hypothesis(xTest, beta, i));
     
-            if(hypothesis(x_test, beta, i) > threshold) {
+            if(hypothesis(xTest, beta, i) > threshold) {
                 predicted[i] = 1.0;
             } else {
                 predicted[i] = 0.0;

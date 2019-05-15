@@ -1,5 +1,5 @@
-class FeatureScaling {
-    mean(xArray, col){
+//class FeatureScaling {
+    function mean(xArray, col){
         var sum = 0;
     
         for(var i = 0; i < xArray.length; i++){
@@ -9,7 +9,7 @@ class FeatureScaling {
         return sum/xArray.length;
     }
     
-    standardDeviation(xArray, col){
+    function standardDeviation(xArray, col){
         var meanDiff = 0;
         var sumMeanDiff = 0;
         var sd = 0;
@@ -26,7 +26,7 @@ class FeatureScaling {
         return sd;
     }
 
-    standardScaler(xTrainArray, xTestArray){
+    function standardScaler(xTrainArray, xTestArray){
         var zScore1 = 0;
         var zScore2 = 0;
         var mean = 0;
@@ -48,7 +48,7 @@ class FeatureScaling {
         }
     }
 
-    max(x, col){
+    function max(x, col){
         var max = x[0][col];
     
         for(var i = 0; i < x.length; i++) {
@@ -60,7 +60,7 @@ class FeatureScaling {
         return max;
     }
 
-    min(x, col){
+    function min(x, col){
         var min = x[0][col];
     
         for(var i = 0; i < x.length; i++) {
@@ -72,7 +72,7 @@ class FeatureScaling {
         return min;
     }
 
-    minMaxScaler(xTrainArray, xTestArray){
+    function minMaxScaler(xTrainArray, xTestArray){
         var max = 0;
         var min = 0;
     
@@ -94,4 +94,4 @@ class FeatureScaling {
             }
         }
     }
-}
+//}
