@@ -14,15 +14,13 @@ public class AccuracyVsTolerancegraph
 {
   public static void main (String[] args)
   {
-    //An instance of a dataloader object is created first.
+    //log regression stuff first
     Dataloader data = new Dataloader();
 
-    //We'll be using the wine dataset.
     data.makeArrays(args[0]);
     data.shuffleData();
     data.trainTestSplit(0.70);
 
-    //the dataloader object now has the training/test arrays ready. lets get them:
     double [][] x_train, x_test;
     double [] y_train, y_test;
 
@@ -31,14 +29,13 @@ public class AccuracyVsTolerancegraph
     y_train = data.returnYTrainArray();
     y_test = data.returnYTestArray();
 
-    //Now we can scale them to z scores using the feature scaler:
+
     FeatureScaling.standardScaler(x_train, x_test);
 
-    //Now we can do logistic regression stuff.
-    //make a new classifier object with the arrays that we have:
     LogisticRegression classifier = new LogisticRegression(x_train, x_test, y_train, y_test);
 
-
+    //measure accuracy while changing the tolerance.
+    //also tracks iterations.
     double[] predictionsOnTestSet;
     double[] accuracy = new double[100];
     double[] toleranceLevel = new double[100];

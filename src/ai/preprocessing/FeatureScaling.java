@@ -1,8 +1,8 @@
 package ai.preprocessing;
 
 /**
-** this class only works on 2d arrays
-** note: these methods will perform operations on arrays that you pass in and not that the class holds
+** this class only works on 2d arrays; meant to be used alongside the Dataoader class
+** note: these methods will perform operations on arrays that you pass in so dont create an object for this class
 */
 
 public class FeatureScaling

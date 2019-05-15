@@ -5,6 +5,7 @@
 
 William Tang and Jason Dinh
 
+Wine Classification
 
 Section: 02
 
@@ -13,13 +14,11 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 # 0. Project Structure
 *CE* : Independent study projects, by Jason and William. Extension of term project. Supervisor: Jean-François Brière
 
-*python* : sklearn logisitic regression implementation.
-
 *report* : contains final report, preliminary report.
 
 *resources* : all graphs, images, data generated from project. Also contains the original datasets used in the regression.
 
-*src* : source folder for all the code.
+*src* : source folder for all the code of this project.
 
 *UCI_wine_data_exploratory.ipynb* : jupyter notebook for some exploratory data.
 
@@ -29,13 +28,15 @@ Professors: Jean-François Brière, Jonathan Sumner, Sameer Bhatnagar
 
 Also look at the jupyter notebook for some exploratory data analysis on the wine dataset: in the last section, some scatter plots are presented in the case wine 1 vs. wine 2 classification.
 
-**Instructions**: This is a binomial logistic regression, it only classifies between two classes at a time. To run the main program (one instance of the logistic regression), go to the src folder, and compile and run Classification.java.
+**Instructions**: This is a binomial logistic regression, it only classifies between two classes at a time. **The two main java files in this project are Classification.java and MultipleRuns.java**.
+
+To run the main program (one instance of the logistic regression), go to the src folder, and compile and run Classification.java.
 
 To run multiple instances of the logistic regression and obtain the average accuracy over a certain number of tries, compile and run MultipleRuns.java.
 
 The program uses command line arguments. Type in the path to the file you want to perform a logistic regression on. In MultipleRuns.java, you also have to indicate how many runs to do. Usually you would use the datasets provided [here](/src/dataset).
 
-There are also some things to create graphs. You can run AccuracyVsAlphagraph or AccuracyVsTolerancegraph to get a sense of how a parameter is affecting the accuracy of your model for one single instance. There is also the possibility of creating a ROC curve and a recall-precision graph, which may useful in choosing the prediction threshold and evaluating the performance of the model.
+There are also some things to create graphs. You can run AccuracyVsAlphagraph or AccuracyVsTolerancegraph to get a sense of how a parameter is affecting the accuracy of your model for one single instance. There is also the possibility of creating a ROC curve and a recall-precision graph, which may useful in choosing the prediction threshold and evaluating the performance of the model. Note that these graphs are created for only one single run of the logisitic regression and as such, don't really represent the model as a whole. You would want to use the MultipleRuns.java and get an average over a couple hundred runs, then plot your information manually for better graphs.
 
 Concerning reproducibility, read the [final report](/report/FinalReport) for parameters that we used to generate our results.
 
@@ -46,8 +47,8 @@ For more information on using the program, make sure to read the classes descrip
 
 Use the methods provided in the [metrics](/src/ai/metrics) to check the results of the program with the real class labels.
 
-Also, we checked if our implementation of logistic regression was working correctly by testing it against a few other datasets.
-We used some other combinations of the wine dataset, the breast cancer data as well as some school exam marks.
+Although our project concentrated on the wine dataset, you can use our implementation of logistic regression and test it against a few other datasets.
+There are other combinations of the wine dataset, the breast cancer data as well as some school exam marks.
 
 You can change what the program classifies by changing the file path in the command line argument.
 
@@ -249,6 +250,8 @@ ________________________________________________________________________________
 
 # 4. Changelog
 
+*excludes CE project*
+
 ### 26-04-2019
 - first "working" version LogisticWine1 + LogisticCancer
 - prelim report
@@ -301,3 +304,10 @@ Classes Update
  - MultipleRuns.java now correctly displays average + standard deviation of accuracy
  - added additional instructions, example usage in src README file
  - requirements.txt in python
+ 
+ ### 14-05-2019
+ - rough draft of final report
+ - AccVSAlphaIteration.java added (code for heatmap data)
+ - cleaned useless bits of code in java files, added comments
+ - moved python implementation and added kNN classifier into the src folder so all code is one place
+ - added all graphs, figures for report
