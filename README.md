@@ -250,6 +250,8 @@ ________________________________________________________________________________
 
 # 4. Changelog
 
+*excludes CE project*
+
 ### 26-04-2019
 - first "working" version LogisticWine1 + LogisticCancer
 - prelim report
@@ -302,3 +304,10 @@ Classes Update
  - MultipleRuns.java now correctly displays average + standard deviation of accuracy
  - added additional instructions, example usage in src README file
  - requirements.txt in python
+ 
+ ### 14-05-2019
+ - rough draft of final report
+ - AccVSAlphaIteration.java added (code for heatmap data)
+ - cleaned useless bits of code in java files, added comments
+ - moved python implementation and added kNN classifier into the src folder so all code is one place
+ - added all graphs, figures for report
