@@ -1,5 +1,7 @@
 package ai.models;
 
+import java.io.*;
+import java.util.Scanner;
 
 /* in unsupervised machine learning, you would not know the real class labels.
 ** When you create the k means clustering object, the file you load in should
@@ -12,6 +14,7 @@ public class KMeansCluster
   private double[] realClassLabels;
   private double[][] centroids;
   private double[] clusteredClassLabels;
+  private int[] classCounts;
 
   private int numOfClusters;
 
@@ -19,8 +22,36 @@ public class KMeansCluster
   public KMeansCluster(String fileLocation, int clusters)
   {
     makeArrays(fileLocation);
-    numOfClusters = clusters
+    numOfClusters = clusters;
     centroids = new double[numOfClusters][];
+    classCounts = new int[numOfClusters];
+  }
+
+
+  public double[][] returnCentroids()
+  {
+    return centroids;
+  }
+
+  public void printCentroids()
+  {
+    for(int i = 0; i < centroids.length; i++)
+    {
+      System.out.print("\nCentroid " + i + ": [");
+      for (int j = 0; j < centroids[i].length; j++)
+      {
+        System.out.print(centroids[i][j] + " ");
+      }
+      System.out.print("]");
+    }
+  }
+
+  public void printClassCounts()
+  {
+    for(int i = 0; i < classCounts.length; i++)
+    {
+      System.out.print("Class counts " + i + ":" + classCounts[i] + " ");
+    }
   }
 
 
@@ -59,7 +90,7 @@ public class KMeansCluster
 
         for (int i = 0; i < ((inputArray.length)); i++) //Copying that array into our xarray
         {
-          allX[currentScanrow][i] = Double.parseDouble(inputArray[i]);
+          dataPoints[currentScanrow][i] = Double.parseDouble(inputArray[i]);
         }
 
         currentScanrow++; //go onto the next line
@@ -117,10 +148,10 @@ public class KMeansCluster
 
 
 
-  public double initialCentroids()
+  public void initialCentroids()
   {
-    int max = dataPoints.length;
-    int min = 0.;
+    int max = dataPoints.length-1;
+    int min = 0;
     int rollRange = (max - min) + 1;
     int roll = 0;
 
@@ -153,12 +184,13 @@ public class KMeansCluster
 
     for (int i = 0; i < dataPoints.length; i++)
     {
+      minDistance = euclidDistance(dataPoints[i], centroids[0]);
+      closestIndex = 0;
+
       for (int j = 0; j < centroids.length; j++)
       {
-        minDistance = euclidDistance(dataPoints[i], centroids[j]);
-        closestIndex = j;
 
-        if (euclidDistance(dataPoints[i],centroids[i]) < minDistance)
+        if (euclidDistance(dataPoints[i],centroids[j]) < minDistance)
         {
           minDistance = euclidDistance(dataPoints[i],centroids[j]);
           closestIndex = j;
@@ -171,12 +203,16 @@ public class KMeansCluster
 
   }
 
+
   public void getCentroids()
   {
     double[] newPoint = new double[dataPoints[0].length];
+    int count = 0;
 
     for(int i = 0; i < numOfClusters; i++)
     {
+      count = 0;
+
       for (int j = 0; j < dataPoints.length; j++)
       {
         if (clusteredClassLabels[j] == i)
@@ -185,10 +221,45 @@ public class KMeansCluster
           {
             newPoint[k] = newPoint[k] + dataPoints[j][k];
           }
+          count++;
         }
       }
+
+      for (int a = 0; a < newPoint.length; a++)
+      {
+        newPoint[a] = newPoint[a]/count;
+        //System.out.println(count);
+      }
+
+      for (int b = 0; b < newPoint.length; b++)
+      {
+        centroids[i][b] = newPoint[b];
+      }
+
+      classCounts[i] = count;
     }
+
   }
+
+  public boolean checkConvergence(double[][] point1, double[][] point2)
+  {
+    boolean check = true;
+
+    for(int i = 0; i < point1.length; i++)
+    {
+      for (int j = 0; j < point1[i].length; j++)
+      {
+        if (point1[i][j] == point2[i][j])
+        {
+          check = true;
+          //System.out.println("hey");
+        }
+        else check = false;
+      }
+    }
+    return check;
+  }
+
 
 
 
