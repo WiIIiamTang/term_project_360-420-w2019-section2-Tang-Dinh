@@ -223,7 +223,7 @@ public class LogisticRegression
 
          if(iterations % 500 == 0)
          {
-           //System.out.println("Cost at " + costFunction(x_train, y_train, beta));
+           System.out.println("Cost at " + costFunction(x_train, y_train, beta));
            //System.out.println(gradient(x,y,beta,0));
          }
          iterations++;

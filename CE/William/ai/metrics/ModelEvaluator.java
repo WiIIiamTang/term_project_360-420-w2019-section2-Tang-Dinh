@@ -18,12 +18,12 @@ public class ModelEvaluator
       if (yLabels[i] == predictedYLabels[i])
       {
         good++;
-        System.out.println(yLabels[i] + "  good   "  + predictedYLabels[i]);
+        //System.out.println(yLabels[i] + "  good   "  + predictedYLabels[i]);
       }
       else
       {
         bad++;
-        System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
+        //System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
       }
     }
 
