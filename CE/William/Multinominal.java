@@ -95,9 +95,9 @@ public class Multinominal
     LogisticRegression classifier3 = new LogisticRegression(x_train3, x_test2, data3.returnYTrainArray(), data3.returnYTestArray());
 
     //gradient descent.
-    classifier1.fit(0.01, 5000, 0, false);
-    classifier2.fit(0.01, 5000, 0, false);
-    classifier3.fit(0.01, 5000, 0, false);
+    classifier1.fit(0.1, 5000, false);
+    classifier2.fit(0.1, 5000, false);
+    classifier3.fit(0.1, 5000, false);
 
     //You have all three classifiers. Now we need to get the predictions of each one in probability.
     //predictions for the training set:

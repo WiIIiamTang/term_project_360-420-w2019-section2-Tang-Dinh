@@ -5,6 +5,8 @@ import java.util.*;
 
 public class ModelEvaluator
 {
+  //returns accuracy based on the predicted labels and the acutal ones
+
   public static double getAccuracy(double[]yLabels, double[]predictedYLabels)
   {
     double good = 0;
@@ -16,12 +18,12 @@ public class ModelEvaluator
       if (yLabels[i] == predictedYLabels[i])
       {
         good++;
-        //System.out.println(yLabels[i] + "  good   "  + predictedYLabels[i]);
+        System.out.println(yLabels[i] + "  good   "  + predictedYLabels[i]);
       }
       else
       {
         bad++;
-        //System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
+        System.out.println(yLabels[i] +"  bad   "  + predictedYLabels[i]);
       }
     }
 
@@ -31,6 +33,9 @@ public class ModelEvaluator
     accuracy = (good/(good+bad))*100;
     return accuracy;
   }
+
+
+  //returns baseline accuracy based on zero rule algorithm
 
   public static double getBaselineAcc(double[] yLabels)
   {
@@ -63,7 +68,9 @@ public class ModelEvaluator
 
   }
 
+
   //c.m. for a binary situation. everything should be 0 or 1.
+
   public static void confusionMatrix(double[] yLabels, double[] predictedYLabels)
   {
     int tp = 0; //true positives
@@ -165,6 +172,8 @@ public class ModelEvaluator
     return cost;
   }
 
+
+  //returns the McFadden's rSquared value.
   public static double mcfaddenRSquared(double[][] x, double[] yLabels, double[] beta)
   {
     double rSquare = 0;
@@ -199,6 +208,9 @@ public class ModelEvaluator
 
     return rSquare;
   }
+
+
+  //displays all weights arranged in descending order, ranked by abs. values
 
   public static void rankWeights(double[] array)
   {
