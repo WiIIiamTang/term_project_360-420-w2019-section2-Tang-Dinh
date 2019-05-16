@@ -2,6 +2,8 @@
 
 ## William Tang and Jason Dinh
 
+*Please read the pdf version for a better time.*
+
 ### Introduction
 
 Classification is a broad and important topic in machine learning. A program that can classify things into different categories autonomously has a variety of uses (spam filters, disease diagnostics, etc.) and provides a solution for sorting through large amounts of data. As an introductory project into machine learning and classification, we look at one type of classifier called logistic regression. We wanted to know how the parameters of a logistic regression affect the performance of a classification and how we can optimize them. After finding the appropriate data, we build a model from scratch to see if it would correctly predict between two sorts of wine at a time. We then evaluate how our model performed and study some of the parameters used.
