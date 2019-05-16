@@ -306,7 +306,7 @@ Classes Update
  - requirements.txt in python
  
  ### 14-05-2019
- - rough draft of final report
+ - final report
  - AccVSAlphaIteration.java added (code for heatmap data)
  - cleaned useless bits of code in java files, added comments
  - moved python implementation and added kNN classifier into the src folder so all code is one place
