@@ -187,7 +187,7 @@ double acc2 = me.getAccuracy(original.returnYTestArray(), bestClassTest);
 System.out.println("\nThe accuracy for the training set is " + acc1 + " percent");
 System.out.println("\nThe accuracy for the test set is " + acc2 + " percent");
 ```
-And that's a simple multi-class logistic regression. In the next section, a give a short report on the results.
+And that's a simple multi-class logistic regression. In the next section, I give a short report on the results.
 
 #### Results
 
@@ -319,7 +319,7 @@ optimal.cluster();
 optimal.printAllClustered();
  ```
 
-From here, we can even compare the exact points it classified. This can prove to be not that useful, however: class values in the iris dataset were labelled 0,1,2 for the species of flowers (each number corresponded to a certain type of flower), but the k-means clustering simply assigned classes to the datapoints, it has *no way of knowing the type of flower associated with a certain cluster*. That's why I'll compare the centroids:
+From here, we can even compare the exact points it classified. This is not always useful, however: we knew the class values for the iris dataset, but the k-means clustering simply assigned classes to the datapoints, it has *no way of knowing the type of flower associated with a certain cluster*. That's why I'll compare the centroids:
 ```java
 String fileLocation2 = "dataset/irisLabels.txt";
 
