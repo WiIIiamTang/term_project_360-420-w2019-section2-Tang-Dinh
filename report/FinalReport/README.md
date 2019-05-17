@@ -24,25 +24,25 @@ Where the x variables are the numerical values of the characteristics of the win
 
 <img src="https://latex.codecogs.com/gif.latex?h(x)&space;=&space;\frac{1}{1&plus;e^{-({\beta}_{0}&space;&plus;&space;{\beta}_{1}x_{1}&space;&plus;&space;{\beta}_{2}x_{2}&space;&plus;&space;...&space;&plus;&space;{\beta}_{13}x_{13})}}" title="h(x) = \frac{1}{1+e^{-({\beta}_{0} + {\beta}_{1}x_{1} + {\beta}_{2}x_{2} + ... + {\beta}_{13}x_{13})}}" />
 
-This is called the hypothesis function. Now we have something that, given a set of input parameters (characteristics of wine), will spit out a number between 0 and 1 and make a prediction on the type. Our goal will be to find the best 0,1,2,...parameters that will give the most accurate predictions. 
+This is called the hypothesis function. Now we have something that, given a set of input parameters (characteristics of wine), will spit out a number between 0 and 1 and make a prediction on the type. Our goal will be to find the best beta0,beta1,beta2,...parameters that will give the most accurate predictions. 
 To achieve this, we need another function in our model: something that will calculate the error between the prediction the program gives and the actual answer. In logistic regression, the mathematical equation of the error J is given as:
 
 <img src="https://latex.codecogs.com/svg.latex?J&space;=&space;cost(h(x),y)&space;=&space;-\frac{1}{m}\sum_{i=1}^{m}y_{i}log(h(x))&space;&plus;&space;(1-y_{i})log(1-h(x))" title="J = cost(h(x),y) = -\frac{1}{m}\sum_{i=1}^{m}y_{i}log(h(x)) + (1-y_{i})log(1-h(x))" />
 
 Again, the xi variables represent the numerical values of the characteristics of the wine, and the yi variables indicate the type of wine (turned into 0 or 1). m is the total number of data points. We call this the cost function, or the loss function. In order to find the best parameters that give the most accurate predictions, we will have to minimize the error between predictions and real answers, which in turn means minimizing the the function that represents the error - the cost function.
-Where does this cost function come from? We can actually think of this problem as maximizing the likelihood of our model. In statistics, probability and likelihood are different concepts. Suppose we have a model that will try to predict the right outcomes (class labels) given a set of parameters like we saw in the previous paragraphs. However, we do not know the specific values for this set of parameters. All we can do is observe the target classes and come out with some kind of estimation for those parameters. Maximizing the likelihood comes down to choosing values of the parameters that would maximize the probability that we will get the right class predictions. In logistic regression, the overall likelihood is computed by simply taking product of the y-values of the sigmoid function, given a set of parameters (in our case we denote them by 0,1,2,...). You can think of this as the probabilities; look at the hypothesis function for a reminder. We need to look at the likelihood that our model will correctly predict between the two classes. As such, we can now define the likelihood of a single point as  h(x) when the the label is 1 (probability of predicting a 1) and as 1- h(x) when the label is 0 (probability of predicting a 0). All we have to do is multiply these likelihoods together.
+Where does this cost function come from? We can actually think of this problem as maximizing the likelihood of our model. In statistics, probability and likelihood are different concepts. Suppose we have a model that will try to predict the right outcomes (class labels) given a set of parameters like we saw in the previous paragraphs. However, we do not know the specific values for this set of parameters. All we can do is observe the target classes and come out with some kind of estimation for those parameters. Maximizing the likelihood comes down to choosing values of the parameters that would maximize the probability that we will get the right class predictions. In logistic regression, the overall likelihood is computed by simply taking product of the y-values of the sigmoid function, given a set of parameters (in our case we denote them by beta0,beta1,beta2,...). You can think of this as the probabilities; look at the hypothesis function for a reminder. We need to look at the likelihood that our model will correctly predict between the two classes. As such, we can now define the likelihood of a single point as  h(x) when the the label is 1 (probability of predicting a 1) and as 1- h(x) when the label is 0 (probability of predicting a 0). All we have to do is multiply these likelihoods together.
 Lots of people prefer to take the logarithm of the overall likelihood to make the function smoother and easier to work with. So in the end, after a couple of mathematical simplifications, we end up with this:
 
 <img src="https://latex.codecogs.com/gif.latex?\sum_{i=1}^{m}y_{i}log(h(x))&space;&plus;&space;(1-y_{i})log(1-h(x))" title="\sum_{i=1}^{m}y_{i}log(h(x)) + (1-y_{i})log(1-h(x))" />
 
 Depending on whether or not the actual class label is 1 or 0, one part of the equation will disappear. 
 In machine learning, a lot of the methods we use are based on minimizing a function. Because the likelihood function has a maximum, what we can do is flip the sign by adding a negative sign. Now we have something that looks like the cost function we described (dividing by m is simply taking the average).
-In the end, logistic regression will be interested in finding the 0,1,2,... parameters that should give the smallest value for the cost function, which in turn maximizes the likelihood. We describe the method used to achieve this in the following section.
+In the end, logistic regression will be interested in finding the beta0,beta1,beta2,... parameters that should give the smallest value for the cost function, which in turn maximizes the likelihood. We describe the method used to achieve this in the following section.
 
 ### Method
 
-We would now like to know how to find the 0,1,2,...parameters that minimize the cost function, given a set of characteristics of the wine. The numerical method we use here is called gradient descent. Recall that the gradient of a function is just the vector whose components are the partial derivatives of the function in question, with respect to the components (x1, x2, …, xn) of the function. We may compare gradient descent method with Euler’s method: it calculated the slope, and then took a step in the direction of that slope to estimate the actual curve. The same idea applies here. If we have the slope (the partial derivative), then we can take a step (the size of which we define) in the direction of the slope - as we saw in Euler’s method, small steps ensure that we follow that actual curve. Also, in our case we are always planning on going downwards. The goal is to take steps until we reach the bottom of the curve, the bottom of our cost function. We will know that we reached the bottom (the minimum) when the gradient is zero, or really close to zero. The function we are dealing with uses the logarithm of values. This makes the curve “smooth”, as there will be no local minima/maxima. This means that the minimum we find will also be the global minimum.
-Now, the slope changes as we compute a new partial derivative at the updated point. The derivative at a minimum should be zero, which means the difference between the updated point and the previous one should also be zero at that point. This means that if we are continuously updating our point (a,b), at some point it will stop decreasing. In other words, we found the minimum. All we have to do is start at a random initialization of 0,1,2,.., and go down from there. For a convex function, it does not matter where you start since there will be only one minimum. For a non-convex function, it becomes more problematic…. Fortunately, in our project the function to minimize is convex: as we saw earlier, taking the log likelihood makes the function smooth and have no local minima/maxima.
+We would now like to know how to find the beta0,beta1,beta2,...parameters that minimize the cost function, given a set of characteristics of the wine. The numerical method we use here is called gradient descent. Recall that the gradient of a function is just the vector whose components are the partial derivatives of the function in question, with respect to the components (x1, x2, …, xn) of the function. We may compare gradient descent method with Euler’s method: it calculated the slope, and then took a step in the direction of that slope to estimate the actual curve. The same idea applies here. If we have the slope (the partial derivative), then we can take a step (the size of which we define) in the direction of the slope - as we saw in Euler’s method, small steps ensure that we follow that actual curve. Also, in our case we are always planning on going downwards. The goal is to take steps until we reach the bottom of the curve, the bottom of our cost function. We will know that we reached the bottom (the minimum) when the gradient is zero, or really close to zero. The function we are dealing with uses the logarithm of values. This makes the curve “smooth”, as there will be no local minima/maxima. This means that the minimum we find will also be the global minimum.
+Now, the slope changes as we compute a new partial derivative at the updated point. The derivative at a minimum should be zero, which means the difference between the updated point and the previous one should also be zero at that point. This means that if we are continuously updating our point (a,b), at some point it will stop decreasing. In other words, we found the minimum. All we have to do is start at a random initialization of beta0,beta1,beta2,.., and go down from there. For a convex function, it does not matter where you start since there will be only one minimum. For a non-convex function, it becomes more problematic…. Fortunately, in our project the function to minimize is convex: as we saw earlier, taking the log likelihood makes the function smooth and have no local minima/maxima.
 The gradient descent method is as follows:
 
 <img src="https://latex.codecogs.com/svg.latex?\beta_{0}&space;=&space;\beta_{0}&space;-&space;\alpha\frac{\delta&space;J}{\delta\beta_{0}}" title="\beta_{0} = \beta_{0} - \alpha\frac{\delta J}{\delta\beta_{0}}" />
@@ -55,7 +55,7 @@ As seen above, each coefficient *beta j* is brought into a continuous loop. We u
 
 <img src="https://latex.codecogs.com/gif.latex?h(x)&space;=&space;\frac{1}{1&plus;e^{-({\beta}_{0}&space;&plus;&space;{\beta}_{1}x_{1}&space;&plus;&space;{\beta}_{2}x_{2}&space;&plus;&space;...&space;&plus;&space;{\beta}_{13}x_{13})}}" title="h(x) = \frac{1}{1+e^{-({\beta}_{0} + {\beta}_{1}x_{1} + {\beta}_{2}x_{2} + ... + {\beta}_{13}x_{13})}}" />
 
-the partial derivative of the cost function with respect to  j will be given by
+the partial derivative of the cost function with respect to *beta j* will be given by
 
 <img src="https://latex.codecogs.com/svg.latex?\frac{\delta&space;J}{\delta\beta_{j}}&space;=&space;\frac{1}{m}\sum_{i=1}^{m}(h(x_{i})-y_{i})x_{i_j}" title="\frac{\delta J}{\delta\beta_{j}} = \frac{1}{m}\sum_{i=1}^{m}(h(x_{i})-y_{i})x_{i_j}" />
 
@@ -65,7 +65,7 @@ This is why it is preferable to have all our data on the same scale. Normalizing
 
 <img src="https://latex.codecogs.com/gif.latex?z&space;=&space;\frac{x&space;-&space;\mu&space;}{\sigma}" title="z = \frac{x - \mu }{\sigma}" />
 
-Where z is the scaled feature, x is the initial value for the feature, and and  respectively are the average and standard deviation of the all the values of the feature in question.
+Where z is the scaled feature, x is the initial value for the feature, and mu and sigma respectively are the average and standard deviation of the all the values of the feature in question.
 
 ### Results
 
@@ -76,10 +76,14 @@ Figure 1 shows four of the plots we did. We see some good separation between the
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/dataexploreexamples.png" />
 
+**figure 1**
+
 After this exploratory data phase, we can start the logistic regression. The wine dataset had 130 data points, containing classes for wine 1 (1) and wine 2 (0). Each point contains 13 different characteristics. Initially, the data is shuffled around and split into training and test sets at a 70:30 ratio. A gradient descent is performed with the training set, and initial weights are set to zero. For this experiment, we used a step size of 0.1 with 5000 iterations of gradient descent. Also note that we always standardize all feature data to z-scores beforehand. After everything is done, we can directly get the predictions of our trained model and validate the results with our test set, with a prediction threshold of 0.5 (this is what we use for all other trials unless indicated otherwise). Checking the accuracy of our model is as simple as comparing the prediction of the model with the actual class label. The total number of correct answers is divided by the total number of predictions to get the accuracy. We ran the logistic regression 1000 times and took the average accuracy.
 Now we have the experimental model of logistic regression to study. Before starting, however, we check to see if the gradient descent is working as it should by plotting the cost function of this model over the amount of iterations. We expect the cost to decrease over time, and the rate of change to slow down considerably after some iterations. Figure 2 confirms our logistic regression is working properly.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/costvsiterationsv2.PNG" />
+
+**figure 2**
 
 We can also check the accuracy of the model with a confusion matrix. 0: negative. 1: positive.
 
@@ -87,6 +91,8 @@ We can also check the accuracy of the model with a confusion matrix. 0: negative
 | ---------- | ------------- | ------------------ |
 | actual 0   | 21235         | 486                |
 | actual 1   | 48            | 17231              |
+
+**figure 3**
 
 From this table in figure 3, we can see the predictions the logistic regression made, as well as the actual class it made the prediction on.  This allows us to obtain other measures of error other than the accuracy:
 
@@ -101,8 +107,11 @@ From this table in figure 3, we can see the predictions the logistic regression 
 | False Positive Rate  | 0.022374660466829337 | 
 | Specificity          | 0.9776253395331707   | 
 
+**figure 4**
+
 Accuracy and error rate go hand in hand; this is obtained following what we described in the previous paragraph. The recall is measure of the true positives divided by the number of actual positive labels. The false positive rate is the number of false positives divided by total number of actual negative labels. The specificity is essentially 1.0 minus the false positive rate: it is the number of true negatives divided by the total number of actual negative labels. The precision is the number of true positives divided by the total number of predicted positive classes. Finally, the prevalence of the wine of class “1” indicates the proportion of this class in the dataset. One good baseline accuracy to compare our model with is just the highest number between 1.0 minus the prevalence, and the prevalence itself. The “baseline” model in this case would just look at the most frequent class, and classify everything as that class. We see that the baseline accuracy is about 55.7% here. The model performs much better than this. In summary, the model has a good performance on all metrics.
-Now we would like to see how our trained model fits the wine dataset. Unlike linear regression, there are many ways to calculate a measure of how well the model fits your data. We chose to use McFadden’s R2  value and use it to evaluate our logistic regression. It is calculated by taking the difference between the log likelihood of the trained model minus the log likelihood of a model without any predictor variables. This difference is then divided by the latter. A model without any predictor variables is simply a logistic regression trained without the characteristics of the wine! From this R2  value, results closer to 0 are indicators of a bad fit, while results closer to 1 indicate a good fit. Figure 5 shows that the logistic regression model and the 0,1,2,...parameters it found fits the data pretty well, and should have a high likelihood of giving the right predictions.
+
+Now we would like to see how our trained model fits the wine dataset. Unlike linear regression, there are many ways to calculate a measure of how well the model fits your data. We chose to use McFadden’s R2  value and use it to evaluate our logistic regression. It is calculated by taking the difference between the log likelihood of the trained model minus the log likelihood of a model without any predictor variables. This difference is then divided by the latter. A model without any predictor variables is simply a logistic regression trained without the characteristics of the wine! From this R2  value, results closer to 0 are indicators of a bad fit, while results closer to 1 indicate a good fit. Figure 5 shows that the logistic regression model and the beta0,beta1,beta2,...parameters it found fits the data pretty well, and should have a high likelihood of giving the right predictions.
 
  
 | set                  | R squared            |
@@ -110,9 +119,13 @@ Now we would like to see how our trained model fits the wine dataset. Unlike lin
 | train                | 0.9951609615489888   |
 | test                 | 0.9624937103640429   | 
 
+**figure 5**
+
 At this point, we can assume that the logistic regression model we made is working as intended: the cost function is going down, accuracy and related measures of error are where they should be, and the model fits the data quite well. The last thing to do before studying the model and its parameters is to compare what we made with other classifiers, just to make sure our results are not abnormal for this dataset. Figure 6 is a comparison of the accuracy of our trained model against other classification algorithms.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/Accbasedondifferentmodels.png" />
+
+**figure 6**
 
 ScikitLearn is a machine learning library in python. We used their logistic regression model and tested against the same wine dataset. Unlike our model where we can modify the step size and number of iterations, no parameters need to be specified when running this program. Furthermore, we used the k Nearest Neighbours model done in a previous class lab to classify the wine dataset as well. Apart from changing the hyperparameter k, no other modifications were made to the original code. All classification models were used on the same dataset. Accuracy is an an average over 1000 runs. Figure 6 tells us that the results we are getting are normal (other, similar classifiers are getting around the same thing).
 
@@ -123,12 +136,18 @@ Normalizing the data, as we said earlier, allows for the logistic regression to 
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/Accbasedonnormalization.png" />
 
+**figure 7**
+
 Figure 7 was created with the same model made in the first section, but the gradient descent runs for 10 iterations. The accuracy displayed is an average accuracy over 1000 runs. The method of normalization was a standardization to z-scores. As seen from the results, normalized data converges quite quickly and reaches around 95% accuracy after only 10 iterations of gradient descent, while the data set that did not have any normalization had horrible results (worse than the baseline of around 55%!). The graph shows that normalization has a significant influence on the speed of convergence of the logistic regression.
 	Another question we can ask ourselves is which characteristics of wine give a good indication of whether it belongs to one class or another. In other words, we are looking to see which characteristics of wine influence the prediction model the most. We may rank the trained weights of our model based on their absolute value (the parameters beta0,beta1,beta2,...), but it is important that we do this on normalized data, since it is useless to compare values that are on different scales. Figure 8 shows the top 10 predictors of wine 1 vs wine 2. It was created with the original logistic regression model we made in the first section. From this information, we are able to compare accuracies of models for different numbers of predictors. Figure 9 shows the accuracies of different logistic regressions that have a certain number of top predictors. Again, we used the same settings as our original logistic regression model in the first section. Each accuracy represents the average over 1000 runs. We observe that the highest accuracy is obtained with the top 7 predictors.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/featureranking.PNG" />
 
+**figure 8**
+
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/ACCPREDICTORS.png" />
+
+**figure 9**
 
 Next, we can also study the tolerance level. Instead of running the logistic regression for a set amount of iterations like we did, we can indicate a stopping condition for convergence. If the difference between one coefficient and its updated version from the gradient descent is near zero, we may stop the loop. This seems like a rather obvious feature to include in our model, but is it really that useful? Figure 10 was generated from one run of a the logistic regression, with step size 0.001, a maximum number of iterations allowed of 30000, with varying tolerance levels. The tolerance starts at 0.00000001 and goes all the way up to 0.0001. The blue curve indicates the accuracy. The red bar plot indicates the log value of the number of iterations it took (a log value was used in order to scale it properly to the graph). As expected, as the tolerance level increases, the accuracy tends to decrease as well. However, the number of iterations decreases, so it takes less time to run. Also, if the tolerance level gets too large, the loop will terminate after 1 or 2 iterations, which is not really what we want (see the normalization of data section to understand why it stays at 95% accuracy after only 1 or 2 iterations!). 
 
@@ -137,9 +156,13 @@ Thus, figure 10 indicates to us that there will be trade-off between the accurac
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/accuracybasedonTolerancelevel.png" />
 
+**figure 10**
+
 On a related note, throughout this whole process, we’ve kept the prediction threshold at 0.5. Although this may seem like a nice number, it is quite arbitrary as well. How do we know that this is the appropriate threshold to round up or round down the probabilities? One of the ways to do this is to look at the ROC curve, or the Receiver-Operator-Characteristic curve of the logistic regression.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/roccurve.png" />
+
+**figure 11**
 
 The ROC curve plots the recall of the model against the false positive rate. Points are obtained by computing the recall and false positive rate for different prediction thresholds. Figure 11 was created by computing the average recall and false positive rate of logistic regression over 100 trials for each threshold. Other than varying the prediction threshold, all other parameters were identical to the original model made in the first section. We observe that when choosing the prediction threshold, there is always a trade-off between recall and the false positive rate, and that going for 0.5 is not necessarily the best option, depending on what the context is.
 Finally, we may study the relationship between the step size and the number of iterations. We decided to approach this aspect by studying their relationship experimentally; that is, to see how the step size (alpha) and number iterations together can affect the accuracy of our program, we make a heat map of accuracy. We looped through the program, and have it calculate and print out the accuracy for different step sizes (0.001 up to 0.1) and different iterations (1000 to 49,000 iterations). Normalized data was used, and all weights started at zero. The prediction threshold was set to 0.5. 
@@ -147,6 +170,8 @@ Figure 12 shows the first half of the data. Because the accuracy can vary for di
 	As a result, figure 12 is useful in two ways: it shows the general trend of the evolution of the optimal pair of step size and iterations; and it allows us (and others!) to directly get the optimal solution for a given step size/number of iterations.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/resources/images%2Cgraphs%2Cresults/Heat%20map.png" />
+
+**figure 12**
 
 
 ### Discussion
