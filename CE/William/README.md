@@ -192,7 +192,7 @@ On individual trials, the training set consistently gets 100% accuracy, which is
 Accuracy is around 98%, which means the classifier is good at sorting through the wines.
 
 
-### Intro to Unsupervised Learning: K-Means Clustering
+### 2. Intro to Unsupervised Learning: K-Means Clustering
 
 Everything that we've done up till now in machine learning was "supervised"; I knew what the answer should be for a given datapoint. In the wine dataset, I had the class values with me. I could, in a sense, *supervise* my program because I know if it's doing poorly or not by measuring its accuracy against the known values!
 
