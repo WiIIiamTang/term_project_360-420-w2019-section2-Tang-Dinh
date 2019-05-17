@@ -396,7 +396,7 @@ The first position of the centroid is alright again, but the others don't quite 
  
  And what we get is a very interesting graph. Past 4 or more clusters, the distance does not seem to change that much. However, we spot an abnormality at K = 2, the distance becomes much smaller. But then, at K = 3, the distance jumps back up. This means that it would be better to use K = 2 over K =3. With 2 clusters, the k-means algorithm would cluster two types of flowers together in one class because of **the similarity of their features.** This makes sense, when you think back to all those graphs we did with Sameer: the first flower was easily classified, while the other two overlapped a bit and did not have clearly defined borders. Of course the k-means algorithm would find that two clusters would be better.
  
- This is where I can observe one weakness of this clustering method: it groups datapoints that have similar features together. But in doing so, it can incorrectly group together incorrect points or outliers. For example, to the k-means algorithm, this graph would look way better:
+ This is where I can observe one weakness of this clustering method: **it groups datapoints that have similar features together. But in doing so, it can group together incorrect points. Thus, it does not work well for different classes that share similar features.** For example, to the k-means algorithm, this graph would look way better:
  
  <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/twoclusterrealiris.PNG" />
  
