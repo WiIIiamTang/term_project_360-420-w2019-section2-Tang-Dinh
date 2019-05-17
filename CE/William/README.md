@@ -340,11 +340,13 @@ It is relatively hard to evaluate a clustering. In logistic regression, we could
 There are still some things we can do, mostly through a qualitative analysis. First, I'll show some screenshots of the final results of my program. I run my program for 1000 loops, and pick the best solution at the end for the iris dataset. I choose to make the program create 3 clusters.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/results1.PNG" />
+
 **figure 3**
 
 This was the optimal solution found. The original iris dataset had 50 flowers of each type. It looks like it was able to sort through one class easily enough (we'll see later on that it clustered the first type of flower perfectly!). The two others are a bit unbalanced, but this is expected. As seen in class from Sameer's part of the course, the iris-setosa flower was easily separable from the others, while the two other species of flowers overlapped in a lot of their traits, making it harder to classify. Now let's look at the real centroids of the dataset, just to compare.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/results2.PNG" />
+
 **figure 4**
 
 The first centroid is pretty good! The algorithm almost got it down perfectly. The other two are alright, but not as close.
@@ -363,11 +365,13 @@ Just call the method on the object after everytime you create it, like above.
 Now we run the same thing again, 1000 runs, and see how it performed.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/results3.PNG" />
+
 **figure 6**
 
 Okay, so the classes are close to the 50/50/50 split now, which is nice. But let's look and compare with the real centroids for a moment:
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/results4.PNG" />
+
 **figure 7**
 
 The first position of the centroid is alright again, but the others don't quite match that well. [And if we look at the class clusters, it doesn't look that good.](https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/CLUSTEREDCLASSNORMALIZED.txt)
@@ -379,6 +383,7 @@ The first position of the centroid is alright again, but the others don't quite 
  Well, one way is just to experiment and try different values of K. Let's do it for the iris dataset, and plot out the summed average distance of points to their respective centroids with respect to K.
  
  <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/results5.PNG" />
+ 
  **figure 9**
  
  And what we get is a very interesting graph. Past 4 or more clusters, the distance does not seem to change that much. However, we spot an abnormality at K = 2, the distance becomes much smaller. But then, at K = 3, the distance jumps back up. This means that it would be better to use K = 2 over K =3. With 2 clusters, the k-means algorithm would cluster two types of flowers together in one class because of the similarity of their features. This makes sense, when you think back to all those graphs we did with Sameer: the first flower was easily classified, while the other two overlapped a bit and did not have clearly defined borders. Of course the k-means algorithm would find that two clusters would be better.
@@ -388,6 +393,7 @@ The first position of the centroid is alright again, but the others don't quite 
  On a related note, what I *was* hoping for in the distance vs. K graph was a "elbow point". Here's an example that I got from Andrea Trevino in his  [article about K-Means Clustering:](https://www.datascience.com/blog/k-means-clustering)
  
  <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/example1.PNG" />
+ 
  **figure 10**
  
  At some point, the distance would stop decreasing at a fast rate, and we would pick the K whose designated point is where the curve plateaus a bit, the "elbow point". On my graph, this *would* have been the case, but there was an abnormality, like I said, because the features for two types of flowers were rather similar.
