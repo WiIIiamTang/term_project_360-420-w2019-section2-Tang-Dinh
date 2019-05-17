@@ -334,7 +334,7 @@ This was the optimal solution found. The original iris dataset had 50 flowers of
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/results2.PNG" />
 
-The first centroids are pretty close! The algorithm almost got it down perfectly. The other two are alright, but not as close.
+The first centroid is pretty close! The algorithm almost got it down perfectly. The other two are alright, but not as close.
 
 [Here's a full list of the clustered classes for the optimal solution](https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/CLUSTEREDPOINTS1.txt) (since we know the real class labels, the real answers should be 50 0's, followed by 50 1's, and then 50 2's).
 
