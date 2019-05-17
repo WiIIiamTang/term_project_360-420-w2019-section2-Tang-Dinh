@@ -351,12 +351,16 @@ This was the optimal solution found. The original iris dataset had 50 flowers of
 
 The first centroid is pretty good! The algorithm almost got it down perfectly. The other two are alright, but not as close.
 
-[Here's a full list of the clustered classes for the optimal solution](https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/CLUSTEREDPOINTS1.txt) (since we know the real class labels, the real answers should be 50 0's, followed by 50 1's, and then 50 2's).
+[Here's a full list of the clustered classes for the optimal solution](https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/CLUSTEREDPOINTS1.txt) (since we know the real class labels, the real answers should be 50 0's, followed by 50 1's, and then 50 2's). Now let's look at one graph that can be generated from the clustered classes:
 
-Again, this shows that the first class 0 in the iris dataset was clustered pretty well. The program is able to recognize that there is a category of flower here. In classes 1 and 2, however, it has a much harder time clustering the right points.
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/CLUSTEREDGRAPH1.PNG" />
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/REALGRAPHIRIS.PNG" />
 
+**figure 5**
 
-How can we improve this? Maybe normalizing our data would help - we had a whole discussion on this in our logistic regression. Let's try running it after standardizing all our data to z-scores using the standardScaler method:
+In figure 5 we see the clustered classes graph first, then a comparaison with the actual classes. The graph shows the petal length vs. the petal width. From these results, I can say that the k-means clustering worked as intended. The first graph shows three distinct clusters; this is what the algorithm was made to do, and it does it quite efficiently. If I didn't have the real class values for the plants with me, I would have said this is really good model. If we compare the actual data to the clusters, however, we see that some points from the iris-Versicolor and iris-Virginica data are mis-classified! This is a problem with the data itself: the k-means clustering is working fine, but the data is not linearly separable in some places, and so we get this problem.
+
+Figur 5 shows that the first class 0 in the iris dataset was clustered pretty well. The program is able to recognize that there is a category of flower here. In classes 1 and 2, however, it has a much harder time clustering the right points. So how can we improve this? Maybe normalizing our data would help - we had a whole discussion on this in our logistic regression. Let's try running it after standardizing all our data to z-scores using the standardScaler method:
 ```java
 kmean.standardScaler();
 ```
@@ -374,9 +378,13 @@ Okay, so the classes are close to the 50/50/50 split now, which is nice. But let
 
 **figure 7**
 
-The first position of the centroid is alright again, but the others don't quite match that well. [And if we look at the class clusters, it doesn't look that good.](https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/CLUSTEREDCLASSNORMALIZED.txt)
+The first position of the centroid is alright again, but the others don't quite match that well. [And if we look at the class clusters, it doesn't look that good.](https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/CLUSTEREDCLASSNORMALIZED.txt) Here's the graph again, comparing petal length vs. width.
+
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/REalclustercomparisongraph.PNG" />
+
+**figure 8**
  
- Classes 1 and 2 are really mixed up! And upon inspection, even though the clustered classes have a better distribution, the datapoints it classified seem to be worse. So really, from what I see, I cannot say with certainty that normalizing the data produces better results, at least when we check the classification with the real answers.
+ Clusters 1 and 2 are really mixed up! Upon inspection, even though the number of points in the clustered classes have a better distribution, the datapoints it classified seem to be worse. So really, from what I see, I cannot say with certainty that normalizing the data produces better results, at least when we check the classification with the real answers.
  
  One more question remains. What would happen if we didn't know the number of clusters? Remember, in conventional unsupervised machine learning, we are only presented with the data, and the program would have to cluster points together. There wouldn't be any possibility of checking our results with the acutal answers like I did here; in reality, we would just have to trust that the algorithm clustered a number of classes correctly. We would not know the real class values, and because of that, we would not know the number of clusters K either! So how do we determine the number of clusters that algorithm should use?
  
@@ -386,21 +394,25 @@ The first position of the centroid is alright again, but the others don't quite 
  
  **figure 9**
  
- And what we get is a very interesting graph. Past 4 or more clusters, the distance does not seem to change that much. However, we spot an abnormality at K = 2, the distance becomes much smaller. But then, at K = 3, the distance jumps back up. This means that it would be better to use K = 2 over K =3. With 2 clusters, the k-means algorithm would cluster two types of flowers together in one class because of the similarity of their features. This makes sense, when you think back to all those graphs we did with Sameer: the first flower was easily classified, while the other two overlapped a bit and did not have clearly defined borders. Of course the k-means algorithm would find that two clusters would be better.
+ And what we get is a very interesting graph. Past 4 or more clusters, the distance does not seem to change that much. However, we spot an abnormality at K = 2, the distance becomes much smaller. But then, at K = 3, the distance jumps back up. This means that it would be better to use K = 2 over K =3. With 2 clusters, the k-means algorithm would cluster two types of flowers together in one class because of **the similarity of their features.** This makes sense, when you think back to all those graphs we did with Sameer: the first flower was easily classified, while the other two overlapped a bit and did not have clearly defined borders. Of course the k-means algorithm would find that two clusters would be better.
  
- This is where I can observe one weakness of this clustering method: it groups datapoints that have similar features together. But in doing so, it can incorrectly group together incorrect points or outliers.
+ This is where I can observe one weakness of this clustering method: it groups datapoints that have similar features together. But in doing so, it can incorrectly group together incorrect points or outliers. For example, to the k-means algorithm, this graph would look way better:
+ 
+ <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/twoclusterrealiris.PNG" />
+ 
+ **figure 10**
  
  On a related note, what I *was* hoping for in the distance vs. K graph was a "elbow point". Here's an example that I got from Andrea Trevino in his  [article about K-Means Clustering:](https://www.datascience.com/blog/k-means-clustering)
  
  <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/example1.PNG" />
  
- **figure 10**
+ **figure 11**
  
  At some point, the distance would stop decreasing at a fast rate, and we would pick the K whose designated point is where the curve plateaus a bit, the "elbow point". On my graph, this *would* have been the case, but there was an abnormality, like I said, because the features for two types of flowers were rather similar.
  
  #### Conclusion
  
- K-Means Clustering is great when you want to sort through some data, without knowing what the classes actually are. This is unsupervised learning. The algorithm can spot patterns and cluster together groups that you would not expect; this can prove to be beneficial or detrimental depending on the case. Also, the data itself can affect the clustering; this algorithm is sensitive to outliers and overlapping of classes. Usually it does not work well when the data cannot be linearly separated. When we don't know the number of clusters, we can create an average distance to centroids vs. K graph, and experimentally determine the best number of clusters.
+ K-Means Clustering is great when you want to sort through some data, without knowing what the classes actually are. This is unsupervised learning. The algorithm can spot patterns and cluster together groups that you would not expect; this can prove to be beneficial or detrimental depending on the case. Also, I've learned that having the **appropriate data is really important in clustering**. The clustering algorithm itself can work perfectly; but this algorithm is sensitive to outliers and overlapping of classes. As a result, you have to keep in mind that it usually does not work well when the data cannot be linearly separated. As I saw with the iris dataset, the first plant was easily clustered, but the two others had a hard time. Finally, When we don't know the number of clusters, we can create an average distance to centroids vs. K graph, and experimentally determine the best number of clusters.
  
  #### Notes
  
