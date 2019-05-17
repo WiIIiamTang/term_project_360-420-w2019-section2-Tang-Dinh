@@ -202,9 +202,9 @@ Fortunately, the wines are still numbered. And for each number, is listed, in hi
 
 This is what the next section will be about. I'll introduce one the most simplest forms of unsupervised machine learning, k-means clustering.
 
-K-Means clustering is an algorithm that **clusters** data into K classes based on feature similarity. That is, every data point in a cluster is assigned the same class. The result of this algorithm are of course the labels for the datapoints, as well as the **centroids** of the clusters, which can be used to classify similar data! I won't be touching on this last point here, but in the conclusion I'll give a text-based explanation of how we can implement k-means clustering in a k-Nearest Neighours model, for example.
+K-Means clustering is an algorithm that **clusters** data into K classes based on feature similarity. That is, every data point in a cluster is assigned the same class. The result of this algorithm are of course the labels for the datapoints, as well as the **centroids** of the clusters, which can be used to classify similar data!
 
-K-Means clustering isn't just useful for when your dad loses his wine collection. The field of unsupervised machine learning has applications in defining personas based on interests (think youtube reccomendations!), bot detection in social media, and inventory categorization in business to detect useful trends/patterns.
+K-Means clustering isn't just useful for when your dad loses his wine collection. The field of unsupervised machine learning has applications in defining personas based on interests (think youtube recommendations), bot detection in social media, and inventory categorization in business to detect useful trends/patterns.
 
 
 #### Code - Cluster.java and KMeansCluster.java
@@ -242,7 +242,6 @@ do
   temp1 = deepCopy2D(kmean.returnCentroids());
   kmean.cluster();
   kmean.getCentroids();
-  //kmean.printCentroids();
   temp2 = deepCopy2D(kmean.returnCentroids());
   iterations++;
   
@@ -253,7 +252,434 @@ And that's k-Means clustering! Done.
 ...Except not really. If we think about it, we are starting at some random points in the dataset. Depending on what points start out as the *intital centroids*, the clusters we end up at convergence could be different. So knowing this, one solution is simply redo the k-means clustering many many times, and take the best clusters!
 
 So now I'll have to implement a system that runs the k-means clustering lots of times, while keeping track of the best solution.
+First, I'll set the initial "best" solutions form my first run:
+```java
+storageBestCentroids = kmean.returnCentroids();
+currentBestDistance = kmean.computeAverageDistanceToCentroids();
+classCountBest = kmean.returnClassCounts();
+```
+Now I'll implement a loop that repeats the whole program again. At the end, I'll have to check if the solution I found is better the previous one. One way to do this is to just compare the summed average distance of the datapoints to their respective centroids. We'll say that a better solution is found when this average distance is lower; this just means the clusters are more tightly packed, which should be good. Putting all of this together:
+```java
+for(int i = 0; i < 100; i++)
+  {
+    kmean = new KMeansCluster(fileLocation, numberOfClusters);
+    kmean.initialCentroids();
+    iterations = 0;
+
+    do
+    {
+      temp1 = deepCopy2D(kmean.returnCentroids());
+      kmean.cluster();
+      kmean.getCentroids();
+      temp2 = deepCopy2D(kmean.returnCentroids());
+      iterations++;
+
+    } while (kmean.checkConvergence(temp1, temp2) == false && iterations <10);
+
+    if (kmean.computeAverageDistanceToCentroids() < currentBestDistance)
+    {
+      storageBestCentroids = kmean.returnCentroids();
+      currentBestDistance = kmean.computeAverageDistanceToCentroids();
+      classCountBest = kmean.returnClassCounts();
+    }
+  }
+```
+At the end of this loop, I will have hopefully obtained a solution that makes sense. Let's print the results:
+```java
+System.out.println("\n\n********Best solution found is: ");
+printBestCentroids(storageBestCentroids);
+System.out.println("\nSummed average distance of points to their respective centroids: " + currentBestDistance);
+for (int i: classCountBest)
+{
+  System.out.println("Class Count: " + i);
+}
+```
+And now we're finally done. One thing to remember here is that this is unsupervised learning, so you wouldn't know the *real* solution in a acutal application. The whole point of k-means clustering is to detect patterns and trends in data that would've gone unnoticed otherwise. If the implementation of the model is good, then this information that you get from the clustering can prove to be very useful, like I said before.
+
+But since we're working on the iris dataset, we *do* have the real class labels. So we *can* verify whether or not the centroids are close to the real centroids of the dataset based on this.
+
+Before that, let's make something that will print out the clustered points of the best solution (KMeansCluster class provides a few classes for this):
+```java
+System.out.println("\n\n************Clustered classes :");
+KMeansCluster optimal = new KMeansCluster(fileLocation, 3);
+optimal.initialCentroids();
+optimal.setCentroids(storageBestCentroids);
+optimal.cluster();
+optimal.printAllClustered();
+ ```
+
+From here, we can even compare the exact points it classified. This can prove to be not that useful, however: class values in the iris dataset were labelled 0,1,2 for the species of flowers (each number corresponded to a certain type of flower), but the k-means clustering simply assigned classes to the datapoints, it has *no way of knowing the type of flower associated with a certain cluster*. That's why I'll compare the centroids:
+```java
+String fileLocation2 = "dataset/irisLabels.txt";
+
+System.out.println("\n********Real centroids at:");
+
+KMeansCluster realClasses = new KMeansCluster(fileLocation, numberOfClusters);
+realClasses.setClusteredClassestoReal(fileLocation2);
+realClasses.initialCentroids();
+realClasses.getCentroids();
+realClasses.printCentroids();
+```
+Using a couple other methods provided in the KMeansCluster class, I can get the position of the real centroids as seen above. Note that I had to manually create a new csv, with only one column: the class values. With this, the setClusteredClassestoReal method is used to load those classes directly into the object, and compute the centroids from them.
+
+#### Results
+
+I'll show some screenshots of the final results of my program. I run my program for 1000 loops, and pick the best solution at the end for the iris dataset. I choose to make the program create 3 clusters.
+
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/results1.PNG" />
+
+This was the optimal solution found. The original iris dataset had 50 flowers of each type. It looks like it was able to sort through one class easily enough. The two others are a bit harder; this is expected. As seen in class from Sameer's part of the course, the iris-setosa flower was easily separable from the others, while the two other species of flowers overlapped in a lot of their traits, making it harder to classify. Now let's look at the real centroids of the dataset, just to compare.
+
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/results2.PNG" />
+
+The first centroids are pretty close! The algorithm almost got it down perfectly. The other two are alright, but not as close.
+
+Here's a full list of the clustered classes for the optimal solution (since we know the real class labels, the real answers should be 50 0's, followed by 50 1's, and then 50 2's):
+
+************Clustered classes :
+Point                                Clustered Class
+ 5.100  3.500  1.400  0.200                0.0
+ 4.900  3.000  1.400  0.200                0.0
+ 4.700  3.200  1.300  0.200                0.0
+ 4.600  3.100  1.500  0.200                0.0
+ 5.000  3.600  1.400  0.200                0.0
+ 5.400  3.900  1.700  0.400                0.0
+ 4.600  3.400  1.400  0.300                0.0
+ 5.000  3.400  1.500  0.200                0.0
+ 4.400  2.900  1.400  0.200                0.0
+ 4.900  3.100  1.500  0.100                0.0
+ 5.400  3.700  1.500  0.200                0.0
+ 4.800  3.400  1.600  0.200                0.0
+ 4.800  3.000  1.400  0.100                0.0
+ 4.300  3.000  1.100  0.100                0.0
+ 5.800  4.000  1.200  0.200                0.0
+ 5.700  4.400  1.500  0.400                0.0
+ 5.400  3.900  1.300  0.400                0.0
+ 5.100  3.500  1.400  0.300                0.0
+ 5.700  3.800  1.700  0.300                0.0
+ 5.100  3.800  1.500  0.300                0.0
+ 5.400  3.400  1.700  0.200                0.0
+ 5.100  3.700  1.500  0.400                0.0
+ 4.600  3.600  1.000  0.200                0.0
+ 5.100  3.300  1.700  0.500                0.0
+ 4.800  3.400  1.900  0.200                0.0
+ 5.000  3.000  1.600  0.200                0.0
+ 5.000  3.400  1.600  0.400                0.0
+ 5.200  3.500  1.500  0.200                0.0
+ 5.200  3.400  1.400  0.200                0.0
+ 4.700  3.200  1.600  0.200                0.0
+ 4.800  3.100  1.600  0.200                0.0
+ 5.400  3.400  1.500  0.400                0.0
+ 5.200  4.100  1.500  0.100                0.0
+ 5.500  4.200  1.400  0.200                0.0
+ 4.900  3.100  1.500  0.200                0.0
+ 5.000  3.200  1.200  0.200                0.0
+ 5.500  3.500  1.300  0.200                0.0
+ 4.900  3.600  1.400  0.100                0.0
+ 4.400  3.000  1.300  0.200                0.0
+ 5.100  3.400  1.500  0.200                0.0
+ 5.000  3.500  1.300  0.300                0.0
+ 4.500  2.300  1.300  0.300                0.0
+ 4.400  3.200  1.300  0.200                0.0
+ 5.000  3.500  1.600  0.600                0.0
+ 5.100  3.800  1.900  0.400                0.0
+ 4.800  3.000  1.400  0.300                0.0
+ 5.100  3.800  1.600  0.200                0.0
+ 4.600  3.200  1.400  0.200                0.0
+ 5.300  3.700  1.500  0.200                0.0
+ 5.000  3.300  1.400  0.200                0.0
+ 7.000  3.200  4.700  1.400                1.0
+ 6.400  3.200  4.500  1.500                1.0
+ 6.900  3.100  4.900  1.500                1.0
+ 5.500  2.300  4.000  1.300                1.0
+ 6.500  2.800  4.600  1.500                1.0
+ 5.700  2.800  4.500  1.300                1.0
+ 6.300  3.300  4.700  1.600                1.0
+ 4.900  2.400  3.300  1.000                1.0
+ 6.600  2.900  4.600  1.300                1.0
+ 5.200  2.700  3.900  1.400                1.0
+ 5.000  2.000  3.500  1.000                1.0
+ 5.900  3.000  4.200  1.500                1.0
+ 6.000  2.200  4.000  1.000                1.0
+ 6.100  2.900  4.700  1.400                1.0
+ 5.600  2.900  3.600  1.300                1.0
+ 6.700  3.100  4.400  1.400                1.0
+ 5.600  3.000  4.500  1.500                1.0
+ 5.800  2.700  4.100  1.000                1.0
+ 6.200  2.200  4.500  1.500                1.0
+ 5.600  2.500  3.900  1.100                1.0
+ 5.900  3.200  4.800  1.800                1.0
+ 6.100  2.800  4.000  1.300                1.0
+ 6.300  2.500  4.900  1.500                1.0
+ 6.100  2.800  4.700  1.200                1.0
+ 6.400  2.900  4.300  1.300                1.0
+ 6.600  3.000  4.400  1.400                1.0
+ 6.800  2.800  4.800  1.400                1.0
+ 6.700  3.000  5.000  1.700                1.0
+ 6.000  2.900  4.500  1.500                1.0
+ 5.700  2.600  3.500  1.000                1.0
+ 5.500  2.400  3.800  1.100                1.0
+ 5.500  2.400  3.700  1.000                1.0
+ 5.800  2.700  3.900  1.200                1.0
+ 6.000  2.700  5.100  1.600                1.0
+ 5.400  3.000  4.500  1.500                1.0
+ 6.000  3.400  4.500  1.600                1.0
+ 6.700  3.100  4.700  1.500                1.0
+ 6.300  2.300  4.400  1.300                1.0
+ 5.600  3.000  4.100  1.300                1.0
+ 5.500  2.500  4.000  1.300                1.0
+ 5.500  2.600  4.400  1.200                1.0
+ 6.100  3.000  4.600  1.400                1.0
+ 5.800  2.600  4.000  1.200                1.0
+ 5.000  2.300  3.300  1.000                1.0
+ 5.600  2.700  4.200  1.300                1.0
+ 5.700  3.000  4.200  1.200                1.0
+ 5.700  2.900  4.200  1.300                1.0
+ 6.200  2.900  4.300  1.300                1.0
+ 5.100  2.500  3.000  1.100                1.0
+ 5.700  2.800  4.100  1.300                1.0
+ 6.300  3.300  6.000  2.500                2.0
+ 5.800  2.700  5.100  1.900                1.0
+ 7.100  3.000  5.900  2.100                2.0
+ 6.300  2.900  5.600  1.800                2.0
+ 6.500  3.000  5.800  2.200                2.0
+ 7.600  3.000  6.600  2.100                2.0
+ 4.900  2.500  4.500  1.700                1.0
+ 7.300  2.900  6.300  1.800                2.0
+ 6.700  2.500  5.800  1.800                2.0
+ 7.200  3.600  6.100  2.500                2.0
+ 6.500  3.200  5.100  2.000                2.0
+ 6.400  2.700  5.300  1.900                2.0
+ 6.800  3.000  5.500  2.100                2.0
+ 5.700  2.500  5.000  2.000                1.0
+ 5.800  2.800  5.100  2.400                1.0
+ 6.400  3.200  5.300  2.300                2.0
+ 6.500  3.000  5.500  1.800                2.0
+ 7.700  3.800  6.700  2.200                2.0
+ 7.700  2.600  6.900  2.300                2.0
+ 6.000  2.200  5.000  1.500                1.0
+ 6.900  3.200  5.700  2.300                2.0
+ 5.600  2.800  4.900  2.000                1.0
+ 7.700  2.800  6.700  2.000                2.0
+ 6.300  2.700  4.900  1.800                1.0
+ 6.700  3.300  5.700  2.100                2.0
+ 7.200  3.200  6.000  1.800                2.0
+ 6.200  2.800  4.800  1.800                1.0
+ 6.100  3.000  4.900  1.800                1.0
+ 6.400  2.800  5.600  2.100                2.0
+ 7.200  3.000  5.800  1.600                2.0
+ 7.400  2.800  6.100  1.900                2.0
+ 7.900  3.800  6.400  2.000                2.0
+ 6.400  2.800  5.600  2.200                2.0
+ 6.300  2.800  5.100  1.500                1.0
+ 6.100  2.600  5.600  1.400                1.0
+ 7.700  3.000  6.100  2.300                2.0
+ 6.300  3.400  5.600  2.400                2.0
+ 6.400  3.100  5.500  1.800                2.0
+ 6.000  3.000  4.800  1.800                1.0
+ 6.900  3.100  5.400  2.100                2.0
+ 6.700  3.100  5.600  2.400                2.0
+ 6.900  3.100  5.100  2.300                2.0
+ 5.800  2.700  5.100  1.900                1.0
+ 6.800  3.200  5.900  2.300                2.0
+ 6.700  3.300  5.700  2.500                2.0
+ 6.700  3.000  5.200  2.300                2.0
+ 6.300  2.500  5.000  1.900                1.0
+ 6.500  3.000  5.200  2.000                2.0
+ 6.200  3.400  5.400  2.300                2.0
+ 5.900  3.000  5.100  1.800                1.0
+
+Again, this shows that the first class 0 in the iris dataset was clustered pretty well. The program is able to recognize that there is a category of flower here. In classes 1 and 2, however, it has a much harder time clustering the right points.
 
 
+How can we improve this? Maybe normalizing our data would help - we had a whole discussion on this in our logistic regression. Let's try running it after standardizing all our data to z-scores using the standardScaler method:
+```java
+kmean.standardScaler();
+```
+Just call the method on the object after everytime you create it, like above.
 
-  
+Now we run the same thing again, 1000 runs, and see how it performed.
+
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/results3.PNG" />
+
+Okay, so the classes are close to the 50/50/50 split now, which is nice. But let's look and compare with the real centroids for a moment:
+
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/results4.PNG" />
+
+The first position of the centroid is alright again, but the others don't quite match that well. And if we look at the class clusters, it doesn't look that good:
+
+************Clustered classes :
+Point                             Clustered Class
+-0.901  1.019 -1.340 -1.315                0.0
+-1.143 -0.132 -1.340 -1.315                0.0
+-1.385  0.328 -1.397 -1.315                0.0
+-1.507  0.098 -1.283 -1.315                0.0
+-1.022  1.249 -1.340 -1.315                0.0
+-0.537  1.940 -1.170 -1.052                0.0
+-1.507  0.789 -1.340 -1.184                0.0
+-1.022  0.789 -1.283 -1.315                0.0
+-1.749 -0.362 -1.340 -1.315                0.0
+-1.143  0.098 -1.283 -1.447                0.0
+-0.537  1.479 -1.283 -1.315                0.0
+-1.264  0.789 -1.227 -1.315                0.0
+-1.264 -0.132 -1.340 -1.447                0.0
+-1.870 -0.132 -1.511 -1.447                0.0
+-0.053  2.170 -1.454 -1.315                0.0
+-0.174  3.091 -1.283 -1.052                0.0
+-0.537  1.940 -1.397 -1.052                0.0
+-0.901  1.019 -1.340 -1.184                0.0
+-0.174  1.710 -1.170 -1.184                0.0
+-0.901  1.710 -1.283 -1.184                0.0
+-0.537  0.789 -1.170 -1.315                0.0
+-0.901  1.479 -1.283 -1.052                0.0
+-1.507  1.249 -1.568 -1.315                0.0
+-0.901  0.559 -1.170 -0.921                0.0
+-1.264  0.789 -1.056 -1.315                0.0
+-1.022 -0.132 -1.227 -1.315                0.0
+-1.022  0.789 -1.227 -1.052                0.0
+-0.780  1.019 -1.283 -1.315                0.0
+-0.780  0.789 -1.340 -1.315                0.0
+-1.385  0.328 -1.227 -1.315                0.0
+-1.264  0.098 -1.227 -1.315                0.0
+-0.537  0.789 -1.283 -1.052                0.0
+-0.780  2.400 -1.283 -1.447                0.0
+-0.416  2.630 -1.340 -1.315                0.0
+-1.143  0.098 -1.283 -1.315                0.0
+-1.022  0.328 -1.454 -1.315                0.0
+-0.416  1.019 -1.397 -1.315                0.0
+-1.143  1.249 -1.340 -1.447                0.0
+-1.749 -0.132 -1.397 -1.315                0.0
+-0.901  0.789 -1.283 -1.315                0.0
+-1.022  1.019 -1.397 -1.184                0.0
+-1.628 -1.743 -1.397 -1.184                0.0
+-1.749  0.328 -1.397 -1.315                0.0
+-1.022  1.019 -1.227 -0.789                0.0
+-0.901  1.710 -1.056 -1.052                0.0
+-1.264 -0.132 -1.340 -1.184                0.0
+-0.901  1.710 -1.227 -1.315                0.0
+-1.507  0.328 -1.340 -1.315                0.0
+-0.658  1.479 -1.283 -1.315                0.0
+-1.022  0.559 -1.340 -1.315                0.0
+ 1.402  0.328  0.535  0.264                2.0
+ 0.675  0.328  0.422  0.396                2.0
+ 1.280  0.098  0.649  0.396                2.0
+-0.416 -1.743  0.138  0.133                1.0
+ 0.796 -0.592  0.479  0.396                1.0
+-0.174 -0.592  0.422  0.133                1.0
+ 0.553  0.559  0.535  0.527                2.0
+-1.143 -1.513 -0.260 -0.262                1.0
+ 0.917 -0.362  0.479  0.133                2.0
+-0.780 -0.823  0.081  0.264                1.0
+-1.022 -2.434 -0.147 -0.262                1.0
+ 0.069 -0.132  0.251  0.396                1.0
+ 0.190 -1.974  0.138 -0.262                1.0
+ 0.311 -0.362  0.535  0.264                1.0
+-0.295 -0.362 -0.090  0.133                1.0
+ 1.038  0.098  0.365  0.264                2.0
+-0.295 -0.132  0.422  0.396                1.0
+-0.053 -0.823  0.194 -0.262                1.0
+ 0.432 -1.974  0.422  0.396                1.0
+-0.295 -1.283  0.081 -0.131                1.0
+ 0.069  0.328  0.592  0.791                2.0
+ 0.311 -0.592  0.138  0.133                1.0
+ 0.553 -1.283  0.649  0.396                1.0
+ 0.311 -0.592  0.535  0.001                1.0
+ 0.675 -0.362  0.308  0.133                1.0
+ 0.917 -0.132  0.365  0.264                2.0
+ 1.159 -0.592  0.592  0.264                2.0
+ 1.038 -0.132  0.706  0.659                2.0
+ 0.190 -0.362  0.422  0.396                1.0
+-0.174 -1.053 -0.147 -0.262                1.0
+-0.416 -1.513  0.024 -0.131                1.0
+-0.416 -1.513 -0.033 -0.262                1.0
+-0.053 -0.823  0.081  0.001                1.0
+ 0.190 -0.823  0.763  0.527                1.0
+-0.537 -0.132  0.422  0.396                1.0
+ 0.190  0.789  0.422  0.527                2.0
+ 1.038  0.098  0.535  0.396                2.0
+ 0.553 -1.743  0.365  0.133                1.0
+-0.295 -0.132  0.194  0.133                1.0
+-0.416 -1.283  0.138  0.133                1.0
+-0.416 -1.053  0.365  0.001                1.0
+ 0.311 -0.132  0.479  0.264                1.0
+-0.053 -1.053  0.138  0.001                1.0
+-1.022 -1.743 -0.260 -0.262                1.0
+-0.295 -0.823  0.251  0.133                1.0
+-0.174 -0.132  0.251  0.001                1.0
+-0.174 -0.362  0.251  0.133                1.0
+ 0.432 -0.362  0.308  0.133                1.0
+-0.901 -1.283 -0.431 -0.131                1.0
+-0.174 -0.592  0.194  0.133                1.0
+ 0.553  0.559  1.274  1.712                2.0
+-0.053 -0.823  0.763  0.922                1.0
+ 1.523 -0.132  1.217  1.186                2.0
+ 0.553 -0.362  1.047  0.791                2.0
+ 0.796 -0.132  1.161  1.317                2.0
+ 2.129 -0.132  1.615  1.186                2.0
+-1.143 -1.283  0.422  0.659                1.0
+ 1.765 -0.362  1.445  0.791                2.0
+ 1.038 -1.283  1.161  0.791                2.0
+ 1.644  1.249  1.331  1.712                2.0
+ 0.796  0.328  0.763  1.054                2.0
+ 0.675 -0.823  0.876  0.922                2.0
+ 1.159 -0.132  0.990  1.186                2.0
+-0.174 -1.283  0.706  1.054                1.0
+-0.053 -0.592  0.763  1.580                1.0
+ 0.675  0.328  0.876  1.449                2.0
+ 0.796 -0.132  0.990  0.791                2.0
+ 2.250  1.710  1.672  1.317                2.0
+ 2.250 -1.053  1.786  1.449                2.0
+ 0.190 -1.974  0.706  0.396                1.0
+ 1.280  0.328  1.104  1.449                2.0
+-0.295 -0.592  0.649  1.054                1.0
+ 2.250 -0.592  1.672  1.054                2.0
+ 0.553 -0.823  0.649  0.791                1.0
+ 1.038  0.559  1.104  1.186                2.0
+ 1.644  0.328  1.274  0.791                2.0
+ 0.432 -0.592  0.592  0.791                1.0
+ 0.311 -0.132  0.649  0.791                2.0
+ 0.675 -0.592  1.047  1.186                2.0
+ 1.644 -0.132  1.161  0.527                2.0
+ 1.886 -0.592  1.331  0.922                2.0
+ 2.492  1.710  1.502  1.054                2.0
+ 0.675 -0.592  1.047  1.317                2.0
+ 0.553 -0.592  0.763  0.396                1.0
+ 0.311 -1.053  1.047  0.264                1.0
+ 2.250 -0.132  1.331  1.449                2.0
+ 0.553  0.789  1.047  1.580                2.0
+ 0.675  0.098  0.990  0.791                2.0
+ 0.190 -0.132  0.592  0.791                1.0
+ 1.280  0.098  0.933  1.186                2.0
+ 1.038  0.098  1.047  1.580                2.0
+ 1.280  0.098  0.763  1.449                2.0
+-0.053 -0.823  0.763  0.922                1.0
+ 1.159  0.328  1.217  1.449                2.0
+ 1.038  0.559  1.104  1.712                2.0
+ 1.038 -0.132  0.820  1.449                2.0
+ 0.553 -1.283  0.706  0.922                1.0
+ 0.796 -0.132  0.820  1.054                2.0
+ 0.432  0.789  0.933  1.449                2.0
+ 0.069 -0.132  0.763  0.791                1.0
+ 
+ Classes 1 and 2 are really mixed up! And upon inspection, even though the clustered classes have a better distribution, the datapoints it classified seem to be worse. So really, from what I see, I cannot say with certainty that normalizing the data produces better results, at least when we check the classification with the real answers.
+ 
+ One more question remains. What would happen if we didn't know the number of clusters? Remember, in conventional unsupervised machine learning, we are only presented with the data, and the program would have to cluster points together. There wouldn't be any possibility of checking our results with the acutal answers like I did here; in reality, we would just have to trust that the algorithm clustered a number of classes correctly. We would not know the real class values, and because of that, we would not know the number of clusters K either! So how do we determine the number of clusters that algorithm should use?
+ 
+ Well, one way is just to experiment and try different values of K. Let's do it for the iris dataset, and plot out the summed average distance of points to their respective centroids with respect to K.
+ 
+ <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/results5.PNG" />
+ 
+ And what we get is a very interesting graph. Past 4 or more clusters, the distance does not seem to change that much. However, we spot an abnormality at K = 2, the distance becomes much smaller. But then, at K = 3, the distance jumps back up. This means that it would be better to use K = 2 over K =3. With 2 clusters, the k-means algorithm would cluster two types of flowers together in one class because of the similarity of their features. This makes sense, when you think back to all those graphs we did with Sameer: the first flower was easily classified, while the other two overlapped a bit and did not have clearly defined borders. Of course the k-means algorithm would find that two clusters would be better.
+ 
+ This is where I can observe one weakness of this clustering method: it groups datapoints that have similar features together. But in doing so, it can incorrectly group together incorrect points or outliers.
+ 
+ On a related note, what I *was* hoping for in the distance vs. K graph was a "elbow point". Here's an example that I got from Andrea Trevino in his  [article about K-Means Clustering:](https://www.datascience.com/blog/k-means-clustering)
+ 
+ <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/example1.PNG" />
+ 
+ At some point, the distance would stop decreasing at a fast rate, and we would pick the K whose designated point is where the curve plateaus a bit, the "elbow point". On my graph, this *would* have been the case, but there was an abnormality, like I said, because the features for two types of flowers were rather similar.
+ 
+ #### Conclusion
+ 
+ K-Means Clustering is great when you want to sort through some data, without knowing what the classes actually are. This is unsupervised learning. The algorithm can spot patterns and cluster together groups that you would not expect; this can prove to be beneficial or detrimental depending on the case. Also, the data itself can affect the clustering; this algorithm is sensitive to outliers and overlapping of classes. When we don't know the number of clusters, we can create an average distance to centroids vs. K graph, and experimentally determine the best number of clusters.
+ 
