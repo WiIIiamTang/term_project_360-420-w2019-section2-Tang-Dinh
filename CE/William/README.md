@@ -335,9 +335,9 @@ Using a couple other methods provided in the KMeansCluster class, I can get the 
 
 #### Results
 
-It is relatively hard to evaluate a clustering. In logistic regression, we could easily validate our code and results. All we had to do is compare the predicitons with the real class labels. Here, with k-means clustering, there is no such validation. The results are totally up for interpretation (did the algorithm recognize a more effective way of organizing the classes? Or did it completely fail?). I am lucky that for this dataset that I am working with, the class labels are provided already. However, because there are four feature variables, it is hard to graph and vizulize the clusters the program made.
+It is relatively hard to evaluate a clustering. In logistic regression, we could easily validate our code and results. All we had to do is compare the predicitons with the real class labels. Here, with k-means clustering, there is no such validation; this is unsupervised learning, and the results are totally up for interpretation (did the algorithm recognize a more effective way of organizing the classes? Or did it completely fail?). I am lucky that for this dataset that I am working with, the class labels are provided already.
 
-There are still some things we can do, mostly through a qualitative analysis. First, I'll show some screenshots of the final results of my program. I run my program for 1000 loops, and pick the best solution at the end for the iris dataset. I choose to make the program create 3 clusters.
+So there are still some things we can do, mostly through a qualitative analysis. First, I'll show some screenshots of the final results of my program. I run my program for 1000 loops, and pick the best solution at the end for the iris dataset. I choose to make the program create 3 clusters.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/William/results1.PNG" />
 
