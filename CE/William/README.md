@@ -326,7 +326,9 @@ Using a couple other methods provided in the KMeansCluster class, I can get the 
 
 #### Results
 
-I'll show some screenshots of the final results of my program. I run my program for 1000 loops, and pick the best solution at the end for the iris dataset. I choose to make the program create 3 clusters.
+It is relatively hard to evaluate a clustering. In logistic regression, we could easily validate our code and results. All we had to do is compare the predicitons with the real class labels. Here, with k-means clustering, there is no such validation. The results are totally up for interpretation (did the algorithm recognize a more effective way of organizing the classes? Or did it completely fail?). I am lucky that for this dataset that I am working with, the class labels are provided already.
+
+So there are still some things we can do, mostly through a qualitative analysis. First, I'll show some screenshots of the final results of my program. I run my program for 1000 loops, and pick the best solution at the end for the iris dataset. I choose to make the program create 3 clusters.
 
 <img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/ce_Tang/CE/William/results1.PNG" />
 
@@ -381,5 +383,5 @@ The first position of the centroid is alright again, but the others don't quite 
  
  #### Notes
  
- Although this report on k-means clustering focuses on the iris dataset, you will see in the code that I have tested against the wine dataset and the school exam marks dataset. The school exam marks seems to perform at the same level as the iris dataset. For the wine, it seems that with higher dimensionality of the features, the clustering is not as effective.
+ Although this report on k-means clustering focuses on the iris dataset, you will see in the code that I have tested against the wine dataset and the school exam marks dataset. The school exam marks seems to perform at the same level as the iris dataset. For the wine, it seems that with higher dimensionality of the features, the clustering is not as effective (or who knows, maybe it spotted patterns in the wine features that we never thought about).
  
