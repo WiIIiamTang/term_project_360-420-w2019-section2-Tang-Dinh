@@ -400,7 +400,7 @@ The first position of the centroid is alright again, but the others don't quite 
  
  #### Conclusion
  
- K-Means Clustering is great when you want to sort through some data, without knowing what the classes actually are. This is unsupervised learning. The algorithm can spot patterns and cluster together groups that you would not expect; this can prove to be beneficial or detrimental depending on the case. Also, the data itself can affect the clustering; this algorithm is sensitive to outliers and overlapping of classes. When we don't know the number of clusters, we can create an average distance to centroids vs. K graph, and experimentally determine the best number of clusters.
+ K-Means Clustering is great when you want to sort through some data, without knowing what the classes actually are. This is unsupervised learning. The algorithm can spot patterns and cluster together groups that you would not expect; this can prove to be beneficial or detrimental depending on the case. Also, the data itself can affect the clustering; this algorithm is sensitive to outliers and overlapping of classes. Usually it does not work well when the data cannot be linearly separated. When we don't know the number of clusters, we can create an average distance to centroids vs. K graph, and experimentally determine the best number of clusters.
  
  #### Notes
  
