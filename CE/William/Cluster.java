@@ -6,12 +6,13 @@ public class Cluster
 {
   public static void main(String[] args)
   {
-    int numberOfClusters = 3;
+    int numberOfClusters = 7;
     String fileLocation = "dataset/iris.txt";
     //String fileLocation = "dataset/fullwineNoLabels.txt";
+    //String fileLocation = "dataset/marks.txt";
 
     KMeansCluster kmean = new KMeansCluster(fileLocation, numberOfClusters);
-    kmean.standardScaler();
+    //kmean.standardScaler();
     int[] numRandC = kmean.returnRowandCol(fileLocation);
     int row = numRandC[0];
     int col = numRandC[1];
@@ -34,7 +35,7 @@ public class Cluster
       temp1 = deepCopy2D(kmean.returnCentroids());
       kmean.cluster();
       kmean.getCentroids();
-      //kmean.printCentroids();
+      kmean.printCentroids();
       temp2 = deepCopy2D(kmean.returnCentroids());
       System.out.println("clustering");
       iterations++;
@@ -55,10 +56,10 @@ public class Cluster
 
 
 
-    for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 1000; i++)
     {
       kmean = new KMeansCluster(fileLocation, numberOfClusters);
-      kmean.standardScaler();
+      //kmean.standardScaler();
       System.out.println("Initial Centroids at");
       kmean.initialCentroids();
       kmean.printCentroids();
@@ -70,7 +71,7 @@ public class Cluster
         temp1 = deepCopy2D(kmean.returnCentroids());
         kmean.cluster();
         kmean.getCentroids();
-        //kmean.printCentroids();
+        kmean.printCentroids();
         temp2 = deepCopy2D(kmean.returnCentroids());
         System.out.println("clustering");
         iterations++;
@@ -89,7 +90,6 @@ public class Cluster
         storageBestCentroids = kmean.returnCentroids();
         currentBestDistance = kmean.computeAverageDistanceToCentroids();
         classCountBest = kmean.returnClassCounts();
-        System.out.println("hey");
       }
     }
 
@@ -105,12 +105,14 @@ public class Cluster
 
     //compare with real centroids.we can use the KMeansCluster class but directly input the clustered classes labels.
     String fileLocation2 = "dataset/irisLabels.txt";
+    //String fileLocation2 = "dataset/marksLabels.txt";
+    //String fileLocation2 = "dataset/fullwineLabels.txt";
 
     System.out.println("\n********Real centroids at:");
 
-    KMeansCluster realClasses = new KMeansCluster(fileLocation, 3);
+    KMeansCluster realClasses = new KMeansCluster(fileLocation, numberOfClusters);
     realClasses.setClusteredClassestoReal(fileLocation2);
-    realClasses.standardScaler();
+  //realClasses.standardScaler();
     realClasses.initialCentroids();
     realClasses.getCentroids();
     realClasses.printCentroids();
@@ -120,7 +122,7 @@ public class Cluster
     //if you want to see what points the algorithm clustered.
     System.out.println("\n\n************Clustered classes :");
     KMeansCluster optimal = new KMeansCluster(fileLocation, 3);
-    optimal.standardScaler();
+    //optimal.standardScaler();
     optimal.initialCentroids();
     optimal.setCentroids(storageBestCentroids);
     optimal.cluster();
