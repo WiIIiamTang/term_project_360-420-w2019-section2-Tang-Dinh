@@ -2,6 +2,8 @@
 
 ## Supervisor: Jean-François Brière
 
+For this CE, I worked on two things: first, I really wanted to study something we didn't have to the time to do in our term project: multi-class logistic regression. Then, I'll discuss some the things I learned in unsupervised machine learning, with k-means clustering.
+
 
 ### 1. Multinominal Logisitic Regression: the One vs. All Strategy
 
@@ -682,4 +684,8 @@ Point                             Clustered Class
  #### Conclusion
  
  K-Means Clustering is great when you want to sort through some data, without knowing what the classes actually are. This is unsupervised learning. The algorithm can spot patterns and cluster together groups that you would not expect; this can prove to be beneficial or detrimental depending on the case. Also, the data itself can affect the clustering; this algorithm is sensitive to outliers and overlapping of classes. When we don't know the number of clusters, we can create an average distance to centroids vs. K graph, and experimentally determine the best number of clusters.
+ 
+ #### Notes
+ 
+ Although this report on k-means clustering focuses on the iris dataset, you will see in the code that I have tested against the wine dataset and the school exam marks dataset. The school exam marks seems to perform at the same level as the iris dataset. For the wine, it seems that with higher dimensionality of the features, the clustering is not as effective.
  
