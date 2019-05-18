@@ -9,7 +9,7 @@ Latest Version: 2019-05-17
 
 ## 0. Project Description
 
-For this CE, I worked on two things: first, I really wanted to study something we didn't have to the time to do in our term project: multi-class logistic regression. Then, I'll discuss some the things I learned in unsupervised machine learning, with k-means clustering. The files that I have created in this project are Multinominal.java, Cluster.java, KMeansCluster.java, and associated graphs/figures. All other material are from our logistic regression work, a term project by me and Jason.
+For this CE, I worked on two things: first, I really wanted to study something we didn't have to the time to do in our term project, a multi-class logistic regression. Then, I'll discuss some the things I learned in unsupervised machine learning, with k-means clustering. The files that I have created in this project are Multinominal.java, Cluster.java, KMeansCluster.java, and associated graphs/figures. All other material are from our logistic regression work, a term project by me and Jason.
 
 
 ## 1. Multinominal Logisitic Regression: the One vs. All Strategy
