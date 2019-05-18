@@ -47,7 +47,7 @@ public class MultipleRuns
       classifier.fit(0.1,5000,false); //alpha, maxiterations, randomize intial weights or not, check for tolerance level
 
       double[] predictionsOnTrainSet = classifier.predictTrainSet(0.5);
-      double[] predictionsOnTestSet = classifier.predictTestSet(1.0);
+      double[] predictionsOnTestSet = classifier.predictTestSet(0.5);
 
       for(int j = 0; j < y_test.length; j++)
       {

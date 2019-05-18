@@ -4,8 +4,7 @@ import java.io.*;
 import java.util.Scanner;
 
 /*
-** info here
-**
+** Each dataloader object will contain a full set of data, as well as the train/test sets.
 **
 */
 
@@ -156,7 +155,7 @@ public class Dataloader
 
 
   //this returns total number of data points in your cvs file
-  // it counts the number of lines, so you can use it to verify if your arrays are initializing correctly
+  //it counts the number of lines, so you can use it to verify if your arrays are initializing correctly
   public int returnNumDataPoints(String location)
   {
     File fileLocation = new File(location);
@@ -242,10 +241,10 @@ public class Dataloader
   }//end makeArrays
 
 
-
+  //This method is kind of the same as the previous one except its to find numb of row/colLength
   public int[] returnRowandCol(String fileLocation)
   {
-    //This method is kind of the same as the previous one except its to find numb of row/colLength
+
 
   	String[] inputArray;
     int[] toReturn = new int[2];
@@ -285,10 +284,7 @@ public class Dataloader
 
   //this method is something that we might need to use to get all the y-labels to ONLY zeroes and ones, for a binary logistic regression.
   //this means that we'll check for one class label (only numerical for now!), and all the others get assigned something else (assignThisOtherwise)
-  //the label we're checking for is assigned (assignThis). this methods works on the allY array ONLY.
-  // Here's an example usage; say we want to get a dataset with wine 2 vs. other wines (type 1, 3):
-  // Dataloader makeYLabels (2, 1, 0);
-  // We check if the label is 2 here, and assign it to 1. Everything else is 0.
+  //the label we're checking for is assigned (assignThis). this method works on the allY array ONLY.
 
   public void makeYLabels(double checkIfThis, double assignThis, double assignThisOtherwise)
   {
