@@ -1,174 +1,150 @@
-class Dataloader {
-    _allX;
-    _allY;
-    _xTrain;
-    _yTrain;
-    _xTest;
-    _xTrain;
+module.exports = {
+	printXArray: function(array) {
+		for(var i = 0; i < array.length;i++) {
+			for(var j = 0; j < array[i].length; j++){
+				console.log(array[i][j]);
+			}
+		}
+	},
 
-    get FullXArray(){
-        return this._allX;
-    }
+	printYArray: function(array) {
+		for(var i = 0; i < array.length;i++) {
+			console.log(array[i]);
+		}
+	},
 
-    get FullYArray() {
-        return this._allY;
-    }
+	makeXArrays: function(fileLocation){
+		var inputArray;
+		var inputRow;
+		var allX;
 
-    get XTrainArray() {
-        return this._xTrain;
-    }
+		var fs = require("fs");
+		var text = fs.readFileSync(fileLocation, "utf-8");
+		var textByLine = text.split("\n");      //textByLine is an array with containing all the data from the .csv file
 
-    get YTrainArray() {
-        return this._yTrain;
-    }
+		allX = [];                              //set 1st dimension array of allX
+		
+		for(var i = 0; i < textByLine.length-1; i++){
+			inputRow = textByLine[i];           //inputRow is each row of the .csv file
+			inputArray = inputRow.split(",")    //inputArray is an array with each column as a variable
+			
+			allX[i] = [];                       //set 2nd dimension array of allX
 
-    get XTestArray() {
-        return this._xTest;
-    }
+			for(var j = 0; j < (inputArray.length - 1); j++){
+				allX[i][j] = parseFloat(inputArray[j]);                 //copy and convert to float
+			}
+			
+		}
+		return allX;
+	},
 
-    get YTestArray() {
-        return this._yTest;
-    }
+	makeYArrays: function(fileLocation){
+		var inputArray;
+		var inputRow;
+		var allY;
 
-    printallX() {
-        for(var i = 0; i < allX.length;i++) {
-            for(var j = 0; j < allX[i].length; j++){
-                console.log(allX[i][j] + " ");
-            }
-        }
-    }
+		var fs = require("fs");
+		//var text = fs.readFileSync("./wine1vs2.txt", "utf-8");
+		var text = fs.readFileSync(fileLocation, "utf-8");
+		var textByLine = text.split("\n");      //textByLine is an array with containing all the data from the .csv file
+		
+		allY = [];                              //set allY as array
+		
+		for(var i = 0; i < textByLine.length-1; i++){
+			inputRow = textByLine[i];           //inputRow is each row of the .csv file
+			inputArray = inputRow.split(",")    //inputArray is an array with each column as a variable
+			
+			allY[i] = parseFloat(inputArray[inputArray.length-1]);      //copy and convert to float
+		}
+		return allY;
+	},
 
-    printallY() {
-        for(var i = 0; i < allY.length;i++) {
-            for(var j = 0; j < allY[i].length; j++){
-                console.log(allY[i][j] + " ");
-            }
-        }
-    }
+	makeYLabels: function(allY, checkIfThis, assignThis, assignThisOtherwise){
+		for(var i = 0; i < allY.length; i++){
+			if (allY[i] != checkIfThis) {
+				allY[i] = assignThisOtherwise;
+			} else {
+				allY[i] = assignThis;
+			}
+		}
+		return allY;
+	},
 
-    printXTrain() {
-        for(var i = 0; i < xTrain.length;i++) {
-            for(var j = 0; j < xTrain[i].length; j++){
-                console.log(xTrain[i][j] + " ");
-            }
-        }
-    }
+	shuffleData: function(allX, allY){
+		var max = (allX.length - 1)
+		var min = 0;
+		var randRange = (max - min) + 1;
+		var roll = 0;
+		var temp = [];
+		var tempY = [];
 
-    printYTrain() {
-        for(var i = 0; i < yTrain.length;i++) {
-            for(var j = 0; j < yTrain[i].length; j++){
-                console.log(yTrain[i][j] + " ");
-            }
-        }
-    }
+		for(var i = 0; i< allX.length; i++){
+			roll = Math.round((Math.random() * randRange) + min);
+			temp[i] = [];
+			allX[i] = [];
+			allX[roll] = [];
+			tempY[i] = allY[i];
+			allY[i] = allY[roll];
+			allY[roll] = tempY[i];
 
-    printXTest() {
-        for(var i = 0; i < xTest.length;i++) {
-            for(var j = 0; j < xTest[i].length; j++){
-                console.log(xTest[i][j] + " ");
-            }
-        }
-    }
+			for(var j = 0; j < allX[0].length; j++){
+				temp[i][j] = allX[i][j];
+				allX[i][j] = allX[roll][j];
+				allX[roll][j] = temp[i][j];
+			}
+		}
+	},
 
-    printYTest() {
-        for(var i = 0; i < yTest.length;i++) {
-            for(var j = 0; j < yTest[i].length; j++){
-                console.log(yTest[i][j] + " ");
-            }
-        }
-    }
+	splitXTrain: function(allX, trainingSplitPercent){
+		var splitIndex = Math.round(allX.length * trainingSplitPercent);
+		var xTrain = new Array(splitIndex);
 
-    setAllX(x){
-        this._allX = x;
-    }
+		for (var i = 0; i < splitIndex; i++) {
+			xTrain[i] = new Array(allX[0].length);
 
-    setAllY(y){
-        this._allY = y;
-    }
+			for(var j = 0; j < xTrain[0].length; j++) {
+				xTrain[i][j] = allX[i][j];
+			}
+		}
+		return xTrain;
+	},
 
-    setTrainX(x){
-        xTrain = x;
-    }
+	splitXTest: function(allX, trainingSplitPercent){
+		var splitIndex = Math.round(allX.length * trainingSplitPercent);
+		var xTest = new Array (allX.length - splitIndex)
+		var countrow = 0;
 
-    setTrainY(y){
-        yTrain = y;
-    }
+		for (var i = splitIndex; i < allX.length; i++) {
+			xTest[countrow] = new Array(allX[0].length);
+			for(var j = 0; j < xTest[countrow].length; j++) {
+				xTest[countrow][j] = allX[i][j];
+			}
+			countrow++;
+		}
+		
+		return xTest;
+	},
 
-    setTestX(x){
-        xTest = x;
-    }
+	splitYTrain: function(allY, trainingSplitPercent){
+		var splitIndex = Math.round(allY.length * trainingSplitPercent);
+		var yTrain = new Array(splitIndex);
+		
+		for (var i = 0; i < splitIndex; i++) {
+			yTrain[i] = allY[i];
+		}
+		return yTrain;
+	},
 
-    setTestY(y){
-        yTest = y;
-    }
-
-    //returnNumDataPoints(location)?
-
-    //makeArrays()
-
-    //returnRowandCol()
-
-    makeYLabels(checkIfThis, assignThis, assignThisOtherwise){
-        for(var i = 0; i < allY.length; i++){
-            if (allY[i] != checkIfThis) {
-                allY[i] = assignThisOtherwise;
-            } else {
-                allY[i] = assignThis;
-            }
-        }
-    }
-
-    shuffleData(){
-        var max = (allX.length - 1)
-        var min = 0;
-        var randRange = (max - min) + 1;
-        var roll = 0;
-        var temp = [];
-        var tempY = [];
-    
-        for(var i = 0; i< allX.length; i++){
-            roll = Math.round((Math.random() * randRange) + min);
-            tempY[i] = allY[i];
-            allY[i] = allY[roll];
-            allY[roll] = tempY[i];
-
-            for(var j = 0; j < allX[0].length; j++){
-                temp[i][j] = allX[i][j];
-                allX[i][j] = allX[roll][j];
-                allX[roll][j] = temp[i][j];
-            }
-        }
-    }
-
-    trainTestSplit(trainingSplitPercent){
-        var splitIndex = Math.round(allX.length * trainingSplitPercent);
-        xTrain;// = new double(splitIndex)[allX[0].length];
-        xTest;// = new double [allX.length - splitIndex][allX[0].length];
-        yTrain = new double(splitIndex);
-        yTest = new double (allY.length - splitIndex);
-        var countrow = 0;
-
-        for (var i = 0; i < splitIndex; i++) {
-            for(var j = 0; j < xTrain[0].length; j++) {
-                xTrain[i][j] = allX[i][j];
-            }
-        }
-
-        for (var i = splitIndex; i < allX.length; i++) {
-            for(var j = 0; j < xTest[0].length; j++) {
-                xTest[countrow][j] = allX[i][j];
-            }
-            countrow++;
-        }
-
-        for (var i = 0; i < splitIndex; i++) {
-            yTrain[i] = allY[i];
-        }
-
-        countrow = 0;
-        for (var i = splitIndex; i < allY.length; i++) {
-            yTest[countrow] = allY[i];
-            countrow++;
-        }
-    }
+	splitYTest: function(allY, trainingSplitPercent){
+		var splitIndex = Math.round(allY.length * trainingSplitPercent);
+		var yTest = new Array (allY.length - splitIndex);
+		var countrow = 0;
+		
+		for (var i = splitIndex; i < allY.length; i++) {
+			yTest[countrow] = allY[i];
+			countrow++;
+		}
+		
+		return yTest;
+	},
 }
