@@ -1,18 +1,4 @@
 module.exports = {
-	printXArray: function(array) {
-		for(var i = 0; i < array.length;i++) {
-			for(var j = 0; j < array[i].length; j++){
-				console.log(array[i][j]);
-			}
-		}
-	},
-
-	printYArray: function(array) {
-		for(var i = 0; i < array.length;i++) {
-			console.log(array[i]);
-		}
-	},
-
 	makeXArrays: function(fileLocation){
 		var inputArray;
 		var inputRow;
@@ -26,7 +12,7 @@ module.exports = {
 		
 		for(var i = 0; i < textByLine.length-1; i++){
 			inputRow = textByLine[i];           //inputRow is each row of the .csv file
-			inputArray = inputRow.split(",")    //inputArray is an array with each column as a variable
+			inputArray = inputRow.split(",");   //inputArray is an array with each column as a variable
 			
 			allX[i] = [];                       //set 2nd dimension array of allX
 
@@ -52,7 +38,7 @@ module.exports = {
 		
 		for(var i = 0; i < textByLine.length-1; i++){
 			inputRow = textByLine[i];           //inputRow is each row of the .csv file
-			inputArray = inputRow.split(",")    //inputArray is an array with each column as a variable
+			inputArray = inputRow.split(",");   //inputArray is an array with each column as a variable
 			
 			allY[i] = parseFloat(inputArray[inputArray.length-1]);      //copy and convert to float
 		}
@@ -70,27 +56,28 @@ module.exports = {
 		return allY;
 	},
 
+	//need to fix
 	shuffleData: function(allX, allY){
-		var max = (allX.length - 1)
+		var max = (allX.length - 1);
 		var min = 0;
 		var randRange = (max - min) + 1;
-		var roll = 0;
+		var random = 0;
 		var temp = [];
 		var tempY = [];
 
-		for(var i = 0; i< allX.length; i++){
-			roll = Math.round((Math.random() * randRange) + min);
+		for(var i = 0; i < allX.length; i++){
+			random = Math.round((Math.random() * randRange) + min);
 			temp[i] = [];
 			allX[i] = [];
-			allX[roll] = [];
+			allX[random] = [];
 			tempY[i] = allY[i];
-			allY[i] = allY[roll];
-			allY[roll] = tempY[i];
+			allY[i] = allY[random];
+			allY[random] = tempY[i];
 
 			for(var j = 0; j < allX[0].length; j++){
 				temp[i][j] = allX[i][j];
-				allX[i][j] = allX[roll][j];
-				allX[roll][j] = temp[i][j];
+				allX[i][j] = allX[random][j];
+				allX[random][j] = temp[i][j];
 			}
 		}
 	},

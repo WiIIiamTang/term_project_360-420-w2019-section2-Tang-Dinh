@@ -8,7 +8,7 @@ module.exports = {
         for (var col = 0; col < xTrainArray[0].length; col++) {
             mean = computeMean(xTrainArray, col);
             sd = standardDeviation(xTrainArray, col);
-    
+            
                 for (var i = 0; i < xTrainArray.length; i++) {
                     zScore1 = ((xTrainArray[i][col] - mean ) / sd);
                     xTrainArray[i][col] = zScore1;
@@ -48,30 +48,6 @@ function standardDeviation(xArray, col){
 
     return sd;
 }
-
-/*
-function standardScaler(xTrainArray, xTestArray){
-    var zScore1 = 0;
-    var zScore2 = 0;
-    var mean = 0;
-    var sd = 0;
-
-    for (var col = 0; col < xTrainArray[0].length; col++) {
-        mean = computeMean(xTrainArray, col);
-        sd = standardDeviation(xTrainArray, col);
-
-            for (var i = 0; i < xTrainArray.length; i++) {
-                zScore1 = ((xTrainArray[i][col] - mean ) / sd);
-                xTrainArray[i][col] = zScore1;
-            }
-
-        for (var i = 0; i < xTestArray.length; i++) {
-            zScore2 = ((xTestArray[i][col] - mean) / sd);
-            xTestArray[i][col] = zScore2;
-        }
-    }
-}
-*/
 
 function max(x, col){
     var max = x[0][col];
