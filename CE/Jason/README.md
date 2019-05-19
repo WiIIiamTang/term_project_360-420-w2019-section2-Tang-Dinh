@@ -28,9 +28,9 @@ The parameters used in this run were:
 
 The run had a 97.44% accuracy.
 
-<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/Jason/results/result-accuracy.PNG" />
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/Jason/results/result-accuracy.png" />
 
 The R-Squared value for the fitted line was 0.9402706
 and here is the confusion matrix, r-square values, and the top 5 featured variable weights.
 
-<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/Jason/results/result-evaluation.PNG" />
+<img src="https://github.com/WiIIiamTang/term_project_360-420-w2019-section2-Tang-Dinh/blob/master/CE/Jason/results/result-evaluation.png" />
