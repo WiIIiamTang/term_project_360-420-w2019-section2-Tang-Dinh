@@ -11,10 +11,10 @@ Translated to JavaScript by Jason Dinh
 var file = "./wine1vs2.csv";
 
 //import methods from other files
-var DataLoader = require("./DataLoader.js");
-var FeatureScaling = require("./FeatureScaling.js");
-var LinearRegression = require("./LinearRegression.js");
-var ModelEvaluator = require("./ModelEvaluator.js");
+var DataLoader = require("./Methods/DataLoader.js");
+var FeatureScaling = require("./Methods/FeatureScaling.js");
+var LinearRegression = require("./Methods/LinearRegression.js");
+var ModelEvaluator = require("./Methods/ModelEvaluator.js");
 
 var makeXArrays = DataLoader.makeXArrays;
 var makeYArrays = DataLoader.makeYArrays;
@@ -38,19 +38,23 @@ var allX = makeXArrays(file);
 var allY = makeYArrays(file);
 
 //shuffle the data
-//shuffleData(allX, allY);
+shuffleData(allX, allY);
 
 //start
-var splitingPercentage = 0.70;
+//parameter values
+var alpha = 0.1;                    //step size
+var iterations = 5000;              //number of iterations
+var splitingPercentage = 0.70;      //percentage for spliting data into train and test sets
+
 var xTrain = splitXTrain(allX, splitingPercentage);
 var xTest = splitXTest(allX,splitingPercentage);
 var yTrain = splitYTrain(allY, splitingPercentage);
 var yTest = splitYTest(allY, splitingPercentage);
 var beta = new Array(xTrain[0].length+1);
 
-standardScaler(xTrain, xTest)
+standardScaler(xTrain, xTest);
 
-fit(xTrain, yTrain, 0.1, 5000, false);
+fit(xTrain, yTrain, alpha, iterations, false);
 
 var predictionsOnTrainSet = predictTrainSet(xTrain, 0.5);
 var predictionsOnTestSet = predictTestSet(xTest, 0.5);
@@ -64,7 +68,7 @@ acc2 = getAccuracy(yTest, predictionsOnTestSet);
 console.log("\n**********Result**********");
 console.log("Model finished with " + acc1 + " accuracy on the training set.");
 console.log("It got " + acc2 + " accuracy on the test set.");
-console.log("Baseline accuracy of test set at " + getBaselineAcc(yTest));
+console.log("\nBaseline accuracy of test set at " + getBaselineAcc(yTest));
 console.log();
 
 confusionMatrix(yTest, predictionsOnTestSet);
@@ -74,4 +78,4 @@ console.log("R-squared value on the test set = " + mcFaddenRSquared(xTest, yTest
 console.log("R-squared value on the training set = " + mcFaddenRSquared(xTrain, yTrain, beta));
 console.log();
 
-//rankWeights(beta);
+rankWeights(beta);

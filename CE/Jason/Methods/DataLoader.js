@@ -30,7 +30,6 @@ module.exports = {
 		var allY;
 
 		var fs = require("fs");
-		//var text = fs.readFileSync("./wine1vs2.txt", "utf-8");
 		var text = fs.readFileSync(fileLocation, "utf-8");
 		var textByLine = text.split("\n");      //textByLine is an array with containing all the data from the .csv file
 		
@@ -56,28 +55,24 @@ module.exports = {
 		return allY;
 	},
 
-	//need to fix
-	shuffleData: function(allX, allY){
-		var max = (allX.length - 1);
-		var min = 0;
-		var randRange = (max - min) + 1;
-		var random = 0;
+	shuffleData: function(allX, allY) {
+		var ctr = allX.length;
 		var temp = [];
-		var tempY = [];
+		var tempY = []
 
-		for(var i = 0; i < allX.length; i++){
-			random = Math.round((Math.random() * randRange) + min);
-			temp[i] = [];
-			allX[i] = [];
-			allX[random] = [];
-			tempY[i] = allY[i];
-			allY[i] = allY[random];
-			allY[random] = tempY[i];
+		while (ctr > 0) {
+			let random = Math.floor(Math.random() * ctr);
+	
+			ctr--;
+			temp[ctr]=[];
+			tempY[ctr] = allY[ctr];
+			allY[ctr] = allY[random];
+			allY[random] = tempY[ctr];
 
-			for(var j = 0; j < allX[0].length; j++){
-				temp[i][j] = allX[i][j];
-				allX[i][j] = allX[random][j];
-				allX[random][j] = temp[i][j];
+			for(var i = 0; i < allX[0].length; i++){
+				temp[ctr][i] = allX[ctr][i];
+				allX[ctr][i] = allX[random][i];
+				allX[random][i] = temp[ctr][i];
 			}
 		}
 	},
