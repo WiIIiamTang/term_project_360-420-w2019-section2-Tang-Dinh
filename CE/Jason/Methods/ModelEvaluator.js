@@ -18,8 +18,8 @@ module.exports = {
         var trueNeg = 0;    //true negatives
         var falPos = 0;     //false positives
         var falNeg = 0;     //false negatives
-        var actual1 = 0;
         var actual0 = 0;
+        var actual1 = 0;
         var predicted1= 0;
     
         for(var i = 0; i < predictedLabels.length; i++){
@@ -29,7 +29,7 @@ module.exports = {
                 actual1++;
                 predicted1++;
             //true negative
-            } else if (labels[i] === predictedLabels[i] && labels === 0){
+            } else if (labels[i] === predictedLabels[i] && labels[i] === 0){
                 trueNeg++;
                 actual0++;
             //false positive
@@ -44,9 +44,9 @@ module.exports = {
             }
         }
         console.log("*****Confusion Matrix*****");
-        console.log("\tPredicted:0\tPredicted:1");
-        console.log("Actual:0\t" + trueNeg +"\t" + falPos);
-        console.log("Actual:1\t" + falNeg +"\t" + truePos);
+        console.log("\t\tPredicted:0\tPredicted:1");
+        console.log("Actual:0\t" + trueNeg +"\t\t" + falPos);
+        console.log("Actual:1\t" + falNeg +"\t\t" + truePos);
         console.log("Accuracy =\t\t" + ((truePos + trueNeg) / (truePos + trueNeg + falPos + falNeg)));
         console.log("Error Rate =\t\t" + ((falPos + falNeg) / (truePos + trueNeg + falPos + falNeg)));
         console.log("Sensitivity/Recall =\t" + (truePos / actual1));
@@ -138,7 +138,7 @@ module.exports = {
                 count++;
         }
     
-        for(var i = 0; i < array.length; i++) {
+        for(var i = 0; i < 5; i++) {
             console.log(array[i] + "\t\t" + findOccurence(original, array[i]));
         }
     },

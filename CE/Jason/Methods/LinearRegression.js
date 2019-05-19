@@ -1,7 +1,5 @@
-var beta = new Array(14);
-
 module.exports = {
-    fit: function(xTrain, yTrain, learningRate, maxIterations, randomize){
+    fit: function(xTrain, yTrain, beta, learningRate, maxIterations, randomize){
         var alpha = learningRate;
         var betaNew = new Array(beta.length);
         var iterations = 0;
@@ -32,15 +30,16 @@ module.exports = {
     
         }
         console.log("The loop was terminated. Total iterations: " + iterations);
+
+        return beta;
     },
     
-    predictTrainSet: function(xTrain, predictionThreshold) {
+    predictTrainSet: function(xTrain, beta, predictionThreshold) {
         var predicted = new Array (xTrain.length);
-        var threshold = predictionThreshold;
     
         for(var i = 0; i < predicted.length; i++){
-    
-            if(hypothesis(xTrain, beta, i) > threshold) {
+            
+            if(hypothesis(xTrain, beta, i) > predictionThreshold) {
                 predicted[i] = 1.0;
             } else {
                 predicted[i] = 0.0;
@@ -51,13 +50,12 @@ module.exports = {
         return predicted;
     },
     
-    predictTestSet: function(xTest, predictionThreshold) {
+    predictTestSet: function(xTest, beta, predictionThreshold) {
         var predicted = new Array(xTest.length);
-        var threshold = predictionThreshold;
     
         for(var i = 0; i < xTest.length; i++){
     
-            if(hypothesis(xTest, beta, i) > threshold) {
+            if(hypothesis(xTest, beta, i) > predictionThreshold) {
                 predicted[i] = 1.0;
             } else {
                 predicted[i] = 0.0;
